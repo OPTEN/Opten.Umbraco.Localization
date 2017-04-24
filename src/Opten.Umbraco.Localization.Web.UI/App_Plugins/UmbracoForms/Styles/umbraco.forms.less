@@ -1,0 +1,216 @@
+// Grays
+// -------------------------
+@black:                 #000;
+@blackLight:			#1d1d1d;
+@grayDarker:            #222;
+@grayDark:              #343434;
+@gray:                  #555;
+@grayLight:             #d9d9d9;
+@grayLighter:           #f8f8f8;
+
+
+// Accent colors
+// -------------------------
+@blue:                  #2e8aea;
+@blueDark:              #0064cd;
+@green:                 #46a546;
+@red:                   #9d261d;
+@yellow:                #ffc40d;
+@orange:                #DF7F48;
+@turquoise:				#04bfbf;
+@pink:                  #c3325f;
+@purple:                #7a43b6;
+
+
+.usky-grid .help-text i.icon{
+    font-size: 16px;
+}
+
+.umb-forms-page{
+    position: relative;
+}
+
+.umb-forms-designer label.checkbox i.icon{
+    margin-left: -22px;
+}
+
+
+//Inline editors
+.umb-forms-designer .inline-editor{
+    background: transparent;
+    border: 1px dashed transparent;
+    resize: none;
+    overflow: hidden;
+    max-width: 400px;
+    clear: right;
+    display: block
+}
+
+.umb-forms-designer .inline-editor.prevalue{
+    display:inline;
+}
+
+.umb-forms-designer .inline-editor:hover, .umb-forms-designer .inline-editor:active  {
+    border-bottom: 1px dashed #999;
+}
+
+.umb-forms-designer .inline-editor.page-name{
+    font-size: 26px;
+    display: block !important;
+    height: 35px;
+    max-width: initial;
+    width: 100%;
+}
+
+.umb-forms-designer .inline-editor.field-tooltip{
+    color: #999;
+    padding: 1px;
+    height: 20px;
+    min-height: 20px;
+    margin: 0;
+    font-size: 12px;
+    color: #ccc;
+}
+
+.umb-forms-designer .inline-editor.field-name{
+    height: 20px;
+    min-height: 20px;
+
+    padding: 1px;
+    margin-top: -5px;
+}
+
+.umb-forms-designer .inline-editor.fieldset-name{
+    font-size: 20px;
+    height: 20px;
+}
+
+.umb-forms-designer .umb-forms-editor-text .inline-editor{
+    display: block;
+    width: 100%;
+}
+
+.umb-forms-designer .umb-forms-editor-text{
+    width: 90%;
+}
+
+
+.umb-forms-designer .usky-control-inner{
+    min-height: 100px;
+}
+
+//Empty container placeholder
+.umb-forms-designer .umb-forms-placeholder{
+    text-align: center;
+    padding: 30px;
+}
+
+.umb-forms-designer .umb-forms-fields-container{
+    min-height: 1px;
+}
+
+
+//Tools
+.umb-forms-designer .row-tools{
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 200;
+}
+
+.umb-forms-designer .cell-tools:hover > div{
+    opacity: 1;
+}
+
+.umb-forms-designer .umb-forms-field-preview{
+    min-height: 90px;
+    margin-right: 40px;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.umb-forms-fields .cell-tools-edit{
+    position: absolute;
+    top: 80px;
+    right: 5px;
+}
+
+.umb-forms-fields .cell-tools-add{
+    margin-right: 45px;
+}
+.umb-forms-fields .cell-tools-add .iconBox{
+    visibility: hidden;
+}
+.umb-forms-fields .cell-tools-add:hover .iconBox{
+    visibility: visible;
+}
+
+
+.umb-forms-designer .umb-forms-pager{
+    display: block;
+    padding: 0;
+    margin: 20px 0 0 0;
+
+    a{
+        text-decoration: none;
+        color: @grayLight;
+    }
+
+    li{
+        display: inline-block;
+        height: 60px;
+        padding: 10px;
+        color: @grayLight;
+        overflow: hidden;
+    }
+
+    i{
+        font-size: 40px;
+        line-height: 45px;
+        display: block;
+        color: @grayLight;
+    }
+
+    li.current{
+        background: @grayLighter;
+    }
+}
+
+.umb-forms-buttons{
+    opacity: 0.9;
+    padding: 15px;
+}
+
+
+//Field previews
+.umb-forms-recaptcha{
+    background: url(../Images/Recaptcha.png) no-repeat top left;
+    height: 70px;
+}
+
+.umb-forms-hidden{
+    border: 1px dashed #efefef;
+    color: #efefef;
+    padding: 10px;
+    text-align: center;
+}
+
+.umb-forms-rule, .umb-forms-newrule{
+    padding-top:10px;
+    padding-left:15px;
+}
+
+.umb-forms-designer .checkbox{
+    padding-left:0px;
+}
+@import "umbraco.forms.entries.less";
+
+@import "umbraco.forms.dashboards.less";
+
+@import "umbraco.gridview.less";
+
+@import "umbraco.forms.fonts.less";
+
+@import "umbraco.forms.workflows.less";

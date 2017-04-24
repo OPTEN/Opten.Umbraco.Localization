@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language>
+  <area alias="OPTEN">
+	<key alias="localizationAll">All</key>
+	<key alias="localizationSelectAll">Select all</key>
+	<key alias="localizationDeselectAll">Deselect all</key>
+  </area>
+</language>

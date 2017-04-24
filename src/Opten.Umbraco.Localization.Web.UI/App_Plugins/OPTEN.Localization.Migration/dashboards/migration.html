@@ -1,0 +1,41 @@
+﻿<div ng-controller="OPTEN.Backoffice.Localization.Migration.Controller">
+	<umb-load-indicator ng-if="loading"></umb-load-indicator>
+
+	<div ng-if="!loading">
+		<div ng-repeat="contentType in model">
+			<div ng-show="contentType.properties.length">
+				<h4>{{contentType.name}} <small>Document Type</small></h4>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Property Group</th>
+							<th>Property Name</th>
+							<th>Property Editor</th>
+							<th>Localize?</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="property in contentType.properties">
+							<td>{{property.group}}</td>
+							<td>
+								{{property.name}}
+								<br />
+								<small>{{property.alias}}</small>
+							</td>
+							<td>{{property.propertyEditorAlias}}</td>
+							<td>
+								<input type="checkbox" ng-model="property.localize" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<button class="btn btn-primary" type="button" ng-click="save(model)">
+			Migrate
+		</button>
+		<button class="btn btn-primary" type="button" ng-click="migrateAllContentTypes()">
+			Migrate ALL
+		</button>
+	</div>
+</div>

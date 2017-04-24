@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Opten.Umbraco.Localization.Core</id>
+    <version></version>
+    <title>Opten.Umbraco.Localization Binaries</title>
+    <authors>OPTEN AG</authors>
+    <owners>OPTEN AG</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://bitbucket.org/opten/opten-solutions</projectUrl>
+    <iconUrl>http://www.opten.ch/nuget/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description><![CDATA[This package only contains binaries.]]></description>
+    <tags>opten</tags>
+    <dependencies>
+      <dependency id="Opten.Common" version="src\Opten.Umbraco.Localization.Web\packages.config" />
+    </dependencies>
+  </metadata>
+	<files>
+		<file src="src\Opten.Umbraco.Localization.Core\bin\Release\Opten.Umbraco.Localization.Core.dll" target="lib\net45" />
+		<file src="src\Opten.Umbraco.Localization.Core\bin\Release\Opten.Umbraco.Localization.Core.pdb" target="lib\net45" />
+		<file src="src\Opten.Umbraco.Localization.Web\bin\Release\Opten.Umbraco.Localization.Web.dll" target="lib\net45" />
+		<file src="src\Opten.Umbraco.Localization.Web\bin\Release\Opten.Umbraco.Localization.Web.pdb" target="lib\net45" />
+		<file src="src\Opten.Umbraco.Localization.Web\bin\Release\Opten.Umbraco.Localization.Web.xml" target="lib\net45" />
+	</files>
+</package>

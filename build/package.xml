@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<umbPackage>
+  <info>
+    <package>
+      <name>Opten.Umbraco.Localization</name>
+      <version>1.0.0</version>
+      <iconUrl>http://www.opten.ch/img/logo.png</iconUrl>
+      <license url="http://opensource.org/licenses/MIT">MIT License</license>
+      <url>http://www.opten.ch</url>
+      <requirements type="strict">
+        <major>7</major>
+        <minor>5</minor>
+        <patch>12</patch>
+      </requirements>
+    </package>
+    <author>
+      <name>OPTEN AG</name>
+      <website>http://www.opten.ch</website>
+    </author>
+    <readme><![CDATA[Opten.Umbraco.Localization
+
+Multilingual properties with Umbraco]]></readme>
+  </info>
+	<files />
+  <DocumentTypes />
+  <Templates />
+  <Stylesheets />
+  <Macros />
+  <DictionaryItems />
+  <Languages />
+  <DataTypes />
+  <Actions>
+    <Action runat="install" undo="true" alias="Opten.Umbraco.Localization.TransformXmlFile" file="~/config/dashboard.config" xdtfile="~/app_plugins/OPTEN.Localization/install/config/dashboard.config" />
+    <Action runat="install" undo="true" alias="Opten.Umbraco.Localization.TransformXmlFile" file="~/views/web.config" xdtfile="~/app_plugins/OPTEN.Localization/install/views/web.config" />
+    <Action runat="install" undo="true" alias="Opten.Umbraco.Localization.TransformXmlFile" file="~/lang/de-DE.user.xml" xdtfile="~/app_plugins/OPTEN.Localization/install/lang/de-DE.user.xml" />
+    <Action runat="install" undo="true" alias="Opten.Umbraco.Localization.TransformXmlFile" file="~/lang/en-GB.user.xml" xdtfile="~/app_plugins/OPTEN.Localization/install/lang/en-GB.user.xml" />
+    <Action runat="install" undo="true" alias="Opten.Umbraco.Localization.TransformXmlFile" file="~/lang/en-US.user.xml" xdtfile="~/app_plugins/OPTEN.Localization/install/lang/en-US.user.xml" />
+    <Action runat="install" undo="true" alias="Opten.Umbraco.Localization.TransformXmlFile" file="~/lang/umbraco/en.xml" xdtfile="~/app_plugins/OPTEN.Localization/install/lang/umbraco/en.xml" />
+    <Action runat="install" undo="true" alias="Opten.Umbraco.Localization.TransformXmlFile" file="~/lang/umbraco/de.xml" xdtfile="~/app_plugins/OPTEN.Localization/install/lang/umbraco/de.xml" />
+  </Actions>
+</umbPackage>

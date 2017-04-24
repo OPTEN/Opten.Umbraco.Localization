@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<language xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<area alias="OPTEN">
+		<key alias="localizationAll"
+			 xdt:Transform="Remove"
+			 xdt:Locator="Condition(@alias='localizationAll')">All</key>
+	</area>
+
+	<area alias="OPTEN"
+		  xdt:Transform="RemoveAll"
+		  xdt:Locator="Condition(count(*)=0)" />
+</language>

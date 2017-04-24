@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"?>
+<dashBoard xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<section alias="StartupSettingsDashboardSection">
+		<pages>
+			<namespaces>
+				<add namespace="Opten.Umbraco.Localization.Web.Extensions"
+					 xdt:Transform="Remove"
+					 xdt:Locator="Condition(@namespace='Opten.Umbraco.Localization.Web.Extensions')" />
+			</namespaces>
+		</pages>
+	</section>
+</dashBoard>
+
+<?xml version="1.0" encoding="utf-8" ?>
+<dashBoard xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- prevent Visual Studio from complaining about missing schema information -->
+	<xs:schema>
+		<xs:element name="dashBoard">
+			<xs:complexType>
+				<xs:sequence>
+					<!-- just accept anything, we don't want a schema, really-->
+					<xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+	</xs:schema>
+	<section alias="Localization" xdt:Transform="Remove" xdt:Locator="Match(alias)" />
+</dashBoard>

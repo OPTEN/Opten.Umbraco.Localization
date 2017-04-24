@@ -1,0 +1,8 @@
+{
+	"javascript": [
+		"~/App_Plugins/OPTEN.Localization/opten.localization.js?v=1.0.0",
+		"~/App_Plugins/OPTEN.Localization/opten.localization.interceptor.js?v=1.0.0",
+		"~/App_Plugins/OPTEN.Localization/opten.localization.resource.js?v=1.0.0",
+		"~/App_Plugins/OPTEN.Localization/opten.localization.directive.js?v=1.0.0"
+	]
+}

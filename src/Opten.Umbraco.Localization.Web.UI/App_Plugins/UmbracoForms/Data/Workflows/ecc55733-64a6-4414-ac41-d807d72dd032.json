@@ -1,0 +1,14 @@
+{
+  "id": "ecc55733-64a6-4414-ac41-d807d72dd032",
+  "name": "Send email to support@opten.ch when submitted",
+  "form": "d8f9d8a7-2f90-46aa-85e0-a758bac1d1fc",
+  "active": true,
+  "workflowTypeId": "e96badd7-05be-4978-b8d9-b3d733de70a5",
+  "executesOn": "Submitted",
+  "settings": {
+    "Email": "support@opten.ch",
+    "Subject": "the form  was submitted",
+    "Message": "the form  was submitted, this is the list of values it contained, you can turn this email off under workflows in Umbraco Contour"
+  },
+  "sortOrder": 0
+}

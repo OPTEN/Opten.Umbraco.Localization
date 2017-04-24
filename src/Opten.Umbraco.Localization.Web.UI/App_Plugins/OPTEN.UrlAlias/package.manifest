@@ -1,0 +1,13 @@
+{
+	"propertyEditors": [{ 
+		"alias": "OPTEN.UrlAlias",
+		"name":  "OPTEN: URL Alias",
+		"editor": {
+			"view": "~/App_Plugins/OPTEN.UrlAlias/urlAlias.html?v=1.0.0",
+			"valueType": "JSON"
+		}
+	}],
+	"javascript": [
+		"~/App_Plugins/OPTEN.UrlAlias/opten.urlAlias.controller.js?v=1.0.0"
+	]
+}

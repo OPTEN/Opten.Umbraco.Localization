@@ -1,0 +1,32 @@
+﻿<div class="umb-editor-header__actions-menu pull-right">
+	<a class="btn btn-info" href="#" data-prevent-default data-toggle="dropdown">
+		<localize key="general_language">Language</localize>
+		<span class="caret"></span>
+	</a>
+
+	<ul class="dropdown-menu umb-actions" role="menu" aria-labelledby="dLabel" ng-click="$event.stopPropagation()">
+		<li class="action" data-ng-repeat="language in $root.languages" data-ng-class="{ 'selected' : $root.selectedLanguages.indexOf(language.isoCode) > -1 }">
+			<a prevent-default
+			   ng-click="language.select()">
+				<i class="icon " data-ng-class="$root.selectedLanguages.indexOf(language.isoCode) > -1 ? 'icon-checkbox' : 'icon-checkbox-empty'"></i>
+				<span class="menu-label">{{language.nativeName}}</span>
+			</a>
+		</li>
+		<li class="action sep">
+			<a data-prevent-default
+			   data-ng-click="$root.selectAllLanguages()"
+			   style="padding-left: 0; padding-right: 0; display: inline-block; width: 50%; text-align: center; float: left; clear: none;">
+				<small>
+					<localize key="OPTEN_localizationSelectAll">Select all</localize>
+				</small>
+			</a>
+			<a data-prevent-default
+			   data-ng-click="$root.deselectAllLanguages()"
+			   style="padding-left: 0; padding-right: 0; display: inline-block; width: 50%; text-align: center; float: left; clear: none;">
+				<small>
+					<localize key="OPTEN_localizationDeselectAll">Deselect all</localize>
+				</small>
+			</a>
+		</li>
+	</ul>
+</div>

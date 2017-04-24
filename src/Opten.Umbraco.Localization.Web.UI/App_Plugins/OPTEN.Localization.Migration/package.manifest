@@ -1,0 +1,6 @@
+{
+	"javascript": [
+		"~/App_Plugins/OPTEN.Localization.Migration/opten.localization.migration.controller.js?v=1.0.0",
+		"~/App_Plugins/OPTEN.Localization.Migration/opten.localization.migration.resource.js?v=1.0.0"
+	]
+}

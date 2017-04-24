@@ -1,0 +1,54 @@
+﻿<div ng-controller="OPTEN.Backoffice.UrlAlias.Controller as urlAlias">
+	<ng-form name="urlAliasForm">
+		<div class="umb-property"
+			 ng-repeat="language in $root.languages"
+			 ng-show="urlAlias.loadings.length == 3 && states.isEnabled && states.isPublished && states.hasHostnames == false && urlAlias.getIndex(language.isoCode) >= 0">
+			<div class="control-group umb-control-group">
+				<div class="umb-el-wrap">
+					<label class="control-label" for="urlAlias_{{ language.isoCode }}">
+						{{ language.nativeName }}
+					</label>
+
+					<div class="controls">
+						<input name="urlAlias_{{ language.isoCode }}"
+							   class="umb-editor umb-textstring"
+							   type="text"
+							   ng-keyup="urlAlias.checkAvailability(urlAlias.getIndex(language.isoCode))"
+							   ng-model="urls[urlAlias.getIndex(language.isoCode)].name"
+							   data-val-highlight="urls[urlAlias.getIndex(language.isoCode)].hasError"
+							   style="min-width: 30%;" />
+
+						<input name="urlAlias_segment_{{ language.isoCode }}"
+							   class="umb-editor umb-textstring"
+							   type="text"
+							   disabled="disabled"
+							   ng-model="urls[urlAlias.getIndex(language.isoCode)].url"
+							   style="min-width: 30%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-form>
+
+	<div ng-show="states.isPublished && urlAlias.loadings.length < 3">
+		Loading...
+	</div>
+
+	<div ng-show="urlAlias.loadings.length == 3 && states.isEnabled == false">
+		<div class="alert alert-block alert-danger">
+			URL Localization is not enabled [OPTEN:localization:aliasUrlProvider]!
+		</div>
+	</div>
+
+	<div ng-show="urlAlias.loadings.length == 3 && states.isEnabled && states.isPublished && states.hasHostnames">
+		<div class="alert alert-block alert-info">
+			This content has hostnames. Therefore you can't set any url alias!
+		</div>
+	</div>
+
+	<div ng-show="states.isPublished == false">
+		<div class="alert alert-block alert-info">
+			You have to publish this content first to set localized URLs.
+		</div>
+	</div>
+</div>

@@ -1,0 +1,52 @@
+﻿[
+	{
+		"insertString": " data-opten-language-show=\"property.alias\"",
+		"modifications": [
+			{
+				"url": [
+					"views/content/edit.html",
+					"views/media/edit.html",
+					"App_Plugins\\NestedContent\\Views\\nestedcontent.editor.html",
+					"App_Plugins\\OPTEN.DocTypeGridEditor\\views\\DocTypeGridEditor.dialog.html"
+				],
+				"insertAfter": "ng-repeat=\"property in tab.properties\""
+			}
+		]
+	},
+	{
+		"insertString": "<div style=\"position: absolute;right: 20px;top: 23px;\"><opten-language-menu></opten-language-menu></div>",
+		"modifications": [
+			{
+				"url": "App_Plugins\\OPTEN.DocTypeGridEditor\\views\\DocTypeGridEditor.dialog.html",
+				"insertAfter": "</h1>"
+			}
+		]
+	},
+	{
+		"insertString": "<opten-language-menu ng-if=\"menu.currentNode\"></opten-language-menu>",
+		"modifications": [
+			{
+				"url": "views/components/editor/umb-editor-header.html",
+				"insertAfter": "</umb-editor-menu>"
+			}
+		]
+	},
+	{
+		"insertString": " <small data-opten-language-name=\"property.alias\"></small>",
+		"modifications": [
+			{
+				"url": "views/components/property/umb-property.html",
+				"insertAfter": "{{property.label}}"
+			}
+		]
+	},
+	{
+		"insertString": " <small data-opten-language-name=\"alias\"></small>",
+		"modifications": [
+			{
+				"url": "views/components/html/umb-control-group.html",
+				"insertAfter": "{{labelstring}}"
+			}
+		]
+	}
+]

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+	<metadata>
+		<id>Opten.Umbraco.Localization</id>
+		<version></version>
+		<title>Opten.Umbraco.Localization</title>
+		<authors>OPTEN AG</authors>
+		<owners>OPTEN AG</owners>
+		<licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+		<projectUrl>https://bitbucket.org/opten/opten-solutions</projectUrl>
+		<iconUrl>http://www.opten.ch/nuget/logo.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>
+			<![CDATA[Enables Property and URL Localization for Umbraco.
+Some further installations are required!]]>
+		</description>
+		<tags>opten</tags>
+		<dependencies>
+			<dependency id="Opten.Umbraco.Localization.Core" version="$version$" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\**\*.*" target="content\App_Plugins\OPTEN.Localization" />
+		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization.Migration\**\*.*" target="content\App_Plugins\OPTEN.Localization.Migration" />
+		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.UrlAlias\**\*.*" target="content\App_Plugins\OPTEN.UrlAlias" />
+		<file src="src\Opten.Umbraco.Localization.Web.UI\Config\opten.localization.config.json" target="content\Config\opten.localization.config.json"/>
+		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\config\*.xdt" target="content\config" />
+		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\lang\*.xdt" target="content\config\lang" />
+		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\lang\umbraco\*.xdt" target="content\umbraco\config\lang" />
+		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\views\*.xdt" target="content\views" />
+	</files>
+</package>

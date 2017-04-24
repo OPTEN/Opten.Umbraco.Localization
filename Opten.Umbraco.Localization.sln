@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opten.Umbraco.Localization.Core", "src\Opten.Umbraco.Localization.Core\Opten.Umbraco.Localization.Core.csproj", "{52FE24BB-7285-4D72-8935-C9DE65B4EEC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opten.Umbraco.Localization.Web", "src\Opten.Umbraco.Localization.Web\Opten.Umbraco.Localization.Web.csproj", "{22709175-8B08-4836-9FFA-E56A0F5EB3F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opten.Umbraco.Localization.Web.UI", "src\Opten.Umbraco.Localization.Web.UI\Opten.Umbraco.Localization.Web.UI.csproj", "{BF534B4D-4923-48CC-82A0-0D66B54EE7EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C69FE877-6590-42AE-8AB1-810AE75B0668}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opten.Umbraco.Localization.Test", "tests\Opten.Umbraco.Localization.Test\Opten.Umbraco.Localization.Test.csproj", "{8F9BA3F2-91E0-4F63-8ADB-D5021D594B1D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{E328AB6C-8319-49B1-B9C5-F51FAF2750CB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{F0CE97A3-C1A7-47FB-84AB-FDF23E0D5788}"
+	ProjectSection(SolutionItems) = preProject
+		build\build.cake = build\build.cake
+		build\build.ps1 = build\build.ps1
+		build\Opten.Umbraco.Localization.Core.nuspec = build\Opten.Umbraco.Localization.Core.nuspec
+		build\Opten.Umbraco.Localization.nuspec = build\Opten.Umbraco.Localization.nuspec
+		build\package.xml = build\package.xml
+		build\UmbracoPackage.proj = build\UmbracoPackage.proj
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4812CAA3-5A45-4671-A463-6F90101FC440}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6C760C3E-DC38-4C5A-8155-21B39644F4D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52FE24BB-7285-4D72-8935-C9DE65B4EEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52FE24BB-7285-4D72-8935-C9DE65B4EEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52FE24BB-7285-4D72-8935-C9DE65B4EEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52FE24BB-7285-4D72-8935-C9DE65B4EEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22709175-8B08-4836-9FFA-E56A0F5EB3F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22709175-8B08-4836-9FFA-E56A0F5EB3F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22709175-8B08-4836-9FFA-E56A0F5EB3F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22709175-8B08-4836-9FFA-E56A0F5EB3F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF534B4D-4923-48CC-82A0-0D66B54EE7EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF534B4D-4923-48CC-82A0-0D66B54EE7EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF534B4D-4923-48CC-82A0-0D66B54EE7EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF534B4D-4923-48CC-82A0-0D66B54EE7EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F9BA3F2-91E0-4F63-8ADB-D5021D594B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9BA3F2-91E0-4F63-8ADB-D5021D594B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F9BA3F2-91E0-4F63-8ADB-D5021D594B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F9BA3F2-91E0-4F63-8ADB-D5021D594B1D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{52FE24BB-7285-4D72-8935-C9DE65B4EEC3} = {6C760C3E-DC38-4C5A-8155-21B39644F4D1}
+		{22709175-8B08-4836-9FFA-E56A0F5EB3F5} = {6C760C3E-DC38-4C5A-8155-21B39644F4D1}
+		{BF534B4D-4923-48CC-82A0-0D66B54EE7EF} = {6C760C3E-DC38-4C5A-8155-21B39644F4D1}
+		{8F9BA3F2-91E0-4F63-8ADB-D5021D594B1D} = {4812CAA3-5A45-4671-A463-6F90101FC440}
+	EndGlobalSection
+EndGlobal
