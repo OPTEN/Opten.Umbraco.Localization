@@ -35,7 +35,7 @@ Task("Version")
 		CreateDirectory(dest);
 	}
 
-	version = "1.0.0"; //GetNextNuGetVersion("Opten.Umbraco.Localization", feedUrl);
+	version = "1.5.3.9"; //GetNextNuGetVersion("Opten.Umbraco.Localization", feedUrl);
 
 	PatchAssemblyInfo("../src/Opten.Umbraco.Localization.Core/Properties/AssemblyInfo.cs", version);
 	PatchAssemblyInfo("../src/Opten.Umbraco.Localization.Web/Properties/AssemblyInfo.cs", version);
@@ -89,6 +89,12 @@ Task("Build")
 		settings.SetConfiguration("Release"));
 
 	MSBuild("../tests/Opten.Umbraco.Localization.Test/Opten.Umbraco.Localization.Test.csproj", settings =>
+		settings.SetConfiguration("Release"));
+
+	MSBuild("../src/Opten.Umbraco.Localization.Web.UI/Opten.Umbraco.Localization.Web.UI.csproj", settings =>
+		settings.SetConfiguration("Debug"));
+
+	MSBuild("../src/Opten.Umbraco.Localization.Web.UI/Opten.Umbraco.Localization.Web.UI.csproj", settings =>
 		settings.SetConfiguration("Release"));
 
 	// Copy files to artifacts for Umbraco Package
