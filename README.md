@@ -6,8 +6,8 @@ Multilingual properties with Umbraco
 
 ### Nuget Package
 
-[Complete Package](http://www.google.com): **Install-Package Opten.Umbraco.Localization**
+[Complete Package](https://www.nuget.org/packages/Opten.Umbraco.Localization/): **Install-Package Opten.Umbraco.Localization**
 
-[Binaries only](http://www.google.com): **Install-Package Opten.Umbraco.Localization.Core**
+[Binaries only](https://www.nuget.org/packages/Opten.Umbraco.Localization.Core/): **Install-Package Opten.Umbraco.Localization.Core**
 
 ### [Umbraco Package](http://www.google.com)
