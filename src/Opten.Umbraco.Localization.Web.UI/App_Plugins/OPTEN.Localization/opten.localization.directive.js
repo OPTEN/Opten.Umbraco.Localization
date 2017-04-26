@@ -82,7 +82,7 @@
 		return {
 			restrict: "E",
 			replace: true,
-			templateUrl: "/App_Plugins/OPTEN.Localization/directives/languageMenu.html?v=1.0.0"
+			templateUrl: "/App_Plugins/OPTEN.Localization/directives/languageMenu.html?v=ASSEMBLY_VERSION"
 		};
 	};
 
