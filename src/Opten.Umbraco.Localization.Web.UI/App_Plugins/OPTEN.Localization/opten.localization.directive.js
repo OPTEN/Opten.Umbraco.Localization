@@ -86,4 +86,16 @@
 		};
 	};
 
+	angular.module("umbraco.directives").directive("optenHeaderLocalizedName", optenHeaderLocalizedName);
+
+	function optenHeaderLocalizedName() {
+		return {
+			restrict: "E",
+			replace: true,
+			templateUrl: "/App_Plugins/OPTEN.Localization/directives/headerLocalizedName.html?v=ASSEMBLY_VERSION"
+		};
+	};
+
+
+
 }());

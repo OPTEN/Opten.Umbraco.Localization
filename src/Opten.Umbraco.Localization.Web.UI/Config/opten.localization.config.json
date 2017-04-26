@@ -48,5 +48,23 @@
 				"insertAfter": "{{labelstring}}"
 			}
 		]
+	},
+	{
+		"insertString": "<opten-header-localized-name></opten-header-localized-name>",
+		"modifications": [
+			{
+				"url": "views/components/editor/umb-editor-header.html",
+				"insertAfter": "<div class=\"umb-panel-header-locked-description\" ng-show=\"descriptionLocked\">{{ description }}</div>"
+			}
+		]
+	},
+	{
+		"insertString": " optenHeaderLocalizedName-panel-header",
+		"modifications": [
+			{
+				"url": "views/components/editor/umb-editor-header.html",
+				"insertAfter": "umb-editor-header umb-panel-header"
+			}
+		]
 	}
 ]
