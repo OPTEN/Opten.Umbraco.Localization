@@ -3,7 +3,7 @@
   <info>
     <package>
       <name>Opten.Umbraco.Localization</name>
-      <version>ASSEMBLY_VERSION</version>
+      <version>$ASSEMBLY_VERSION$</version>
       <iconUrl>http://www.opten.ch/img/logo.png</iconUrl>
       <license url="http://opensource.org/licenses/MIT">MIT License</license>
       <url>http://www.opten.ch</url>
