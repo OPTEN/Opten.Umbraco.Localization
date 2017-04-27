@@ -35,7 +35,7 @@ Task("Version")
 		CreateDirectory(dest);
 	}
 
-	version = "1.5.4.0"; //GetNextNuGetVersion("Opten.Umbraco.Localization", feedUrl);
+	version = "1.5.4.1"; //GetNextNuGetVersion("Opten.Umbraco.Localization", feedUrl);
 
 	PatchAssemblyInfo("../src/Opten.Umbraco.Localization.Core/Properties/AssemblyInfo.cs", version);
 	PatchAssemblyInfo("../src/Opten.Umbraco.Localization.Web/Properties/AssemblyInfo.cs", version);

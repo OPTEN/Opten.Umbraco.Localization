@@ -25,8 +25,6 @@ Some further installations are required!]]>
 		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.UrlAlias\**\*.*" target="content\App_Plugins\OPTEN.UrlAlias" />
 		<file src="src\Opten.Umbraco.Localization.Web.UI\Config\opten.localization.config.json" target="content\Config\opten.localization.config.json"/>
 		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\config\*.xdt" target="content\config" />
-		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\lang\*.xdt" target="content\config\lang" />
-		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\lang\umbraco\*.xdt" target="content\umbraco\config\lang" />
 		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\views\*.xdt" target="content\views" />
 		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\*.xdt" target="content" />
 	</files>
