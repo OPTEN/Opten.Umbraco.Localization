@@ -28,5 +28,6 @@ Some further installations are required!]]>
 		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\lang\*.xdt" target="content\config\lang" />
 		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\lang\umbraco\*.xdt" target="content\umbraco\config\lang" />
 		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\views\*.xdt" target="content\views" />
+		<file src="src\Opten.Umbraco.Localization.Web.UI\App_Plugins\OPTEN.Localization\install\*.xdt" target="content" />
 	</files>
 </package>

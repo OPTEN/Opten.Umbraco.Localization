@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<appSettings>
+		<add xdt:Transform="Remove"
+				 xdt:Locator="Condition(@key='OPTEN:localization:defaultCulture')"
+				 key="OPTEN:localization:defaultCulture"
+				 value="en-US" />
+		<add xdt:Transform="Remove"
+				 xdt:Locator="Condition(@key='OPTEN:localization:aliasUrlProvider')"
+				 key="OPTEN:localization:aliasUrlProvider"
+				 value="false" />
+		<add xdt:Transform="Remove"
+				 xdt:Locator="Condition(@key='OPTEN:localization:browserLanguageRedirect')"
+				 key="OPTEN:localization:browserLanguageRedirect"
+				 value="true" />
+		<add xdt:Transform="Remove"
+				 xdt:Locator="Condition(@key='OPTEN:localization:404')"
+				 key="OPTEN:localization:404"
+				 value="true" />
+	</appSettings>
+</configuration>

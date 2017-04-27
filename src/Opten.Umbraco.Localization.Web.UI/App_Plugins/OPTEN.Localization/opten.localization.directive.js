@@ -31,7 +31,7 @@
 				});
 
 				$rootScope.$watch("selectedLanguages", function optenLanguageShowWatchAction(value) {
-					animate[(!canLocalize || value.indexOf(language) > -1 || value.length === 0) ? 'show' : 'hide'](element);
+					animate[(!canLocalize || value.indexOf(language) > -1) ? 'show' : 'hide'](element);
 				}, true);
 			});
 		};
@@ -82,7 +82,7 @@
 		return {
 			restrict: "E",
 			replace: true,
-			templateUrl: "/App_Plugins/OPTEN.Localization/directives/languageMenu.html?v=1.0.0"
+			templateUrl: "/App_Plugins/OPTEN.Localization/directives/languageMenu.html?v=ASSEMBLY_VERSION"
 		};
 	};
 

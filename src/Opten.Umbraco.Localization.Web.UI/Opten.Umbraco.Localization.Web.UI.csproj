@@ -425,6 +425,22 @@
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\config\Dashboard.config.install.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\config\Dashboard.config.uninstall.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\de-DE.user.xml.install.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\de-DE.user.xml.uninstall.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\en-GB.user.xml.install.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\en-GB.user.xml.uninstall.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\en-US.user.xml.install.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\en-US.user.xml.uninstall.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\umbraco\de.xml.install.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\umbraco\de.xml.uninstall.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\umbraco\en.xml.install.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\lang\umbraco\en.xml.uninstall.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\views\web.config.install.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\views\web.config.uninstall.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\web.config.install.xdt" />
+    <Content Include="App_Plugins\OPTEN.Localization\install\web.config.uninstall.xdt" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
