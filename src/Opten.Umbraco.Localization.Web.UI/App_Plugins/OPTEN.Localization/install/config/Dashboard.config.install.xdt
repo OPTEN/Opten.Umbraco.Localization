@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<dashBoard xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<dashBoard xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
 	<section alias="Localization" xdt:Transform="InsertIfMissing" xdt:Locator="Match(alias)">
 		<areas>
 			<area>settings</area>
