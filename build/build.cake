@@ -107,7 +107,7 @@ Task("Build")
 	CopyFileToDirectory(File("../src/Opten.Umbraco.Localization.Web.UI/bin/Opten.Common.dll"), umb + Directory("bin"));
 	CopyFileToDirectory(File("../src/Opten.Umbraco.Localization.Web.UI/bin/Microsoft.Web.XmlTransform.dll"), umb + Directory("bin"));
 	CreateDirectory(umb + Directory("config"));
-	CopyFileToDirectory(File("../src/Opten.Umbraco.Localization.Web.UI/config/opten.localization.config.json"), umb + Directory("bin"));
+	CopyFileToDirectory(File("../src/Opten.Umbraco.Localization.Web.UI/config/opten.localization.config.json"), umb + Directory("config"));
 	CopyFileToDirectory(File("package.xml"), umb);
 });
 
