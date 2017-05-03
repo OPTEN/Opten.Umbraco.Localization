@@ -10,4 +10,4 @@ Multilingual properties with Umbraco
 
 [Binaries only](https://www.nuget.org/packages/Opten.Umbraco.Localization.Core/): **Install-Package Opten.Umbraco.Localization.Core**
 
-### [Umbraco Package](http://www.google.com)
+### [Umbraco Package](https://our.umbraco.org/projects/backoffice-extensions/op10-localization-multilingual-properties/)
