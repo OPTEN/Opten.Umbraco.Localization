@@ -14,3 +14,28 @@ Multilingual properties with Umbraco
 [Binaries only](https://www.nuget.org/packages/Opten.Umbraco.Localization.Core/): **Install-Package Opten.Umbraco.Localization.Core**
 
 ### [Umbraco Package](https://our.umbraco.org/projects/backoffice-extensions/op10-localization-multilingual-properties/)
+
+## Using with other Umbraco Packages
+
+### Nested Content
+> /App_Plugins/NestedContent/Views/nestedcontent.editor.html
+
+``` HTML
+<umb-property 
+    property="property"
+    ng-repeat="property in tab.properties"
+    data-opten-language-show="property.alias"> <!-- <== this attribute here -->
+    <umb-editor model="property"></umb-editor>
+</umb-property>
+```
+
+### DocTypeGridEditor
+> /App_Plugins/DocTypeGridEditor/Views/doctypegrideditor.dialog.html
+
+``` HTML
+<umb-property property="property"
+    ng-repeat="property in tab.properties"
+    data-opten-language-show="property.alias"> <!-- <== this attribute here -->
+    <umb-editor model="property"></umb-editor> 
+</umb-property>
+```
