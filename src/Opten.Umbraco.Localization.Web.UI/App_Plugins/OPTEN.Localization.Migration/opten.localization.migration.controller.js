@@ -3,9 +3,9 @@
 
 	angular.module("umbraco.resources").controller("OPTEN.Backoffice.Localization.Migration.Controller", localizationMigrationController)
 
-	localizationMigrationController.$inject = ["$scope", "notificationsService", "OPTEN.Backoffice.Localization.Migration.Resource"];
+	localizationMigrationController.$inject = ["$scope", "notificationsService", "OPTEN.Backoffice.Localization.Migration.Resource", '$location', '$anchorScroll'];
 
-	function localizationMigrationController($scope, notificationsService, localizationMigrationResource) {
+	function localizationMigrationController($scope, notificationsService, localizationMigrationResource, $location, $anchorScroll) {
 		$scope.loading = true;
 		$scope.selectedItem = {};
 
