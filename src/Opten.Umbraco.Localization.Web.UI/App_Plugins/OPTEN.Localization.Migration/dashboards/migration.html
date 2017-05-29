@@ -4,7 +4,7 @@
 	<div class="umb-editor-container umb-panel-body umb-scrollable">
 		<div class="umb-pane">
 			<div ng-if="!loading">
-				<div ng-repeat="contentType in model" id="{{contentType.alias}}" class="content-type">
+				<div ng-repeat="contentType in model | orderBy: 'name'" id="{{contentType.alias}}" class="content-type">
 					<div ng-show="contentType.properties.length">
 						<h4>{{contentType.name}} <small>Document Type</small></h4>
 						<table class="table table-condensed">
@@ -43,7 +43,7 @@
 				<select class="content-type-dropdown"
 						ng-model="selectedItem"
 						ng-change="goToDocType(selectedItem)"
-						ng-options="contentType.name for contentType in model track by contentType.alias"></select>
+						ng-options="contentType.name for contentType in model | orderBy: 'name'"></select>
 			</div>
 			<div class="umb-editor-drawer-content__right-side">
 				<button class="btn btn-primary" type="button" ng-click="save(model)">
