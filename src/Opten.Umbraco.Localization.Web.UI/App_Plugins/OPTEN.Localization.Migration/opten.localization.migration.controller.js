@@ -7,10 +7,12 @@
 
 	function localizationMigrationController($scope, notificationsService, localizationMigrationResource) {
 		$scope.loading = true;
+		$scope.selectedItem = {};
 
 		$scope.loadData = function () {
 			localizationMigrationResource.getContentTypes().then(function (data) {
 				$scope.model = data;
+				$scope.selectedItem = $scope.model[0];
 				$scope.loading = false;
 			});
 		}
@@ -40,6 +42,25 @@
 					$scope.loadData();
 				});
 			}
+		}
+
+		$scope.goToDocType = function (target) {
+			scrollToHash(target.alias);
+			var el = document.getElementById(target.alias);
+			var siblings = document.getElementsByClassName('content-type');
+
+			for (var i = 0; i < siblings.length; i++) {
+				siblings[i].classList.remove('-scroll-target');
+			}
+
+			el.classList.add('-scroll-target');
+		}
+
+		function scrollToHash(hash) {
+			var old = $location.hash();
+			$location.hash(hash);
+			$anchorScroll();
+			$location.hash(old);
 		}
 
 		$scope.loadData();
