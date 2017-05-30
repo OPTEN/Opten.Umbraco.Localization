@@ -1,6 +1,7 @@
 {
 	"javascript": [
 		"~/App_Plugins/OPTEN.Localization.Migration/opten.localization.migration.controller.js?v=ASSEMBLY_VERSION",
-		"~/App_Plugins/OPTEN.Localization.Migration/opten.localization.migration.resource.js?v=ASSEMBLY_VERSION"
+		"~/App_Plugins/OPTEN.Localization.Migration/opten.localization.migration.resource.js?v=ASSEMBLY_VERSION",
+		"~/App_Plugins/OPTEN.Localization.Migration/opten.localization.migration.directive.js?v=ASSEMBLY_VERSION"
 	]
 }

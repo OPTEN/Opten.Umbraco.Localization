@@ -340,6 +340,7 @@
   <ItemGroup>
     <Content Include="App_Data\Umbraco.sdf" />
     <Content Include="App_Plugins\OPTEN.Localization.Migration\dashboards\migration.html" />
+    <Content Include="App_Plugins\OPTEN.Localization.Migration\opten.localization.migration.directive.js" />
     <Content Include="App_Plugins\OPTEN.Localization\lang\de-DE.xml" />
     <Content Include="App_Plugins\OPTEN.Localization\lang\en-GB.xml" />
     <Content Include="App_Plugins\OPTEN.Localization\lang\en-US.xml" />

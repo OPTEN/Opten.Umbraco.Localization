@@ -9,7 +9,8 @@
 		var resource = {
 			getContentTypes: getContentTypes,
 			postContentTypes: postContentTypes,
-			migrateAllContentTypes: migrateAllContentTypes
+			migrateAllContentTypes: migrateAllContentTypes,
+			postProperty: postProperty
 		};
 
 		return resource;
@@ -41,6 +42,17 @@
 				"Failed to migrate content types"
 			);
 		}
+
+		function postProperty(property) {
+			return umbRequestHelper.resourcePromise(
+				$http({
+					url: "/umbraco/backoffice/OPTEN/MigrationApi/PostProperty",
+					method: "POST",
+					data: property
+				}),
+				"Failed to migrate content types"
+			);
+		};
 	};
 
 }());
