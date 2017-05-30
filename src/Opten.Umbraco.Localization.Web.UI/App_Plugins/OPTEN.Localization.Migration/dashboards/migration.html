@@ -41,6 +41,7 @@
 		<div class="umb-editor-drawer-content">
 			<div class="umb-editor-drawer-content__left-side">
 				<select class="content-type-dropdown"
+						no-dirty-check
 						ng-model="selectedItem"
 						ng-change="goToDocType(selectedItem)"
 						ng-options="contentType.name for contentType in model | orderBy: 'name'"></select>
