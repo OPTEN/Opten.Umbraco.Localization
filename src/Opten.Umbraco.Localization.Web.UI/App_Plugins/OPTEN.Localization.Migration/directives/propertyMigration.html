@@ -1,0 +1,9 @@
+﻿<div class="umb-group-builder__property-action">
+	<i class="icon icon-theater" ng-click="togglePrompt()"></i>
+	<umb-confirm-action
+		ng-if="property.localize"
+		direction="left"
+		on-confirm="localize()"
+		on-cancel="hidePrompt()">
+	</umb-confirm-action>
+</div>
