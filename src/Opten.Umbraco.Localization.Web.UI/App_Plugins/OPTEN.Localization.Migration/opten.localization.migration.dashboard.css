@@ -1,0 +1,12 @@
+﻿.content-type {
+	border: 2px dashed transparent;
+}
+
+	.content-type.-scroll-target {
+		background-color: #f5f5f5;
+		border: 2px dashed #413659;
+	}
+
+.content-type-dropdown {
+	margin-bottom: 0;
+}
