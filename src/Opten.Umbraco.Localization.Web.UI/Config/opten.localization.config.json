@@ -6,8 +6,8 @@
 				"url": [
 					"views/content/edit.html",
 					"views/media/edit.html",
-					"App_Plugins\\NestedContent\\Views\\nestedcontent.editor.html",
-					"App_Plugins\\OPTEN.DocTypeGridEditor\\views\\DocTypeGridEditor.dialog.html"
+					"App_Plugins/NestedContent/Views/nestedcontent.editor.html",
+					"App_Plugins/OPTEN.DocTypeGridEditor/views/DocTypeGridEditor.dialog.html"
 				],
 				"insertAfter": "ng-repeat=\"property in tab.properties\""
 			}
@@ -17,7 +17,7 @@
 		"insertString": "<div style=\"position: absolute;right: 20px;top: 23px;\"><opten-language-menu></opten-language-menu></div>",
 		"modifications": [
 			{
-				"url": "App_Plugins\\OPTEN.DocTypeGridEditor\\views\\DocTypeGridEditor.dialog.html",
+				"url": "App_Plugins/OPTEN.DocTypeGridEditor/views/DocTypeGridEditor.dialog.html",
 				"insertAfter": "</h1>"
 			}
 		]
@@ -47,6 +47,15 @@
 				"url": "views/components/html/umb-control-group.html",
 				"insertAfter": "{{labelstring}}"
 			}
+		]
+	},
+	{
+		"insertString": "<opten-property-migration property=\"property\" tab=\"tab\" content-type=\"model\"></opten-property-migration>",
+		"modifications": [
+					{
+						"url": "views/components/umb-groups-builder.html",
+						"insertAfter": "<!-- delete property -->"
+					}
 		]
 	}
 ]

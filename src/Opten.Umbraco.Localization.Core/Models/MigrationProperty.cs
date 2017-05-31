@@ -23,5 +23,7 @@ namespace Opten.Umbraco.Localization.Core.Models
 		[JsonProperty("localize")]
 		public bool Localize { get; set; }
 
+		[JsonProperty("contentTypeAlias")]
+		public string ContentTypeAlias { get; set; }
 	}
 }
