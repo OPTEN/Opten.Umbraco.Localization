@@ -1,0 +1,28 @@
+﻿.url-alias-wrapper {
+	position: relative;
+	display: flex;
+	margin-bottom: 10px;
+}
+
+.url-alias-iso-code {
+	padding-right: 10px;
+	display: block;
+	width: 60px;
+	line-height: 30px;
+	text-align: right;
+	color: #a2a1a6;
+	flex: 1 1 60px;
+}
+
+.url-alias-alias {
+	text-align: right;
+	width: auto;
+	font-size: 13px;
+	color: #a2a1a6;
+	line-height: 30px;
+	display: block;
+}
+
+.url-alias-alias-wrapper {
+	top: 0;
+}

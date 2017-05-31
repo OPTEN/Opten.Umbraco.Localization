@@ -3,28 +3,22 @@
 		<div class="umb-property"
 			 ng-repeat="language in $root.languages"
 			 ng-show="urlAlias.loadings.length == 3 && states.isEnabled && states.isPublished && states.hasHostnames == false && urlAlias.getIndex(language.isoCode) >= 0">
-			<div class="control-group umb-control-group">
-				<div class="umb-el-wrap">
-					<label class="control-label" for="urlAlias_{{ language.isoCode }}">
-						{{ language.nativeName }}
-					</label>
+			<div class="url-alias-wrapper">
+				<span class="url-alias-iso-code">{{ language.isoCode }}</span>
 
-					<div class="controls">
-						<input name="urlAlias_{{ language.isoCode }}"
-							   class="umb-editor umb-textstring"
-							   type="text"
-							   ng-keyup="urlAlias.checkAvailability(urlAlias.getIndex(language.isoCode))"
-							   ng-model="urls[urlAlias.getIndex(language.isoCode)].name"
-							   data-val-highlight="urls[urlAlias.getIndex(language.isoCode)].hasError"
-							   style="min-width: 30%;" />
+				<input name="urlAlias_{{ language.isoCode }}"
+					   class="umb-panel-header-name-input"
+					   type="text"
+					   ng-keyup="urlAlias.checkAvailability(urlAlias.getIndex(language.isoCode))"
+					   ng-model="urls[urlAlias.getIndex(language.isoCode)].name"
+					   data-val-highlight="urls[urlAlias.getIndex(language.isoCode)].hasError" />
 
-						<input name="urlAlias_segment_{{ language.isoCode }}"
-							   class="umb-editor umb-textstring"
-							   type="text"
-							   disabled="disabled"
-							   ng-model="urls[urlAlias.getIndex(language.isoCode)].url"
-							   style="min-width: 30%;" />
-					</div>
+				<div class="umb-panel-header-alias url-alias-alias-wrapper">
+
+					<span class="umb-locked-field__input url-alias-alias">
+						<i class="umb-locked-field__lock-icon icon-lock" ng-if="urls[urlAlias.getIndex(language.isoCode)].url.length > 0"></i>
+						{{urls[urlAlias.getIndex(language.isoCode)].url}}
+					</span>
 				</div>
 			</div>
 		</div>
