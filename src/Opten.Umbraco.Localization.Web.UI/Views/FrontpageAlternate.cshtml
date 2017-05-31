@@ -1,0 +1,129 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Opten.Umbraco.Localization.Web.Extensions
+@using Opten.Umbraco.Localization.Web.UI.Controllers
+@{
+	Layout = null;
+
+	string otherLanguage = (Request.GetCurrentUICulture().TwoLetterISOLanguageName == "en") ? "de" : "en";	
+}
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<h2>This page</h2>
+
+<p>My name is: @Model.Content.Name</p>
+<p>My path is: @Model.Content.Url</p>
+<p>
+	Get Localized value (en): @Model.Content.GetLocalizedValue("textstring", "en")<br />
+	Get Localized value (current): @Model.Content.GetLocalizedValue("textstring")<br />
+	Get Localized value (en, recurse): @Model.Content.GetLocalizedValue("textstring", true, "en")<br />
+	Get Localized value (current, recurse): @Model.Content.GetLocalizedValue("textstring", true)<br />
+	Get Localized value (current, nofallback): @(Model.Content.GetLocalizedValue<string>("textstring", recurse: false, withFallback: false))<br/>
+</p>
+<p>
+	From Server: @(Html.Action<TestController>("Dictionary"))<u style="float: right">Should be 'Test DEU' <strong>if</strong> /de</u>
+	<br />
+	From Surface: <span id="dictionarySurfaceResult"></span><u style="float: right">Should be 'Test DEU' <strong>if</strong> /de</u>
+	<br />
+	From API: <span id="dictionaryApiResult"></span><u style="float: right">Should be 'Test DEU' <strong>if</strong> /de</u>
+</p>
+<p>
+	From Server: @(Html.Action<TestController>("ContentUrl"))<u style="float: right">Should be '/de' <strong>if</strong> /de</u>
+	<br />
+	From Surface: <span id="urlSurfaceResult"></span><u style="float: right">Should be '/de' <strong>if</strong> /de</u>
+	<br />
+	From API: <span id="urlApiResult"></span><u style="float: right">Should be '/de' <strong>if</strong> /de</u>
+</p>
+<p>
+	GetLocalizedUrl(): @Model.Content.GetLocalizedUrl()<u style="float: right">Should be '/de' <strong>if</strong> /de</u>
+</p>
+<p>
+	Other URL: @Model.Content.GetLocalizedUrl(otherLanguage)<u style="float: right">Should be '/en' <strong>if</strong> /de</u>
+</p>
+<p>
+	Other plugins
+	<br />
+	RJP.MultiUrlPicker: @Model.Content.GetLocalizedValue("rjp") is null: @(Model.Content.GetLocalizedValue("rjp") == null)
+	@if(Model.Content.GetLocalizedValue("rjp") != null)
+	{
+		<br />
+		@("RJP.MultiUrlPicker: " + Model.Content.GetLocalizedValue<RJP.MultiUrlPicker.Models.MultiUrls>("rjp").First().Url)
+	}
+</p>
+<p>
+	HttpUnauthorized
+	<br />
+	@Html.ActionLink("HttpUnauthorized", "HttpUnauthorized", "Test", new { area = "v1" }, null)
+</p>
+<p>
+	HttpException
+	<br />
+	@Html.ActionLink("HttpException", "HttpException", "Test", new { area = "v1" }, null)
+</p>
+<p>
+	HttpStatusCodeResult
+	<br />
+	@Html.ActionLink("HttpStatusCodeResult", "HttpStatusCodeResult", "Test", new { area = "v1" }, null)
+</p>
+<p>
+	Forms Tests: <a href="/login" title="Forms Test">Goooo</a>
+</p>
+
+<br />
+
+<h2>Sub pages</h2>
+@if(Model.Content.Children.Any())
+{
+	foreach(IPublishedContent content in Model.Content.Children)
+	{
+		<p>
+			.Url: @content.Url
+			<br />
+			.GetLocalizedUrl(en): @content.GetLocalizedUrl("en")
+			<br />
+			.GetLocalizedUrl(de): @content.GetLocalizedUrl("de")
+		</p>
+	}
+}
+
+<script>
+	$(function () {
+
+		$.ajaxSetup({
+			headers: { "accept-language": "@Request.GetCurrentUICulture().Name" }
+		});
+
+		$.ajax({
+			url: "/Umbraco/v1/Test/Dictionary",
+			cache: false,
+			async: true
+		}).done(function (dictionary) {
+			$("#dictionarySurfaceResult").text(dictionary);
+		});
+
+		$.ajax({
+			url: "/Umbraco/v1/Test/ContentUrl?pageId=@Model.Content.Id",
+			cache: false,
+			async: true
+		}).done(function (dictionary) {
+			$("#urlSurfaceResult").text(dictionary);
+		});
+
+		$.ajax({
+			url: "/Umbraco/v1/TestApi/GetDictionary",
+			cache: false,
+			async: true
+		}).done(function (dictionary) {
+			$("#dictionaryApiResult").text(dictionary);
+		});
+
+		$.ajax({
+			url: "/Umbraco/v1/TestApi/GetContentUrl?pageId=@Model.Content.Id",
+			cache: false,
+			async: true
+		}).done(function (dictionary) {
+			$("#urlApiResult").text(dictionary);
+		});
+	})
+</script>
+@*Html.RenderProfiler()*@

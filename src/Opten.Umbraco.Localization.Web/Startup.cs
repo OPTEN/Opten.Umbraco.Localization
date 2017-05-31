@@ -90,6 +90,9 @@ namespace Opten.Umbraco.Localization.Web
 				// - ContentFinderByNotFoundHandlers
 				ContentFinderResolver.Current.InsertTypeBefore<global::Umbraco.Web.Routing.ContentFinderByIdPath, Web.Routing.ContentFinderByUrlAlias>();
 				LogHelper.Info<Startup>("Applied Opten.Umbraco.Localization.Web.Routing.ContentFinderByUrlAlias");
+
+				ContentFinderResolver.Current.InsertTypeBefore<global::Umbraco.Web.Routing.ContentFinderByIdPath, Web.Routing.ContentFinderByUrlAliasAndTemplate>();
+				LogHelper.Info<Startup>("Applied Opten.Umbraco.Localization.Web.Routing.ContentFinderByUrlAliasAndTemplate");
 			}
 		}
 
