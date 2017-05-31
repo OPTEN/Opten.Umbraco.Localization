@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Web.XmlTransform;
+using System;
+using System.Web;
 using System.Xml;
 using umbraco.interfaces;
-using umbraco.cms.businesslogic.packager.standardPackageActions;
-using System.Web;
-using Microsoft.Web.XmlTransform;
 
 namespace Opten.Umbraco.Localization.Web.Install.PackageActions
 {
@@ -17,15 +12,45 @@ namespace Opten.Umbraco.Localization.Web.Install.PackageActions
 	/// <seealso cref="umbraco.interfaces.IPackageAction" />
 	public class TransformXmlFile : IPackageAction
 	{
-
+		/// <summary>
+		/// Alias of this PackageAction
+		/// </summary>
+		/// <returns></returns>
 		public string Alias()
 		{
 			return "Opten.Umbraco.Localization.TransformXmlFile";
 		}
 
+		/// <summary>
+		/// Executes the specified package name.
+		/// </summary>
+		/// <param name="packageName">Name of the package.</param>
+		/// <param name="xmlData">The XML data.</param>
+		/// <returns></returns>
 		public bool Execute(string packageName, XmlNode xmlData)
 		{
 			return Transform(xmlData);
+		}
+
+		/// <summary>
+		/// Sample of the XML.
+		/// </summary>
+		/// <returns></returns>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public XmlNode SampleXml()
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Undoes the specified package name.
+		/// </summary>
+		/// <param name="packageName">Name of the package.</param>
+		/// <param name="xmlData">The XML data.</param>
+		/// <returns></returns>
+		public bool Undo(string packageName, XmlNode xmlData)
+		{
+			return Transform(xmlData, true);
 		}
 
 		private bool Transform(XmlNode xmlData, bool uninstall = false)
@@ -51,16 +76,6 @@ namespace Opten.Umbraco.Localization.Web.Install.PackageActions
 			}
 			return true;
 
-		}
-
-		public XmlNode SampleXml()
-		{
-			return helper.parseStringToXmlNode("<Action runat=\"install\" undo=\"true\" alias=\"Opten.Umbraco.Localization.TransformXmlFile\" file=\"~/web.config\" xdtfile=\"~/app_plugins/OPTEN.Localization/install/web.config\"></Action>");
-		}
-
-		public bool Undo(string packageName, XmlNode xmlData)
-		{
-			return Transform(xmlData, true);
 		}
 	}
 }

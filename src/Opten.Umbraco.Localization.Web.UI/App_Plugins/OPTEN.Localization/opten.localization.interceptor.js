@@ -10,7 +10,7 @@
 				if (response.config.url.toLowerCase().indexOf(config[i].url[j].toLowerCase()) >= 0) {
 					var search = config[i].insertAfter.toLowerCase();
 					var position = response.data.toLowerCase().indexOf(search) + search.length;
-
+					
 					response.data = [response.data.slice(0, position), insertString, response.data.slice(position)].join('');
 				}
 			}

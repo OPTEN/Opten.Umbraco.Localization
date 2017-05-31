@@ -340,12 +340,13 @@
   <ItemGroup>
     <Content Include="App_Data\Umbraco.sdf" />
     <Content Include="App_Plugins\OPTEN.Localization.Migration\dashboards\migration.html" />
-    <Content Include="App_Plugins\OPTEN.Localization\directives\headerLocalizedName.html" />
+    <Content Include="App_Plugins\OPTEN.Localization.Migration\directives\propertyMigration.html" />
+    <Content Include="App_Plugins\OPTEN.Localization.Migration\opten.localization.migration.dashboard.css" />
+    <Content Include="App_Plugins\OPTEN.Localization.Migration\opten.localization.migration.directive.js" />
     <Content Include="App_Plugins\OPTEN.Localization\lang\de-DE.xml" />
     <Content Include="App_Plugins\OPTEN.Localization\lang\en-GB.xml" />
     <Content Include="App_Plugins\OPTEN.Localization\lang\en-US.xml" />
     <Content Include="App_Plugins\OPTEN.Localization.Migration\opten.localization.migration.resource.js" />
-    <Content Include="App_Plugins\OPTEN.Localization\opten.localization.controller.js" />
     <Content Include="App_Plugins\OPTEN.Localization\opten.localization.directive.js" />
     <Content Include="App_Plugins\OPTEN.Localization\opten.localization.interceptor.js" />
     <Content Include="App_Plugins\OPTEN.Localization\opten.localization.resource.js" />
@@ -429,16 +430,6 @@
     <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
     <Content Include="App_Plugins\OPTEN.Localization\install\config\Dashboard.config.install.xdt" />
     <Content Include="App_Plugins\OPTEN.Localization\install\config\Dashboard.config.uninstall.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\de-DE.user.xml.install.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\de-DE.user.xml.uninstall.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\en-GB.user.xml.install.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\en-GB.user.xml.uninstall.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\en-US.user.xml.install.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\en-US.user.xml.uninstall.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\umbraco\de.xml.install.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\umbraco\de.xml.uninstall.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\umbraco\en.xml.install.xdt" />
-    <Content Include="App_Plugins\OPTEN.Localization\install\lang\umbraco\en.xml.uninstall.xdt" />
     <Content Include="App_Plugins\OPTEN.Localization\install\views\web.config.install.xdt" />
     <Content Include="App_Plugins\OPTEN.Localization\install\views\web.config.uninstall.xdt" />
     <Content Include="App_Plugins\OPTEN.Localization\install\web.config.install.xdt" />

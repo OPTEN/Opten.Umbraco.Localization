@@ -35,7 +35,7 @@ Task("Version")
 		CreateDirectory(dest);
 	}
 
-	version = "1.5.3.9"; //GetNextNuGetVersion("Opten.Umbraco.Localization", feedUrl);
+	version = "1.5.5"; //GetNextNuGetVersion("Opten.Umbraco.Localization", feedUrl);
 
 	PatchAssemblyInfo("../src/Opten.Umbraco.Localization.Core/Properties/AssemblyInfo.cs", version);
 	PatchAssemblyInfo("../src/Opten.Umbraco.Localization.Web/Properties/AssemblyInfo.cs", version);
@@ -107,7 +107,7 @@ Task("Build")
 	CopyFileToDirectory(File("../src/Opten.Umbraco.Localization.Web.UI/bin/Opten.Common.dll"), umb + Directory("bin"));
 	CopyFileToDirectory(File("../src/Opten.Umbraco.Localization.Web.UI/bin/Microsoft.Web.XmlTransform.dll"), umb + Directory("bin"));
 	CreateDirectory(umb + Directory("config"));
-	CopyFileToDirectory(File("../src/Opten.Umbraco.Localization.Web.UI/config/opten.localization.config.json"), umb + Directory("bin"));
+	CopyFileToDirectory(File("../src/Opten.Umbraco.Localization.Web.UI/config/opten.localization.config.json"), umb + Directory("config"));
 	CopyFileToDirectory(File("package.xml"), umb);
 });
 
