@@ -270,6 +270,7 @@
     <Compile Include="Routing\ContentFinderByNotFound.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Routing\ContentFinderByUrlAliasAndTemplate.cs" />
     <Compile Include="Routing\LocalizedRouting.cs" />
     <Compile Include="Routing\RoutingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

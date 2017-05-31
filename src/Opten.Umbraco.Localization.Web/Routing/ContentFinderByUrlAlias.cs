@@ -28,7 +28,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		/// <remarks>
 		/// Optionally, can also assign the template or anything else on the document request, although that is not required.
 		/// </remarks>
-		public bool TryFindContent(PublishedContentRequest contentRequest)
+		public virtual bool TryFindContent(PublishedContentRequest contentRequest)
 		{
 			// Following helped to write this code:
 			// ContentFinderByUrlAlias.cs
@@ -62,7 +62,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			return content != null && contentRequest.HasPublishedContent;
 		}
 
-		private IPublishedContent FindContentByAlias(ContextualPublishedContentCache cache, int rootContentId, string alias)
+		protected IPublishedContent FindContentByAlias(ContextualPublishedContentCache cache, int rootContentId, string alias)
 		{
 			Mandate.ParameterNotNullOrEmpty(alias, "alias");
 
