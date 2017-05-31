@@ -55,6 +55,11 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 				}
 			}
 		}
+
+		public void PostProperty(MigrationProperty property)
+		{
+			_migrater.UpdateContentType(property.ContentTypeAlias, property.Alias);
+		}
 	}
 
 #pragma warning restore 1591

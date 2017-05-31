@@ -48,5 +48,14 @@
 				"insertAfter": "{{labelstring}}"
 			}
 		]
+	},
+	{
+		"insertString": "<opten-property-migration property=\"property\" tab=\"tab\" content-type=\"model\"></opten-property-migration>",
+		"modifications": [
+					{
+						"url": "views/components/umb-groups-builder.html",
+						"insertAfter": "<!-- delete property -->"
+					}
+		]
 	}
 ]
