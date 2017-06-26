@@ -1430,6 +1430,16 @@ function contentTypeResource($q, $http, umbRequestHelper, umbDataFormatter) {
                'Failed to retrieve property type aliases');
         },
 
+        getAllStandardFields: function () {
+
+            return umbRequestHelper.resourcePromise(
+               $http.get(
+                   umbRequestHelper.getApiUrl(
+                       "contentTypeApiBaseUrl",
+                       "GetAllStandardFields")),
+               'Failed to retrieve standard fields');
+        },
+
         getPropertyTypeScaffold : function (id) {
               return umbRequestHelper.resourcePromise(
                $http.get(
@@ -2831,7 +2841,7 @@ function logResource($q, $http, umbRequestHelper) {
                        "logApiBaseUrl",
                        "GetCurrentUserLog",
                        [{ logtype: type, sinceDate: since }])),
-               'Failed to retrieve user data for id ' + id);
+               'Failed to retrieve log data for current user of type ' + type + ' since ' + since);
         },
 
         /**
@@ -2862,7 +2872,7 @@ function logResource($q, $http, umbRequestHelper) {
                        "logApiBaseUrl",
                        "GetLog",
                        [{ logtype: type, sinceDate: since }])),
-               'Failed to retrieve user data for id ' + id);
+               'Failed to retrieve log data of type ' + type + ' since ' + since);
         }
     };
 }
@@ -4067,15 +4077,14 @@ angular.module('umbraco.resources').factory('memberTypeResource', memberTypeReso
     **/
 function ourPackageRepositoryResource($q, $http, umbDataFormatter, umbRequestHelper) {
 
-    //var baseurl = "http://localhost:24292/webapi/packages/v1";
-    var baseurl = "https://our.umbraco.org/webapi/packages/v1";
+    var baseurl = Umbraco.Sys.ServerVariables.umbracoUrls.packagesRestApiBaseUrl;
 
     return {
         
         getDetails: function (packageId) {
 
             return umbRequestHelper.resourcePromise(
-               $http.get(baseurl + "/" + packageId),
+               $http.get(baseurl + "/" + packageId + "?version=" + Umbraco.Sys.ServerVariables.application.version),
                'Failed to get package details');
         },
 

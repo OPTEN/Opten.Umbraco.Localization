@@ -50,7 +50,7 @@
 
                         <div class="control-group" ng-class="{error: loginForm.username.$invalid}">
                             <label><localize key="general_username">Username</localize></label>
-                            <input type="text" ng-model="login" name="username" class="-full-width-input" localize="placeholder" placeholder="@placeholders_username" />
+                            <input type="text" ng-model="login" name="username" class="-full-width-input" localize="placeholder" placeholder="@placeholders_usernameHint" />
                         </div>
 
                         <div class="control-group" ng-class="{error: loginForm.password.$invalid}">
@@ -76,7 +76,7 @@
                     <form method="POST" name="requestPasswordResetForm" ng-submit="requestPasswordResetSubmit(email)">
                         <div class="control-group" ng-class="{error: requestPasswordResetForm.email.$invalid}">
                             <label><localize key="general_email">Email</localize></label>
-                            <input type="text" ng-model="email" name="email" class="-full-width-input" localize="placeholder" placeholder="@placeholders_email" />
+                            <input type="email" ng-model="email" name="email" class="-full-width-input" localize="placeholder" placeholder="@placeholders_email" />
                         </div>
                         
                         <div class="control-group" ng-show="requestPasswordResetForm.$invalid">
