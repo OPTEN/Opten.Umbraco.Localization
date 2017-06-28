@@ -1,0 +1,70 @@
+﻿﻿<div>
+	<div ng-controller="OPTEN.Backoffice.HeaderLocalizedName.Controller as urlAlias">
+		<div ng-repeat="language in $root.languages"
+			 ng-show="!nameLocked && hideIcon">
+			<div>
+				<div class="clearfix" style="position: relative;">
+					<label class="umb-label" for="optenHeaderLocalizedName_{{ language.isoCode }}" style="width: 55px; height: 28px; float: left; line-height: 31px;">
+						{{ language.isoCode }}
+					</label>
+
+					<ng-form name="optenHeaderLocalizedNameForm_{{ language.isoCode }}"
+							 style="width: calc(100% - 70px); float: right;">
+						<input name="optenHeaderLocalizedName_{{ language.isoCode }}"
+							   type="text"
+							   class="umb-panel-header-name-input"
+							   localize="placeholder"
+							   placeholder="@placeholders_entername"
+							   ng-keyup="urlAlias.checkAvailability(urlAlias.getIndex(language.isoCode))"
+							   ng-model="urls[urlAlias.getIndex(language.isoCode)].name"
+							   data-val-highlight="urls[urlAlias.getIndex(language.isoCode)].hasError"
+							   ng-class="{'name-is-empty': $parent.name===null || $parent.name===''}"
+							   required />
+					</ng-form>
+
+					<div class="umb-panel-header-name" ng-if="nameLocked">{{ name }}</div>
+
+
+					<umb-generate-alias class="umb-panel-header-alias"
+										ng-if="hideAlias"
+										alias="urls[urlAlias.getIndex(language.isoCode)].url"
+										alias-from="urls[urlAlias.getIndex(language.isoCode)].name"
+										enable-lock="true"
+										server-validation-field="Alias"></umb-generate-alias>
+
+					<!--<input name="urlAlias_{{ language.isoCode }}"
+							class="umb-editor umb-textstring"
+							type="text"
+							ng-keyup="urlAlias.checkAvailability(urlAlias.getIndex(language.isoCode))"
+							ng-model="urls[urlAlias.getIndex(language.isoCode)].name"
+							data-val-highlight="urls[urlAlias.getIndex(language.isoCode)].hasError"
+							style="min-width: 30%;" />
+
+					<input name="urlAlias_segment_{{ language.isoCode }}"
+							class="umb-editor umb-textstring"
+							type="text"
+							disabled="disabled"
+							ng-model="urls[urlAlias.getIndex(language.isoCode)].url"
+							style="min-width: 30%;" />-->
+				</div>
+			</div>
+		</div>
+
+		<style ng-if="!nameLocked && hideIcon">
+			.optenHeaderLocalizedName-panel-header {
+				padding-top: 22px;
+				padding-bottom: 22px;
+				height: auto;
+			}
+
+				.optenHeaderLocalizedName-panel-header .umb-panel-header-content-wrapper {
+					height: auto;
+				}
+
+				.optenHeaderLocalizedName-panel-header .umb-panel-header-left-side.-top-position {
+					padding-bottom: 20px;
+					top: 0;
+				}
+		</style>
+	</div>
+</div>

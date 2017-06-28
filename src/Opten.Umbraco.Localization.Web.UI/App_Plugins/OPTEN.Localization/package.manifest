@@ -3,6 +3,7 @@
 		"~/App_Plugins/OPTEN.Localization/opten.localization.js?v=ASSEMBLY_VERSION",
 		"~/App_Plugins/OPTEN.Localization/opten.localization.interceptor.js?v=ASSEMBLY_VERSION",
 		"~/App_Plugins/OPTEN.Localization/opten.localization.resource.js?v=ASSEMBLY_VERSION",
-		"~/App_Plugins/OPTEN.Localization/opten.localization.directive.js?v=ASSEMBLY_VERSION"
+		"~/App_Plugins/OPTEN.Localization/opten.localization.directive.js?v=ASSEMBLY_VERSION",
+		"~/App_Plugins/OPTEN.Localization/opten.localization.controller.js?v=ASSEMBLY_VERSION"
 	]
 }
