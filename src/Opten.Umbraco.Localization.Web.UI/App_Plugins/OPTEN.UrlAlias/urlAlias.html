@@ -1,25 +1,23 @@
 ﻿<div ng-controller="OPTEN.Backoffice.UrlAlias.Controller as urlAlias">
 	<ng-form name="urlAliasForm">
+		
 		<div class="umb-property"
 			 ng-repeat="language in $root.languages"
+			 opten-language-show="'_' + language.twoLetterISOCode"
 			 ng-show="urlAlias.loadings.length == 3 && states.isEnabled && states.isPublished && states.hasHostnames == false && urlAlias.getIndex(language.isoCode) >= 0">
 			<div class="url-alias-wrapper">
-				<span class="url-alias-iso-code">{{ language.isoCode }}</span>
-
+				<span class="url-alias-iso-code">{{ language.nativeName.split("(")[0].trim() }}</span>
 				<input name="urlAlias_{{ language.isoCode }}"
 					   class="umb-panel-header-name-input"
 					   type="text"
-					   ng-keyup="urlAlias.checkAvailability(urlAlias.getIndex(language.isoCode))"
 					   ng-model="urls[urlAlias.getIndex(language.isoCode)].name"
 					   data-val-highlight="urls[urlAlias.getIndex(language.isoCode)].hasError" />
 
-				<div class="umb-panel-header-alias url-alias-alias-wrapper">
-
-					<span class="umb-locked-field__input url-alias-alias">
-						<i class="umb-locked-field__lock-icon icon-lock" ng-if="urls[urlAlias.getIndex(language.isoCode)].url.length > 0"></i>
-						{{urls[urlAlias.getIndex(language.isoCode)].url}}
-					</span>
-				</div>
+					<opten-generate-url class="umb-panel-header-alias url-alias-alias-wrapper"
+										alias="urls[urlAlias.getIndex(language.isoCode)].url"
+										alias-from="urls[urlAlias.getIndex(language.isoCode)].name"
+										enable-lock="true"
+										server-validation-field="Alias"></opten-generate-url>
 			</div>
 		</div>
 	</ng-form>

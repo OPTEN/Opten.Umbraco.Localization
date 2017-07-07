@@ -351,6 +351,7 @@
     <Content Include="App_Plugins\OPTEN.Localization\opten.localization.interceptor.js" />
     <Content Include="App_Plugins\OPTEN.Localization\opten.localization.resource.js" />
     <Content Include="App_Plugins\OPTEN.Localization\package.manifest" />
+    <Content Include="App_Plugins\OPTEN.UrlAlias\opten-generate-url.html" />
     <Content Include="App_Plugins\OPTEN.UrlAlias\opten.urlalias.css" />
     <Content Include="App_Plugins\OPTEN.UrlAlias\package.manifest" />
     <Content Include="Web.config">
