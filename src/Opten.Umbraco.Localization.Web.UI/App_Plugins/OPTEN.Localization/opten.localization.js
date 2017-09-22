@@ -69,21 +69,9 @@
 
 				languageResource.getSelectedLanguages().then(function (languages) {
 					if (languages && languages.length) {
-						// if it's not the same amount we select them otherwise it's 'all'
-						if (languages.length == $rootScope.languages.length) {
-							$rootScope.selectedLanguages = [];
-						}
-						else {
-							var selected = [];
-							angular.forEach(languages, function (language) {
-								selected.push(language.isoCode);
+							$rootScope.selectedLanguages = languages.map(function (l) {
+								return l.isoCode;
 							});
-							$rootScope.selectedLanguages = selected;
-						}
-					}
-					else {
-						// if no languages yet set default
-						$rootScope.selectedLanguages = $rootScope.defaultLanguages;
 					}
 				});
 			};

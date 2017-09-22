@@ -1,6 +1,7 @@
 ﻿<div>
-    <ul>
+    <ul ui-sortable ng-model="prevalues" class="unstyled list-icons">
         <li ng-repeat="prevalue in prevalues">
+            <i class="icon icon-navigation handle"></i>
             {{prevalue}}
             <a ng-click="deletePrevalue($index)" title="Delete"><i class="icon-trash"></i></a>
         </li>
