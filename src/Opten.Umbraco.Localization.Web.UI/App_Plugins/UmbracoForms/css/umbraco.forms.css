@@ -2,9 +2,6 @@ input.umb-forms__hacky-hidden-field {
   opacity: 0;
   cursor: default;
 }
-.umb-forms .umb-panel-header .umb-sub-views-nav {
-  margin-top: 25px;
-}
 .control-row.-margin-bottom {
   margin-bottom: 10px;
 }
@@ -49,30 +46,30 @@ select.-full-width {
   align-items: center;
 }
 .umb-form-prevalue small {
-  color: #555555;
+  color: #817f85;
 }
 .umb-forms-designer .inline-editor:hover,
 .umb-forms-designer .inline-editor:focus {
-  border-bottom-color: #2e8aea;
+  border-bottom-color: #03bfb3;
 }
 .umb-forms-designer .inline-editor::-webkit-input-placeholder {
-  color: #909090;
+  color: #a2a1a6;
 }
 .umb-forms-designer .inline-editor.page-name {
-  font-size: 26px;
+  font-size: 27px;
   display: block !important;
   height: 35px;
   max-width: initial;
   width: 100%;
 }
 .umb-forms-designer .inline-editor.field-tooltip {
-  color: #999;
+  color: #a2a1a6;
   padding: 1px;
   height: 20px;
   min-height: 20px;
   margin: 0;
-  font-size: 12px;
-  color: #ccc;
+  font-size: 13px;
+  color: #d8d7d9;
 }
 .umb-forms-designer .inline-editor.field-name {
   height: 20px;
@@ -139,23 +136,23 @@ select.-full-width {
 }
 .umb-forms-designer .umb-forms-pager a {
   text-decoration: none;
-  color: #d9d9d9;
+  color: #d8d7d9;
 }
 .umb-forms-designer .umb-forms-pager li {
   display: inline-block;
   height: 60px;
   padding: 10px;
-  color: #d9d9d9;
+  color: #d8d7d9;
   overflow: hidden;
 }
 .umb-forms-designer .umb-forms-pager i {
   font-size: 40px;
   line-height: 45px;
   display: block;
-  color: #d9d9d9;
+  color: #d8d7d9;
 }
 .umb-forms-designer .umb-forms-pager li.current {
-  background: #f8f8f8;
+  background: #f3f3f5;
 }
 .umb-forms-buttons {
   opacity: 0.9;
@@ -166,14 +163,14 @@ select.-full-width {
   height: 70px;
 }
 .umb-forms-hidden {
-  border: 1px dashed #efefef;
-  color: #efefef;
+  border: 1px dashed #e9e9eb;
+  color: #d8d7d9;
   padding: 10px;
   text-align: center;
 }
 .umb-forms-designer .checkbox {
   padding-left: 0px;
-  font-size: 13px;
+  font-size: 14px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -195,11 +192,12 @@ select.-full-width {
 .umb-forms__member-edit {
   margin-top: -25px;
   margin-left: auto;
-  color: #2e8aea;
-  font-size: 13px;
+  color: #00aea2;
+  font-size: 14px;
 }
 .umb-forms__member-edit:hover {
-  color: #0064cd;
+  color: #00aea2;
+  text-decoration: underline;
 }
 .form-search {
   margin-right: 5px;
@@ -224,18 +222,18 @@ select.-full-width {
   width: 35px;
   top: auto;
   z-index: 666;
-  border-right: 1px solid #d9d9d9 !important;
+  border-right: 1px solid #d8d7d9 !important;
 }
 .entries-table-wrapper thead .header-col {
-  background: #f8f8f8;
+  background: #f3f3f5;
 }
 .entries-table-wrapper tbody > tr:nth-child(odd) > td {
-  background: white;
+  background: #ffffff;
 }
 .umb-forms-rendertype-file .file {
   text-align: center;
   text-decoration: none;
-  color: #555555;
+  color: #817f85;
   padding: 20px;
 }
 .umb-forms-rendertype-file .thumbnail {
@@ -244,7 +242,7 @@ select.-full-width {
 .umb-forms-rendertype-file .icon {
   font-size: 80px;
   line-height: 90px;
-  color: #d9d9d9;
+  color: #d8d7d9;
   display: block;
 }
 .umb-forms-entries-actions .arrow {
@@ -254,8 +252,8 @@ select.-full-width {
   padding: 0 5px;
 }
 .umb-forms-entries .date-range-filter span {
-  color: #555555;
-  font-size: 12px;
+  color: #817f85;
+  font-size: 13px;
 }
 .umb-forms-entries label {
   display: inline-block;
@@ -266,7 +264,7 @@ select.-full-width {
   margin-top: 60px;
 }
 .-faded {
-  color: #aeaeae;
+  color: #817f85;
 }
 .umb-forms-entry {
   display: flex;
@@ -279,7 +277,7 @@ select.-full-width {
 }
 .umb-forms-entry-sidebar {
   flex: 0 0 300px;
-  background: whitesmoke;
+  background: #f3f3f5;
   padding: 30px;
   box-sizing: border-box;
 }
@@ -303,7 +301,7 @@ select.-full-width {
 .umb-forms-title .btn {
   margin-top: 0;
   padding: 0;
-  font-size: 13px;
+  font-size: 14px;
   opacity: .6;
   font-weight: bold;
 }
@@ -328,14 +326,14 @@ select.-full-width {
   min-width: 0;
 }
 .umb-forms-card {
-  background: #f8f8f8;
+  background: #f3f3f5;
   display: block;
   transition: all 100ms ease;
-  color: #343434;
+  color: #303033;
   text-align: center;
 }
 .umb-forms-card:hover {
-  background: #d9d9d9;
+  background: #e9e9eb;
   transition: all 100ms ease;
   color: #000000;
 }
@@ -366,12 +364,12 @@ select.-full-width {
   padding: 0 0 20px;
 }
 .umb-forms-card .card-body small {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 12px;
   display: block;
 }
 .umb-forms-card .card-body .icon {
-  color: #2e8aea;
+  color: #00aea2;
   font-size: 14px;
 }
 .umb-db-form-action {
@@ -386,33 +384,33 @@ select.-full-width {
   padding: 15px 50px;
   font-size: 16px;
   border: none;
-  background: #2e8aea;
-  color: #fff;
+  background: #35c786;
+  color: #ffffff;
 }
 .btn.btn-install:hover {
-  background: #2b8ee3;
+  background: #1fb572;
 }
 .btn.btn-blue {
   padding: 15px 30px;
   font-size: 14px;
   border: none;
   background: #2e8aea;
-  color: #fff;
+  color: #ffffff;
   text-shadow: none;
   transition: background 200ms ease;
 }
 .btn.btn-blue:hover {
-  background: #2b8ee3;
+  background: #0064cd;
 }
 .btn.btn-tiny {
   padding: 0;
   margin-top: 10px;
   font-size: 12px;
-  color: #838584;
+  color: #817f85;
   text-align: left;
 }
 .btn.btn-tiny:hover {
-  color: #000;
+  color: #000000;
 }
 .umb-forms-install-overlay {
   position: absolute;
@@ -421,7 +419,7 @@ select.-full-width {
   right: 0;
   left: 0;
   background: rgba(255, 255, 255, 0.95);
-  color: #000;
+  color: #000000;
   padding: 100px 40px 40px;
   text-align: center;
 }
@@ -434,7 +432,7 @@ select.-full-width {
   margin: 0 auto 30px;
   width: 90px;
   height: 90px;
-  border: 1px solid #ececec;
+  border: 1px solid #e9e9eb;
   border-radius: 50%;
   padding: 10px;
 }
@@ -469,14 +467,14 @@ select.-full-width {
 .umb-forms-install-overlay > div p {
   font-size: 15px;
   line-height: 1.5;
-  color: #3e3e3e;
+  color: #303033;
 }
 .umb-forms-install-overlay > div .divider {
   width: 1px;
   height: 60px;
   padding: 10px 0;
   margin: 15px auto;
-  background: #ececec;
+  background: #d8d7d9;
 }
 .umb-forms-install-overlay > div small {
   font-size: 13px;
@@ -518,8 +516,8 @@ IFRAME {
   overflow: hidden;
 }
 .usky-grid .ui-sortable-helper {
-  border: dashed 1px #000 !important;
-  background: #ccc;
+  border: dashed 1px #000000 !important;
+  background: #d8d7d9;
   opacity: 0.4;
   height: 80px !important;
   width: 160px !important;
@@ -533,7 +531,7 @@ IFRAME {
 .usky-grid .ui-sortable-helper * {
   border: none !important;
   background: none !important;
-  color: #999 !important;
+  color: #a2a1a6 !important;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -541,17 +539,17 @@ IFRAME {
   display: none !important;
 }
 .usky-grid .ui-sortable-placeholder {
-  border: 2px dashed #d9d9d9;
+  border: 2px dashed #d8d7d9;
   padding: 20px;
   font-family: icomoon;
   text-align: center;
   font-size: 85px;
   line-height: 65px;
-  color: #f8f8f8;
+  color: #f3f3f5;
   vertical-align: middle;
 }
 .usky-grid .ui-sortable-placeholder:hover {
-  border-color: #555555;
+  border-color: #817f85;
 }
 .usky-grid .ui-sortable-placeholder:before {
   content: "\e1bd";
@@ -570,14 +568,14 @@ IFRAME {
   width: 100%;
   display: inline-block;
   vertical-align: top;
-  border-right: 1px dashed rgba(182, 182, 182, 0);
+  border-right: 1px dashed transparent;
   box-sizing: border-box;
 }
 .usky-grid .tb:hover .td {
-  border-right: 1px dashed rgba(182, 182, 182, 0.3);
+  border-right: 1px dashed #e9e9eb;
 }
 .usky-grid .td.last {
-  border-right: 1px dashed rgba(182, 182, 182, 0) !important;
+  border-right: 1px dashed transparent !important;
 }
 .usky-grid .middle {
   text-align: center;
@@ -590,15 +588,14 @@ IFRAME {
 }
 .usky-grid .usky-row {
   position: relative;
-  border: 1px dashed rgba(0, 0, 0, 0);
+  border: 1px dashed transparent;
 }
 .usky-grid .tb:hover .usky-row {
-  border-bottom: 1px dashed rgba(182, 182, 182, 0.3);
+  border-bottom: 1px dashed #e9e9eb;
 }
-/*.usky-grid .selectedRow {     border: 1px solid rgba(182, 182, 182, 0.3);}*/
 .usky-grid .usky-cell {
   position: relative;
-  border: 1px dashed rgba(0, 0, 0, 0);
+  border: 1px dashed transparent;
 }
 .usky-grid .cell-tools {
   transition: all 0.2s ease-in-out;
@@ -635,8 +632,8 @@ IFRAME {
 }
 .usky-grid .cell-tools-remove .iconBox:hover,
 .usky-grid .cell-tools-remove .iconBox:hover * {
-  background: #9d261d !important;
-  border-color: #9d261d !important;
+  background: #fe3e39 !important;
+  border-color: #fe3e39 !important;
 }
 .usky-grid .cell-tools-move {
   display: inline-block;
@@ -652,31 +649,22 @@ IFRAME {
   right: 5px;
 }
 .usky-grid .usky-control {
-  /*transition: all .20s ease-in-out;    -moz-transition: all .20s ease-in-out;    -webkit-transition: all .20s ease-in-out;*/
   position: relative;
   display: block;
-  /*    border: 1px dashed rgba(255, 0, 0, .0);    border-bottom-width: 1px;    */
   -webkit-background-clip: padding-box;
   /* for Safari */
   background-clip: padding-box;
   /* for IE9+, Firefox 4+, Opera, Chrome */
   margin: 10px 0 0 0;
 }
-.usky-grid .usky-control:hover {
-  /*border: 1px solid rgba(182, 182, 182, 0.3);*/
-}
-.usky-grid .usky-control-placeholder:hover {
-  /*border: 1px solid rgba(182, 182, 182, 0);*/
-  /*border-bottom:1px solid rgba(182, 182, 182, 0.0) !important;*/
-}
 .usky-grid .warnhighlight {
-  border: 1px dashed #9d261d !important;
+  border: 1px dashed #fe3e39 !important;
 }
 .usky-grid .infohighlight {
-  border: 1px dashed #2e8aea !important;
+  border: 1px dashed #03bfb3 !important;
 }
 .usky-grid .defaulthighlight {
-  border: 1px dashed #d9d9d9 !important;
+  border: 1px dashed #d8d7d9 !important;
 }
 .usky-grid .usky-control-inner {
   min-height: 60px;
@@ -693,24 +681,24 @@ IFRAME {
   opacity: 0.7;
   text-align: left;
   padding: 5px;
-  border: 1px solid rgba(182, 182, 182, 0.3);
+  border: 1px solid #e9e9eb;
   height: 20px;
 }
 .usky-grid .usky-control-placeholder:hover .placeholder {
-  border: 1px solid rgba(182, 182, 182, 0.8);
+  border: 1px solid #bbbabf;
 }
 .usky-grid .usky-editor-placeholder {
   min-height: 65px;
   padding: 20px;
   padding-bottom: 30px;
   position: relative;
-  background-color: white;
-  border: 4px dashed #d9d9d9;
+  background-color: #ffffff;
+  border: 4px dashed #d8d7d9;
   text-align: center;
   text-align: -moz-center;
 }
 .usky-grid .usky-editor-placeholder i {
-  color: #d9d9d9;
+  color: #d8d7d9;
   font-size: 85px;
   line-height: 85px;
   display: block;
@@ -720,10 +708,10 @@ IFRAME {
   display: block;
   overflow: hidden;
   border: none;
-  background: #fff;
+  background: #ffffff;
   outline: none;
   resize: none;
-  color: #555555;
+  color: #817f85;
 }
 .usky-grid .usky-cell-rte textarea {
   display: none !important;
@@ -732,7 +720,7 @@ IFRAME {
   display: block;
   overflow: hidden;
   border: none;
-  background: #fff;
+  background: #ffffff;
   outline: none;
   width: 98%;
   resize: none;
@@ -747,31 +735,28 @@ IFRAME {
   cursor: pointer;
   border-radius: 200px;
   background: #ffffff;
-  border: 1px solid #b6b6b6;
+  border: 1px solid #bbbabf;
   margin: 2px;
 }
 .usky-grid .iconBox:hover,
 .usky-grid .iconBox:hover * {
-  background: #2e8aea !important;
-  color: white !important;
-  border-color: #2e8aea !important;
+  background: #03bfb3 !important;
+  color: #ffffff !important;
+  border-color: #03bfb3 !important;
 }
 .usky-grid .iconBox a:hover {
   text-decoration: none;
-  color: white !important;
+  color: #ffffff !important;
 }
 .usky-grid .iconBox.selected {
   -webkit-appearance: none;
-  background-image: -moz-linear-gradient(top, #e6e6e6, #bfbfbf);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e6e6e6), to(#bfbfbf));
-  background-image: -webkit-linear-gradient(top, #e6e6e6, #bfbfbf);
-  background-image: -o-linear-gradient(top, #e6e6e6, #bfbfbf);
-  background-image: linear-gradient(to bottom, #e6e6e6, #bfbfbf);
+  background-image: -moz-linear-gradient(top, #d8d7d9, #bbbabf);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d8d7d9), to(#bbbabf));
+  background-image: -webkit-linear-gradient(top, #d8d7d9, #bbbabf);
+  background-image: -o-linear-gradient(top, #d8d7d9, #bbbabf);
+  background-image: linear-gradient(to bottom, #d8d7d9, #bbbabf);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe6e6e6', endColorstr='#ffbfbfbf', GradientType=0);
-  zoom: 1;
-  border-color: #bfbfbf #bfbfbf #999;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-color: #bbbabf #bbbabf #a2a1a6;
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -782,7 +767,7 @@ IFRAME {
 }
 .usky-grid .iconBox i {
   font-size: 16px !important;
-  color: #5F5F5F;
+  color: #515054;
 }
 .usky-grid ul {
   display: inline-block;
@@ -792,8 +777,8 @@ IFRAME {
   text-align: center;
 }
 .usky-grid .help-text {
-  background: #f8f8f8;
-  color: #555555;
+  background: #f3f3f5;
+  color: #817f85;
   font-size: 14px;
   padding: 10px 20px 10px 20px;
   border-radius: 15px;
@@ -814,11 +799,10 @@ IFRAME {
   line-height: inherit;
 }
 .usky-grid .mce-toolbar {
-  border: 1px solid rgba(207, 207, 207, 0.7);
-  background-color: #fafafa;
+  border: 1px solid #d8d7d9;
+  background-color: #ffffff;
   z-index: 100;
   display: inline-block;
-  float: left;
   padding: -1px;
   position: absolute;
   margin: -1px -1px 0 -1px;
@@ -834,7 +818,7 @@ IFRAME {
   background: transparent !important;
 }
 .usky-grid .mce-floatpanel {
-  background-color: #F7F7F7 !important;
+  background-color: #f3f3f5 !important;
 }
 .usky-grid .fullSizeImage {
   width: 100%;
@@ -851,10 +835,10 @@ IFRAME {
   width: 40px;
 }
 .usky-grid .boxWidth label {
-  font-size: 10px;
+  font-size: 11px;
   padding: 0;
   margin: 5px 5px 0 0;
-  color: #808080;
+  color: #817f85;
 }
 /**************************************************************************************************/
 /* Margin control */
@@ -894,14 +878,14 @@ IFRAME {
   margin: 20px;
 }
 .usky-grid .uSky-templates-template a.tb:hover {
-  border: 5px solid #2e8aea;
+  border: 5px solid #03bfb3;
 }
 .usky-grid .uSky-templates-template .tb {
   width: 100%;
   height: 150px;
   padding: 10px;
-  background-color: #f8f8f8;
-  border: 5px solid #d9d9d9;
+  background-color: #f3f3f5;
+  border: 5px solid #d8d7d9;
   cursor: pointer;
   position: relative;
 }
@@ -911,15 +895,15 @@ IFRAME {
 }
 .usky-grid .uSky-templates-template .tb .uSky-templates-column {
   height: 100%;
-  border: 1px dashed #d9d9d9;
+  border: 1px dashed #d8d7d9;
   border-right: none;
 }
 .usky-grid .uSky-templates-template .tb .uSky-templates-column.last {
-  border-right: 1px dashed #d9d9d9 !important;
+  border-right: 1px dashed #d8d7d9 !important;
 }
 .usky-grid a.uSky-templates-column:hover,
 .usky-grid a.uSky-templates-column.selected {
-  background-color: #2e8aea;
+  background-color: #03bfb3;
 }
 /**************************************************************************************************/
 /* template column */
@@ -929,17 +913,17 @@ IFRAME {
   vertical-align: middle;
 }
 .usky-grid .usky-templates-columns .td i {
-  color: #555555;
+  color: #817f85;
   opacity: 0.8;
 }
 .usky-grid .mainTbpt:hover {
-  border-color: #2e8aea;
+  border-color: #03bfb3;
 }
 .usky-grid .mainTbpt {
   cursor: pointer;
   border-collapse: separate;
   min-height: 35px;
-  border: 2px solid #d9d9d9;
+  border: 2px solid #d8d7d9;
   margin: 0px;
   padding: 1px;
 }
@@ -953,7 +937,7 @@ IFRAME {
   height: 11px;
   margin: 0;
   overflow: hidden;
-  border: 1px dashed #d9d9d9;
+  border: 1px dashed #bbbabf;
   display: block;
   float: left;
 }
@@ -965,7 +949,7 @@ IFRAME {
   box-sizing: border-box;
   margin: 0 1px;
   height: 10px;
-  background: #d9d9d9;
+  background: #d8d7d9;
 }
 /**************************************************************************************************/
 /* overlay */
@@ -975,10 +959,10 @@ IFRAME {
   width: 360px;
   height: 380px;
   overflow: auto;
-  border: 1px solid #ccc;
+  border: 1px solid #d8d7d9;
   margin-top: -270px;
   margin-left: -150px;
-  background: white;
+  background: #ffffff;
   padding: 7px;
   top: 0;
   left: 50%;
@@ -988,8 +972,8 @@ IFRAME {
   box-shadow: 3px 3px 12px 0px rgba(50, 50, 50, 0.45);
 }
 .usky-grid .cell-tools-menu h5 {
-  border-bottom: 1px solid #d9d9d9;
-  color: #999;
+  border-bottom: 1px solid #d8d7d9;
+  color: #a2a1a6;
   padding: 10px;
   margin-top: 0;
 }
@@ -1005,21 +989,21 @@ IFRAME {
   margin: 5px;
   padding: 5px;
   overflow: hidden;
-  font-size: 11px;
+  font-size: 12px;
 }
 .usky-grid .elements li:hover,
 .usky-grid .elements li:hover * {
-  background: #2e8aea;
-  color: white;
+  background: #03bfb3;
+  color: #ffffff;
 }
 .usky-grid .elements a {
-  color: #222;
+  color: #1e1c1c;
   text-decoration: none;
 }
 .usky-grid .elements i {
   font-size: 30px;
   line-height: 50px;
-  color: #999;
+  color: #a2a1a6;
   display: block;
 }
 /**************************************************************************************************/
@@ -1048,7 +1032,7 @@ IFRAME {
   overflow: hidden;
 }
 .usky-grid-configuration .uSky-templates .uSky-templates-template span {
-  background: #d9d9d9;
+  background: #d8d7d9;
   display: inline-block;
 }
 .usky-grid-configuration .uSky-templates .uSky-templates-template .tb:hover {
@@ -1058,8 +1042,8 @@ IFRAME {
   display: block;
   float: left;
   margin-left: -1px;
-  border: 1px white solid !important;
-  background: #f8f8f8;
+  border: 1px #ffffff solid !important;
+  background: #f3f3f5;
 }
 .usky-grid-configuration .uSky-templates-column.last {
   margin-right: -1px;
@@ -1068,9 +1052,9 @@ IFRAME {
   text-align: center;
   font-size: 20px;
   line-height: 70px;
-  color: #ccc;
+  color: #d8d7d9;
   text-decoration: none;
-  background: white;
+  background: #ffffff;
 }
 .usky-grid-configuration .mainTdpt {
   height: initial;
@@ -1101,7 +1085,7 @@ IFRAME {
   margin-bottom: 20px;
 }
 .umb-forms__page {
-  background: whitesmoke;
+  background: #f3f3f5;
   padding: 20px 15px;
   margin-top: 30px;
   margin-bottom: 30px;
@@ -1114,8 +1098,8 @@ IFRAME {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  border: 2px solid #d9d9d9;
+  background: #ffffff;
+  border: 1px solid #bbbabf;
   margin-right: 5px;
 }
 .umb-forms__page-header {
@@ -1124,7 +1108,7 @@ IFRAME {
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
 }
 .umb-forms__page-footer {
@@ -1151,19 +1135,18 @@ input.umb-forms__page-name {
   border: none;
   color: #000000;
   background-color: transparent;
-  font-weight: bold;
   margin: 0 0 0 3px;
   padding: 0;
 }
 input.umb-forms__page-name::-webkit-input-placeholder {
-  color: #555555;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #68676b;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .umb-forms__pagination {
   opacity: .5;
 }
 .umb-forms__actions {
-  color: #555555;
+  color: #817f85;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -1173,7 +1156,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 .umb-forms__actions a {
   margin-right: 5px;
   position: relative;
-  color: #555555;
+  color: #68676b;
   font-size: 16px;
 }
 .umb-forms__actions a:hover {
@@ -1187,7 +1170,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   color: #ffffff;
 }
 .umb-forms__container {
-  background: white;
+  background: #ffffff;
   position: relative;
 }
 .umb-forms__fieldset {
@@ -1198,8 +1181,8 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   display: flex;
   padding: 5px 10px;
   border: 2px solid transparent;
-  border-bottom: 2px solid #0064cd;
-  background: #2e8aea;
+  background: #00aea2;
+  align-items: center;
 }
 .umb-forms__fieldset-info {
   display: flex;
@@ -1210,40 +1193,37 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   border: none;
   background-color: transparent;
   color: #ffffff;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 13px;
   padding: 0;
 }
 .umb-forms__fieldset-name:focus {
   outline: none;
 }
 .umb-forms__fieldset-name::-webkit-input-placeholder {
-  color: #ffffff;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  opacity: .7;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #c0f0ed;
 }
 .umb-forms__fieldset-name::-moz-placeholder {
-  color: #ffffff;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  opacity: .7;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #c0f0ed;
 }
 .umb-forms__field {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #ececec;
+  border-bottom: 1px solid #e9e9eb;
 }
 .umb-forms__page-placeholder,
 .umb-forms__fieldset-placeholder,
 .umb-forms__field-placeholder {
-  background: rgba(0, 0, 0, 0.1);
+  background: #e9e9eb;
 }
 .umb-forms__field-condition {
   padding-top: 3px;
   padding-right: 10px;
   padding-bottom: 3px;
   padding-left: 10px;
-  background-color: rgba(0, 100, 205, 0.04);
-  font-size: 11px;
+  background-color: #f3f3f5;
+  font-size: 13px;
   font-weight: bold;
   width: 100%;
   box-sizing: border-box;
@@ -1297,7 +1277,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   border-bottom: none;
 }
 .umb-forms__field-mandatory {
-  color: #F54033;
+  color: #f02e28;
   position: absolute;
   transform: translate(-4px, -4px);
 }
@@ -1314,7 +1294,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 }
 .umb-forms__field-description {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   margin-top: -10px;
 }
 .umb-forms__field-info {
@@ -1342,13 +1322,14 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 }
 .umb-forms__containers {
   display: flex;
-  background: #ececec;
+  background: #e9e9eb;
 }
 .umb-forms__container {
   flex: 1 1 100%;
   margin-left: 1px;
   margin-right: 1px;
-  border: 2px solid #ececec;
+  border: 2px solid #e9e9eb;
+  border-top: none;
   display: flex;
   flex-direction: column;
 }
@@ -1366,7 +1347,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   flex: 1 1 auto;
 }
 .umb-forms__fields.-empty {
-  min-height: 150px;
+  min-height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1379,8 +1360,8 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   align-items: center;
 }
 .umb-forms__fieldset-condition {
-  font-size: 11px;
-  color: #fff;
+  font-size: 12px;
+  color: #ffffff;
   flex: 0 0 400px;
   margin-left: 10px;
   text-overflow: ellipsis;
@@ -1414,7 +1395,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   height: 70px;
   box-sizing: border-box;
   padding: 2px;
-  border: 2px solid #ececec;
+  border: 2px solid #e9e9eb;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -1422,15 +1403,15 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 }
 .umb-forms__columns-template__column {
   flex: 1 1 100%;
-  background: #d9d9d9;
-  border: 2px solid white;
+  background: #d8d7d9;
+  border: 2px solid #ffffff;
   display: flex;
 }
 .umb-forms__columns-template__column:hover {
-  background: #2e8aea;
+  background: #03bfb3;
 }
 .umb-forms__columns-template__column:only-child:hover {
-  background: #d9d9d9;
+  background: #d8d7d9;
 }
 .umb-forms__columns-template__column:hover .umb-forms__columns-template__remove {
   display: block;
@@ -1438,13 +1419,13 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 .umb-forms__columns-template__remove {
   display: none;
   margin-left: auto;
-  color: white;
+  color: #ffffff;
   opacity: .7;
   margin-right: 3px;
 }
 .umb-forms__columns-template__remove:hover {
   opacity: 1;
-  color: white;
+  color: #ffffff;
   text-decoration: none;
 }
 @font-face {
@@ -1516,7 +1497,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   content: "\e60f";
 }
 .inactive {
-  color: #d9d9d9;
+  color: #d8d7d9;
 }
 .umb-forms-workflow-illustration {
   width: 70px;
@@ -1524,13 +1505,13 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #d9d9d9;
+  border: 2px dashed #d8d7d9;
   background: #ffffff;
   font-size: 50px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 40px;
-  color: #d9d9d9;
+  color: #d8d7d9;
 }
 .umb-forms-workflows {
   margin-top: 20px;
@@ -1538,7 +1519,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 }
 .umb-forms-workflows__line {
   width: 2px;
-  background-color: #ebebeb;
+  background-color: #e9e9eb;
   position: absolute;
   top: 15px;
   bottom: 0;
@@ -1548,19 +1529,19 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   min-height: 10px;
 }
 .umb-forms-workflow-start {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
-  color: #d9d9d9;
+  color: #d8d7d9;
   margin-bottom: 20px;
   margin-left: 73px;
 }
 .umb-forms-add-workflow {
   font-weight: bold;
-  font-size: 13px;
-  color: #2e8aea;
+  font-size: 14px;
+  color: #00aea2;
 }
 .umb-forms-workflow.-add-new:hover .umb-forms-add-workflow {
-  color: #2e8aea;
+  color: #00aea2;
   text-decoration: none;
 }
 .umb-forms-workflow {
@@ -1575,17 +1556,17 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 }
 .umb-forms-workflow:hover {
   cursor: pointer;
-  background: #f8f8f8;
+  background: #f3f3f5;
 }
 .umb-forms-workflow:hover .umb-forms-workflow__icon-wrapper {
-  border-color: #2e8aea;
+  border-color: #03bfb3;
 }
 .umb-forms-workflow.-not-clickable:hover {
   cursor: auto;
   background: transparent;
 }
 .umb-forms-workflow.-not-clickable:hover .umb-forms-workflow__icon-wrapper {
-  border: 2px solid #ebebeb;
+  border: 2px solid #e9e9eb;
 }
 .umb-forms-workflow.-add-new {
   padding-bottom: 0;
@@ -1599,7 +1580,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #ebebeb;
+  border: 2px solid #d8d7d9;
   margin-right: 10px;
   background: #ffffff;
   border-radius: 3px;
@@ -1623,12 +1604,11 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 }
 .umb-forms-workflow__name {
   font-weight: bold;
-  font-size: 13px;
+  font-size: 14px;
 }
 .umb-forms-workflow__description {
-  font-size: 11px;
-  color: #555555;
-  opacity: .7;
+  font-size: 13px;
+  color: #817f85;
 }
 .umb-forms-workflow__action {
   font-size: 16px;
@@ -1637,7 +1617,7 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   position: relative;
 }
 .umb-forms-workflow__workflow-placeholder {
-  background: #f8f8f8;
+  background: #f3f3f5;
   display: block;
   padding: 10px;
   position: relative;
@@ -1645,14 +1625,14 @@ input.umb-forms__page-name::-webkit-input-placeholder {
 }
 .umb-forms-workflows-divider {
   display: block;
-  border: 1px dashed #ececec;
+  border: 1px dashed #e9e9eb;
   margin-top: 40px;
   margin-bottom: 40px;
 }
 .umb-forms-workflow-actions {
-  border-left: 2px solid #ececec;
-  border-right: 2px solid #ececec;
-  border-bottom: 2px solid #ececec;
+  border-left: 2px solid #e9e9eb;
+  border-right: 2px solid #e9e9eb;
+  border-bottom: 2px solid #e9e9eb;
   padding: 10px 15px;
   margin-bottom: 30px;
   display: flex;
@@ -1664,22 +1644,21 @@ input.umb-forms__page-name::-webkit-input-placeholder {
   line-height: 1.3;
   display: inline-flex;
   align-items: center;
-  font-size: 13px;
+  font-size: 14px;
   flex: 0 0 auto;
   padding: 3px 0;
 }
 .umb-forms-workflow-preview__item {
   padding: 5px 8px;
   margin: 0 5px;
-  font-weight: bold;
-  background-color: #f3f9ff;
-  border: 2px solid #bfdff9;
+  background-color: #f3fdfc;
+  border: 1px solid #03bfb3;
   border-radius: 3px;
   text-align: center;
   display: inline-block;
 }
 a.umb-forms-workflow-preview__item:hover {
-  background: #e8f1fb;
+  border-color: #42cfc5;
   text-decoration: none;
 }
 .umb-forms-workflow-flows {
@@ -1699,7 +1678,7 @@ a.umb-forms-workflow-preview__item:hover {
   font-weight: bold;
   flex: 0 0 auto;
   text-align: right;
-  font-size: 13px;
+  font-size: 14px;
 }
 .umb-forms-workflow-preview__add {
   display: inline-block;
@@ -1712,26 +1691,26 @@ a.umb-forms-workflow-preview__item:hover {
   text-align: center;
 }
 .umb-forms__no-fields-text {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.5;
   font-weight: bold;
   display: block;
   width: 100%;
-  padding: 0 10px;
+  margin-bottom: 5px;
 }
 .umb-forms-button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
   text-transform: capitalize;
   height: 32px;
   line-height: 32px;
   max-width: 100%;
   padding: 0 18px;
-  color: #484848;
-  background-color: #e0e0e0;
+  color: #515054;
+  background-color: #d8d7d9;
   text-decoration: none !important;
   user-select: none;
   white-space: nowrap;
@@ -1742,8 +1721,8 @@ a.umb-forms-workflow-preview__item:hover {
 }
 .umb-forms-button:hover,
 .umb-forms-button:active {
-  color: #484848;
-  background-color: #d3d3d3;
+  color: #515054;
+  background-color: #bbbabf;
   outline: none;
   text-decoration: none;
 }
@@ -1752,12 +1731,12 @@ a.umb-forms-workflow-preview__item:hover {
 }
 .umb-forms-button.-blue {
   background: #2e8aea;
-  color: #fff;
+  color: #ffffff;
 }
 .umb-forms-button.-blue:hover,
 .umb-forms-button.-blue:active {
   background: #0064cd;
-  color: #fff;
+  color: #ffffff;
 }
 .umb-forms-button.-simple {
   background: transparent;
@@ -1778,32 +1757,20 @@ a.umb-forms-workflow-preview__item:hover {
   min-width: 70px;
   border: none;
   margin-right: 5px;
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 14px;
   text-align: left;
   line-height: 1.3;
   display: inline-block;
-  background: #f5f9fd;
-  border: 2px solid #bfdff9;
+  background: #f3fdfc;
+  border: 1px solid #03bfb3;
   border-radius: 3px;
-  height: 32px;
+  height: 30px;
 }
 .umb-forms__select select:hover,
 .umb-forms__select select:active {
-  background: #e8f1fb;
+  border: 1px solid #42cfc5;
   text-decoration: none;
   outline: none;
-}
-.umb-forms__select:before {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  bottom: 2px;
-  width: 24px;
-  background: #f5f9fd;
-  z-index: 3;
-  content: "";
-  pointer-events: none;
 }
 .umb-forms__select:after {
   position: absolute;
@@ -1815,12 +1782,9 @@ a.umb-forms-workflow-preview__item:hover {
   height: 0px;
   border-style: solid;
   border-width: 5px 4px 0 4px;
-  border-color: #555 transparent transparent transparent;
+  border-color: #68676b transparent transparent transparent;
   transform: translate(0, -50%);
   pointer-events: none;
-}
-.umb-forms__select:hover:before {
-  background: #e8f1fb;
 }
 .umb-forms__condition-select {
   display: inline-flex;
@@ -1839,14 +1803,16 @@ a.umb-forms-workflow-preview__item:hover {
 .umb-forms-rule {
   padding-top: 15px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #ececec;
+  border-bottom: 1px solid #e9e9eb;
 }
 .umb-forms-rule:last-of-type {
   margin-bottom: 20px;
 }
 .umb-forms-rule input[type="text"] {
   display: block;
-  margin-top: 5px;
+  width: auto;
+  flex: 1 1 auto;
+  margin: 0;
 }
 .umb-forms-rule__cond {
   display: flex;
@@ -1873,15 +1839,6 @@ a.umb-forms-workflow-preview__item:hover {
 .umb-forms-rule .umb-forms__select {
   flex: 1 1 32%;
   margin-right: 5px;
-}
-.umb-forms-rule input[type="text"] {
-  width: auto;
-  flex: 1 1 auto;
-  font-size: 13px;
-  margin: 0;
-  border-width: 2px;
-  border-radius: 3px;
-  font-weight: bold;
 }
 .umb-forms__conditions-rule {
   display: flex;
@@ -1959,4 +1916,82 @@ a.umb-forms-workflow-preview__item:hover {
 }
 .umb-forms__save-as-node .-full-width {
   width: 100%;
+}
+.umb-forms-date-range-picker {
+  /* List */
+  /* Date range start */
+  /* Date range end */
+  /* Date range background */
+  /* Current date */
+  /* Date hover */
+  /* Dropdown icon  */
+  /* Calendar switcher arrow */
+}
+.umb-forms-date-range-picker.daterange .dr-input.dr-active {
+  box-shadow: none;
+  color: #00aea2;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-list-item {
+  color: #303033;
+  font-weight: bold;
+  border-bottom-color: #e9e9eb;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-list-item .dr-item-aside {
+  font-weight: normal;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-list-item:hover {
+  background-color: #f3f3f5;
+}
+.umb-forms-date-range-picker.daterange .dr-input:hover {
+  border-color: #03bfb3;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-days-of-week-list {
+  background-color: #f3f3f5;
+  color: #817f85;
+}
+.umb-forms-date-range-picker.daterange .dr-input .dr-dates .dr-date.dr-active,
+.umb-forms-date-range-picker.daterange .dr-input .dr-dates .dr-date:focus,
+.umb-forms-date-range-picker.daterange .dr-input .dr-dates .dr-date:hover {
+  color: #00aea2;
+}
+.umb-forms-date-range-picker.daterange .dr-input .dr-presets {
+  border-left-color: #bbbabf;
+}
+.umb-forms-date-range-picker.daterange .dr-input .dr-presets.dr-active,
+.umb-forms-date-range-picker.daterange .dr-input .dr-presets:hover {
+  border-color: #03bfb3;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-start {
+  border-left-color: #00aea2;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-end {
+  border-right-color: #00aea2;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-end,
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-selected,
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-start {
+  background-color: #f3f3f5;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-current {
+  color: #000000 !important;
+  background-color: #c0f0ed !important;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-day.dr-hover-before,
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-day.dr-hover-after {
+  border-left-color: #00aea2 !important;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-day.dr-hover:not(.dr-current),
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-day-list .dr-day.dr-maybe {
+  background-color: #f3f3f5 !important;
+}
+.umb-forms-date-range-picker.daterange .dr-input .dr-presets .dr-preset-bar {
+  background-color: #a2a1a6;
+}
+.umb-forms-date-range-picker.daterange .dr-input .dr-presets.dr-active .dr-preset-bar,
+.umb-forms-date-range-picker.daterange .dr-input .dr-presets:hover .dr-preset-bar {
+  background-color: #03bfb3;
+}
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-range-switcher .dr-switcher i:hover:after,
+.umb-forms-date-range-picker.daterange .dr-selections .dr-calendar .dr-range-switcher .dr-switcher i:hover:before {
+  background-color: #00aea2;
 }

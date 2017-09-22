@@ -90,12 +90,19 @@
 
                                 <div class="umb-forms__field sortable" ng-class="{'-collapsed': sortingMode}" ng-repeat="field in container.fields">
 
-
                                     <div class="umb-forms__field-content">
 
                                         <i class="icon-navigation umb-forms__field-sort-handle sortable-handle" ng-if="sortingMode"></i>
 
                                         <div class="umb-forms__field-info" ng-class="{'-inline': sortingMode}">
+                                            
+                                            <umb-locked-field
+                                                ng-if="field.alias"
+                                                locked="locked"
+                                                ng-model="field.alias"
+                                                placeholder-text="'Alias...'"
+                                                server-validation-field="{{'field_' + field.alias}}">
+                                            </umb-locked-field>
 
                                             <div class="umb-forms__field-mandatory" ng-if="field.mandatory">*</div>
 
@@ -150,11 +157,19 @@
                                 </div>
 
                                 <div class="umb-forms__no-fields" ng-if="container.fields.length === 0 && !sortingMode">
-                                    <button class="umb-forms-button -blue" ng-click="addField(fieldset, container)">Add question</button>
+                                    <umb-button
+                                        type="button"
+                                        action="addField(fieldset, container)"
+                                        label="Add question">
+                                    </umb-button>
                                 </div>
 
                                 <div class="umb-forms__field-footer" ng-if="container.fields.length > 0 && !sortingMode">
-                                    <button class="umb-forms-button" ng-click="addField(fieldset, container)">Add question</button>
+                                    <umb-button
+                                        type="button"
+                                        action="addField(fieldset, container)"
+                                        label="Add question">
+                                    </umb-button>
                                 </div>
 
                                 <div class="umb-forms__no-fields" ng-if="container.fields.length === 0 && sortingMode">
@@ -185,7 +200,12 @@
 
                 <!-- Add new sections if fields are present -->
                 <div class="umb-forms__page-footer" ng-if="!sortingMode && pageHasFields(page)">
-                    <a class="umb-forms-button -simple" href="" ng-click="addFieldset(page)">Add new group</a>
+                    <umb-button
+                        button-style="link"
+                        type="button"
+                        action="addFieldset(page)"
+                        label="Add new group">
+                    </umb-button>
                 </div>
 
             </div>
@@ -251,7 +271,12 @@
     </div>
 
     <div class="umb-forms__footer">
-        <button class="umb-forms-button" ng-if="!sortingMode && formHasFields(form)" ng-click="addPage(form)">Add new page</button>
+        <umb-button
+            ng-if="!sortingMode && formHasFields(form)"
+            type="button"
+            action="addPage(form)"
+            label="Add new page">
+        </umb-button>
     </div>
 
     <umb-overlay

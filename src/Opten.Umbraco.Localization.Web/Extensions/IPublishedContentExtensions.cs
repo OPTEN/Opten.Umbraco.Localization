@@ -202,49 +202,11 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// <returns></returns>
 		public static T GetLocalizedValue<T>(this IPublishedContent content, string alias, bool recurse, string language, bool withFallback = true)
 		{
-			//TODO: We look up the default culture twice if the value is null, so we could improve that!
-			// e.g. alias_de => empty => next try with default culture so alias_de (again) => empty => next try alias
-
 			Mandate.ParameterNotNull(content, "content");
 
-			if (string.IsNullOrWhiteSpace(language))
-				language = PropertyHelper.TryGetTwoLetterISOLanguageName();
+			var property = content.GetLocalizedProperty(alias, language, recurse, withFallback);
 
-			string lookup = PropertyHelper.GetAlias(
-				alias: alias,
-				language: language);
-
-			if (content.HasValue(alias: lookup, recurse: recurse))
-			{
-				return content.GetPropertyValue<T>(
-					alias: lookup,
-					recurse: recurse); // Try to get current language => title_en
-			}
-			else if (withFallback)
-			{
-				lookup = PropertyHelper.GetAlias(
-					alias: alias,
-					language: LocalizationContext.DefaultCulture.TwoLetterISOLanguageName);
-
-				if (content.HasValue(alias: lookup, recurse: recurse))
-				{
-					return content.GetPropertyValue<T>(
-						alias: lookup,
-						recurse: recurse); // Try to get default language => title_de
-				}
-				else
-				{
-					lookup = alias;
-
-					return content.GetPropertyValue<T>(
-						alias: lookup,
-						recurse: recurse); // Try to get without language => title
-				}
-			}
-			else
-			{
-				return default(T);
-			}
+			return property != null ? property.GetValue<T>() : default(T);
 		}
 
 		/// <summary>
@@ -416,34 +378,8 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		{
 			Mandate.ParameterNotNull(content, "content");
 
-			if (string.IsNullOrWhiteSpace(language))
-				language = PropertyHelper.TryGetTwoLetterISOLanguageName();
-
-			string lookup = PropertyHelper.GetAlias(alias: alias, language: language);
-
-			if (content.HasValue(alias: lookup, recurse: recurse))
-			{
-				return true; // Try to check current language => title_en
-			}
-			else if (withFallback)
-			{
-				lookup = PropertyHelper.GetAlias(alias: alias, language: LocalizationContext.DefaultCulture.TwoLetterISOLanguageName);
-
-				if (content.HasValue(alias: lookup, recurse: recurse))
-				{
-					return true; // Try to check default language => title_de
-				}
-				else
-				{
-					lookup = alias;
-
-					return content.HasValue(alias: lookup, recurse: recurse); // Try to check without language => title
-				}
-			}
-			else
-			{
-				return false;
-			}
+			var prop = GetLocalizedProperty(content, alias, language, recurse, withFallback);
+			return prop != null && prop.HasValue;
 		}
 
 		/// <summary>
@@ -509,6 +445,62 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 				current: current,
 				mode: global::Umbraco.Web.Routing.UrlProviderMode.AutoLegacy,
 				culture: culture);
+		}
+
+		/// <summary>
+		/// Gets the localized property.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <param name="alias">The alias.</param>
+		/// <param name="language">The language.</param>
+		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
+		/// <param name="withFallback">if set to <c>true</c> [with fallback].</param>
+		/// <returns></returns>
+		public static IPublishedProperty GetLocalizedProperty(this IPublishedContent content, string alias, string language, bool recurse, bool withFallback)
+		{
+			//TODO: We look up the default culture twice if the value is null, so we could improve that!
+			// e.g. alias_de => empty => next try with default culture so alias_de (again) => empty => next try alias
+
+			Mandate.ParameterNotNull(content, "content");
+
+			if (string.IsNullOrWhiteSpace(language))
+				language = PropertyHelper.TryGetTwoLetterISOLanguageName();
+
+			string lookup = PropertyHelper.GetAlias(
+				alias: alias,
+				language: language);
+
+			if (content.HasValue(alias: lookup, recurse: recurse))
+			{
+				return content.GetProperty(
+					alias: lookup,
+					recurse: recurse); // Try to get current language => title_en
+			}
+			else if (withFallback)
+			{
+				lookup = PropertyHelper.GetAlias(
+					alias: alias,
+					language: LocalizationContext.DefaultCulture.TwoLetterISOLanguageName);
+
+				if (content.HasValue(alias: lookup, recurse: recurse))
+				{
+					return content.GetProperty(
+						alias: lookup,
+						recurse: recurse); // Try to get default language => title_de
+				}
+				else
+				{
+					lookup = alias;
+
+					return content.GetProperty(
+						alias: lookup,
+						recurse: recurse); // Try to get without language => title
+				}
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 	}

@@ -40,7 +40,7 @@
             var value = values[rule.field],
                 func = operators[rule.operator],
                 result = value !== null && func(value, rule.value);
-            console.log(rule.field + ": " + value + " " + rule.operator + " " + rule.value + " = " + result + "\n");
+            // console.log(rule.field + ": " + value + " " + rule.operator + " " + rule.value + " = " + result + "\n");
             return result;
         }
 
@@ -131,13 +131,13 @@
         }
 
         function handleCondition(element, id, condition, type) {
-            console.log(type + " " + id);
+            // console.log(type + " " + id);
             var shouldShow = isVisible(id, condition);
             if (shouldShow) {
-                console.log("showing " + id + "\n");
+                // console.log("showing " + id + "\n");
                 element.show();
             } else {
-                console.log("hiding " + id + "\n");
+                // console.log("hiding " + id + "\n");
                 element.hide();
             }
         }

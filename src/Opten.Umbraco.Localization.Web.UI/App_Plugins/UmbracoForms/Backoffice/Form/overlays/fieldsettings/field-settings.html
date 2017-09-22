@@ -17,6 +17,15 @@
         <div class="umb-validation-label" val-msg-for="propertyLabel" val-toggle-msg="required">Required label</div>
     </div>
 
+    <!-- Alias -->
+    <div class="umb-control-group control-group">
+        <umb-generate-alias
+            enable-lock="true"
+            alias-from="model.field.caption"
+            alias="model.field.alias">
+        </umb-generate-alias>
+    </div>
+
     <!-- Description -->
     <div class="umb-control-group control-group">
         <textarea

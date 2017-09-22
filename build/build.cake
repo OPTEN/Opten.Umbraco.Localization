@@ -2,6 +2,7 @@
 #tool "nuget:?package=NUnit.Extension.NUnitV2ResultWriter"
 #tool "docfx.msbuild"
 #addin "Cake.DocFx"
+#addin "Cake.Git"
 #addin "Cake.FileHelpers"
 #addin "nuget:http://nuget.oss-concept.ch/nuget/?package=Opten.Cake"
 
@@ -35,7 +36,7 @@ Task("Version")
 		CreateDirectory(dest);
 	}
 
-	version = "1.5.5"; //GetNextNuGetVersion("Opten.Umbraco.Localization", feedUrl);
+	version = GitDescribe("../", false, GitDescribeStrategy.Tags, 0);
 
 	PatchAssemblyInfo("../src/Opten.Umbraco.Localization.Core/Properties/AssemblyInfo.cs", version);
 	PatchAssemblyInfo("../src/Opten.Umbraco.Localization.Web/Properties/AssemblyInfo.cs", version);

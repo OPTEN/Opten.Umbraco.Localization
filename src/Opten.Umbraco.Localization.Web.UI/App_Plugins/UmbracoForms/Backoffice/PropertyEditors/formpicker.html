@@ -1,12 +1,32 @@
-﻿ <div ng-controller="UmbracoForms.FormPickerController">
+﻿<div ng-controller="UmbracoForms.FormPickerController as vm">
 
-     <div class="radio" ng-repeat="form in forms | orderBy: 'name'">
-         <label>
-             <input ng-model="model.value" value="{{form.id}}" type="radio" name="form_{{model.alias}}">
-             {{form.name}}
-             <small>{{form.fields}}</small>
-         </label>
-     </div>
+    <umb-node-preview
+        ng-if="vm.selectedForm.name"
+        name="vm.selectedForm.name"
+        icon="vm.selectedForm.icon"
+        description="vm.selectedForm.fields"
+        allow-remove="true"
+        on-remove="vm.remove()">
+    </umb-node-preview>
 
-     <a ng-click="clear()" ng-show="model.value" href="">Clear</a>
- </div>
+    <a
+        ng-if="!vm.selectedForm.name"
+        class="umb-node-preview-add"
+        href=""
+        ng-click="vm.openFormPicker()"
+        prevent-default>
+        <localize key="general_add">Add</localize>
+    </a>
+
+    <div ng-if="vm.error" class="alert alert-warning">
+        {{ vm.error }}
+    </div>
+
+    <umb-overlay
+        ng-if="vm.formPickerOverlay.show"
+        model="vm.formPickerOverlay"
+        view="vm.formPickerOverlay.view"
+        position="right">
+    </umb-overlay>
+
+</div>

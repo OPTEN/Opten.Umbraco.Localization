@@ -19,7 +19,7 @@
                     
                     <table class="table table-hover">
                         <tbody ui-sortable="sortableOptions" ng-model="workflows" class="workflows" rel="Submitted">
-                            <tr ng-repeat="workflow in workflows | filter: { executesOn: 'Submitted' }" rel="{{workflow.id}}">
+                            <tr ng-repeat="workflow in workflows | filter: { executesOn: 'Submitted' } track by workflow.id" rel="{{workflow.id}}">
                                 <td>
                                     <a title="Move" class="handle" preventdefault><i class="icon-navigation"></i></a>
                                     <a href ng-click="updateWorkflow('Submitted',workflow)" title="Settings" ng-class="{inactive: workflow.active == false}">{{workflow.name}}</a>
@@ -33,7 +33,7 @@
                     <small>These actions wil execute when the submitted form record is approved. In case your form is set to manual approve these actions will be triggered from the records viewer.</small>
                     <table class="table table-hover">
                         <tbody ui-sortable="sortableOptions" ng-model="workflows" class="workflows" rel="Approved">
-                            <tr ng-repeat="workflow in workflows | filter: { executesOn: 'Approved' }" rel="{{workflow.id}}">
+                            <tr ng-repeat="workflow in workflows | filter: { executesOn: 'Approved' } track by workflow.id" rel="{{workflow.id}}">
                                 <td>
                                     <a title="Move" class="handle" preventdefault><i class="icon-navigation"></i></a>
                                     <a href ng-click="updateWorkflow('Approved',workflow)" title="Settings" ng-class="{inactive: workflow.active == false}">{{workflow.name}}</a>

@@ -25,34 +25,34 @@ else
     if (Model.RenderMode == "full" || Model.RenderMode == "form")
     {
 
-         <div id="contour_form_@Model.FormClientId" class="contour @Model.CssClass">
+        <div id="contour_form_@Model.FormClientId" class="contour @Model.CssClass">
 
-             @using (Html.BeginUmbracoForm<Umbraco.Forms.Web.Controllers.UmbracoFormsController>("HandleForm"))
-             {
-                 @Html.AntiForgeryToken()
+            @using (Html.BeginUmbracoForm<Umbraco.Forms.Web.Controllers.UmbracoFormsController>("HandleForm"))
+            {
+                @Html.AntiForgeryToken()
 
-                 <input type="hidden" name="FormId" value="@Model.FormId" />
-                 @Html.HiddenFor(x => Model.FormName)
-                 @Html.HiddenFor(x => Model.RecordId)
-                 @Html.HiddenFor(x => Model.PreviousClicked)
- 
-                 <input type="hidden" name="FormStep" value="@Model.FormStep" />
-                 <input type="hidden" name="RecordState" value="@Model.RecordState"/>
-                 
-                 <div class="contourPage">
-                
-                     @if (string.IsNullOrEmpty(Model.CurrentPage.Caption) == false)
-                     {
-                         <h4 class="contourPageName">@Html.Raw(Model.CurrentPage.Caption)</h4>
-                     }
-                
-                     @if (Model.ShowValidationSummary)
-                     {
-                         @Html.ValidationSummary(false)
-                     }
+                <input type="hidden" name="FormId" value="@Model.FormId" />
+                @Html.HiddenFor(x => Model.FormName)
+                @Html.HiddenFor(x => Model.RecordId)
+                @Html.HiddenFor(x => Model.PreviousClicked)
 
-                     @foreach (FieldsetViewModel fs in Model.CurrentPage.Fieldsets)
-                     {
+                <input type="hidden" name="FormStep" value="@Model.FormStep" />
+                <input type="hidden" name="RecordState" value="@Model.RecordState" />
+
+                <div class="contourPage">
+
+                    @if (string.IsNullOrEmpty(Model.CurrentPage.Caption) == false)
+                    {
+                        <h4 class="contourPageName">@Html.Raw(Model.CurrentPage.Caption)</h4>
+                    }
+
+                    @if (Model.ShowValidationSummary)
+                    {
+                        @Html.ValidationSummary(false)
+                    }
+
+                    @foreach (FieldsetViewModel fs in Model.CurrentPage.Fieldsets)
+                    {
                         <fieldset class="contourFieldSet" id="@fs.Id">
                             @if (string.IsNullOrEmpty(fs.Caption) == false)
                             {
@@ -68,7 +68,7 @@ else
                                         {
                                             bool hidden = f.HasCondition && f.ConditionActionType == FieldConditionActionType.Show;
 
-                                            <div class="@f.CssClass" @{ if (hidden) { <text> style="display: none" </text>  } }>
+                                            <div class="@f.CssClass" @{ if (hidden) { <text> style="display: none" </text>   } }>
 
                                                 @if (!f.HideLabel)
                                                 {
@@ -93,48 +93,48 @@ else
                                                 </div>
                                             </div>
 
-                                        }
+    }
 
                                     </div>
 
-                                }
+    }
                             </div>
 
                         </fieldset>
-                     }
+    }
 
-                     <div style="display: none">
-                         <input type="text" name="@Model.FormId.ToString().Replace("-", "")" />
-                     </div>
+                    <div style="display: none">
+                        <input type="text" name="@Model.FormId.ToString().Replace("-", "")" />
+                    </div>
 
 
-                     <div class="contourNavigation row-fluid">
-                         <div class="col-md-12">
-                             @if (Model.IsMultiPage)
-                             {
-                                 if (!Model.IsFirstPage)
-                                 {
-                                     <input class="btn prev cancel" type="submit" value="@Model.PreviousCaption" name="__prev"/>
-                                 }
-                                 if (!Model.IsLastPage)
-                                 {
-                                     <input type="submit" class="btn next" value="@Model.NextCaption" name="next"/>
-                                 }
-                                 if (Model.IsLastPage)
-                                 {
-                                     <input type="submit" class="btn primary" value="@Model.SubmitCaption" name="submitbtn"/>
-                                 }
-                             }
-                             else
-                             {
-                                 <input type="submit" class="btn primary" value="@Model.SubmitCaption" name="submitbtn"/>
-                             }
-                         </div>
-                     </div>
+                    <div class="contourNavigation row-fluid">
+                        <div class="col-md-12">
+                            @if (Model.IsMultiPage)
+                            {
+                                if (!Model.IsFirstPage)
+                                {
+                                    <input class="btn prev cancel" type="submit" value="@Model.PreviousCaption" name="__prev" />
+                                }
+                                if (!Model.IsLastPage)
+                                {
+                                    <input type="submit" class="btn next" value="@Model.NextCaption" name="next" />
+                                }
+                                if (Model.IsLastPage)
+                                {
+                                    <input type="submit" class="btn primary" value="@Model.SubmitCaption" name="submitbtn" />
+                                }
+                            }
+                            else
+                            {
+                                <input type="submit" class="btn primary" value="@Model.SubmitCaption" name="submitbtn" />
+                            }
+                        </div>
+                    </div>
 
-                 </div>
-             }
-         </div>
+                </div>
+    }
+        </div>
 
     }
 
@@ -170,7 +170,7 @@ else
                 {
                     <text>@Html.Raw(cmd)</text>
                 }
-        
+
             </script>
         }
 
@@ -183,8 +183,8 @@ else
             else
             {
                 <link rel="stylesheet" href="@Url.Content(css.Value)" />
+                }
             }
-        }
 
+        }
     }
-}

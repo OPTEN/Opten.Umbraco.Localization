@@ -9,9 +9,14 @@
 			for (var j = 0; j < config[i].url.length; j++) {
 				if (response.config.url.toLowerCase().indexOf(config[i].url[j].toLowerCase()) >= 0) {
 					var search = config[i].insertAfter.toLowerCase();
-					var position = response.data.toLowerCase().indexOf(search) + search.length;
-					
-					response.data = [response.data.slice(0, position), insertString, response.data.slice(position)].join('');
+
+					var indexOfSearch = response.data.toLowerCase().indexOf(search);
+
+					if (indexOfSearch >= 0) {
+						var position = indexOfSearch + search.length;
+
+						response.data = [response.data.slice(0, position), insertString, response.data.slice(position)].join('');
+					}
 				}
 			}
 		}
@@ -29,16 +34,16 @@
 
 				var $http = $injector.get('$http');
 				$http.get('/config/opten.localization.config.json', { cache: true })
-				   .then(function (json) {
+					.then(function (json) {
 
-				   	json.data.forEach(function (element, index) {
+						json.data.forEach(function (element, index) {
 
-				   		applyTemplateModification(response, element.insertString, element.modifications);
+							applyTemplateModification(response, element.insertString, element.modifications);
 
-				   	});
+						});
 
-				   	deffered.resolve(response);
-				   });
+						deffered.resolve(response);
+					});
 
 				return deffered.promise;
 			}

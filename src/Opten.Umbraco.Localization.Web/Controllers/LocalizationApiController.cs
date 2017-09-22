@@ -152,18 +152,9 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			cookie.Expires = DateTime.Now.AddDays(1);
 			cookie.Path = "/";
 
-			string[] languagesToStore;
-			if (languages == null || languages.Any() == false)
-			{
-				languagesToStore = LocalizationContext.Languages.Select(o => o.IsoCode)
-													  .ToArray();
-			}
-			else
-			{
-				languagesToStore = LocalizationContext.Languages.Where(o => languages.Contains(o.IsoCode))
+			string[] languagesToStore = LocalizationContext.Languages.Where(o => languages.Contains(o.IsoCode))
 													  .Select(o => o.IsoCode)
 													  .ToArray();
-			}
 
 			cookie.Value = string.Join(",", languagesToStore);
 
