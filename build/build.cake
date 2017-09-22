@@ -132,7 +132,7 @@ Task("Run-Unit-Tests")
 });
 
 Task("Pack")
-	.IsDependentOn("Run-Unit-Tests")
+	.IsDependentOn("Build")
 	.Does(() =>
 {
 	NuGetPackWithDependencies("./Opten.Umbraco.Localization.Core.nuspec", new NuGetPackSettings {
