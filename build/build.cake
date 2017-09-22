@@ -112,7 +112,7 @@ Task("Build")
 	CopyFileToDirectory(File("package.xml"), umb);
 });
 
-Task("Run-Unit-Tests")
+/*Task("Run-Unit-Tests")
 	.IsDependentOn("Build")
 	.Does(() =>
 {
@@ -129,7 +129,7 @@ Task("Run-Unit-Tests")
 		Configuration = "Release",
 		ResultFormat = "nunit2" // Wait until Bamboo 5.14 is out to support NUnit 3!
 	});
-});
+});*/
 
 Task("Pack")
 	.IsDependentOn("Build")
