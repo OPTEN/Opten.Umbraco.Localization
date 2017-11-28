@@ -64,7 +64,7 @@
 					if (typeof propertyAlias !== "undefined" && propertyAlias.indexOf("_" + value.twoLetterISOCode) > -1) {
 						canLocalize = true;
 						language = value.isoCode;
-						languageName = value.nativeName;
+						languageName = value.name;
 					}
 				});
 

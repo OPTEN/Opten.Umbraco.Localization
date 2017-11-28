@@ -39,8 +39,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 					.Select(o => new Models.Language
 					{
 						ISOCode = o.Name,
-						DisplayName = o.DisplayName,
-						NativeName = o.NativeName
+						Name = o.EnglishName
 					}));
 
 			// See if one has already been set via the event handler
@@ -141,8 +140,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 							.Select(o => new Models.Language
 							{
 								ISOCode = o.Name,
-								DisplayName = o.DisplayName,
-								NativeName = o.NativeName
+								Name = o.EnglishName
 							});
 		}
 

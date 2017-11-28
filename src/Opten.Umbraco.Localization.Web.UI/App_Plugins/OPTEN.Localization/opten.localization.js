@@ -19,8 +19,7 @@
 					var language = {
 						isoCode: value.isoCode,
 						twoLetterISOCode: value.isoCode.split('-')[0],
-						displayName: value.displayName,
-						nativeName: value.nativeName,
+						name: value.name,
 						select: function () {
 							if ($rootScope.selectedLanguages.indexOf(this.isoCode) == -1) {
 								$rootScope.selectedLanguages.push(this.isoCode);
