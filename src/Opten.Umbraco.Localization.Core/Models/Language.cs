@@ -8,11 +8,8 @@ namespace Opten.Umbraco.Localization.Core.Models
 		[JsonProperty("isoCode")]
 		public string ISOCode { get; set; }
 
-		[JsonProperty("displayName")]
-		public string DisplayName { get; set; }
-
-		[JsonProperty("nativeName")]
-		public string NativeName { get; set; }
+		[JsonProperty("name")]
+		public string Name { get; set; }
 
 		[JsonProperty("isDefault")]
 		public bool IsDefault { get; set; }
