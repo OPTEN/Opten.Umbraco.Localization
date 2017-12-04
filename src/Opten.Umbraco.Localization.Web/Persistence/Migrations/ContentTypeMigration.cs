@@ -36,7 +36,9 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 			{
 				IDataTypeDefinition dataTypeDefinition = _dataTypeService.GetDataTypeDefinitionById(propertyType.DataTypeDefinitionId);
 				PropertyGroup propertyGroup = contentType.PropertyGroups.FirstOrDefault(o => o.PropertyTypes.Contains(propertyType.Alias));
+				var allFollowingPropertyTypes = propertyGroup.PropertyTypes.Where(o => o != propertyType && o.SortOrder >= propertyType.SortOrder).OrderBy(o => o.SortOrder).ToList();
 
+				var sortOrderIndex = propertyType.SortOrder + 1;
 				if (PropertyHelper.IsLocalizedProperty(propertyType.Alias) == false)
 				{
 					propertyType.Alias = PropertyHelper.GetAlias(propertyType.Alias, LocalizationContext.DefaultCulture.TwoLetterISOLanguageName);
@@ -46,8 +48,8 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 				{
 					string localizedAlias = PropertyHelper.GetAlias(PropertyHelper.GetNotLocalizedAlias(propertyType.Alias), language.CultureInfo.TwoLetterISOLanguageName);
 
-					if (contentType.PropertyTypeExists(localizedAlias) == false ||
-						propertyType.Alias.Equals(localizedAlias) == false ||
+					if ((contentType.PropertyTypeExists(localizedAlias) == false ||
+						propertyType.Alias.Equals(localizedAlias) == false) &&
 						propertyType.PropertyEditorAlias.Equals("OPTEN.UrlAlias", StringComparison.OrdinalIgnoreCase) == false)
 					{
 						PropertyType newPropertyType = new PropertyType(dataTypeDefinition)
@@ -55,11 +57,19 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 							Alias = localizedAlias,
 							Name = propertyType.Name,
 							Description = propertyType.Description,
-							SortOrder = propertyType.SortOrder
+							SortOrder = sortOrderIndex
 						};
 
 						contentType.AddPropertyType(newPropertyType, propertyGroup.Name);
+						newPropertyType.SortOrder = sortOrderIndex; // Somehow umbraco sets a sort order on adding... but not always?!?
+						sortOrderIndex++;
 					}
+				}
+
+				foreach(var followingPropertyType in allFollowingPropertyTypes)
+				{
+					propertyGroup.PropertyTypes.Single(o => followingPropertyType == o).SortOrder = sortOrderIndex;
+					sortOrderIndex++;
 				}
 			}
 
