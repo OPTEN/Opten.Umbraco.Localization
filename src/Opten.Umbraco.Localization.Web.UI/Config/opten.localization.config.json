@@ -15,7 +15,7 @@
 		]
 	},
 	{
-		"insertString": "<opten-language-menu ng-if=\"menu.currentNode\"></opten-language-menu>",
+		"insertString": "<opten-language-menu></opten-language-menu>",
 		"modifications": [
 			{
 				"url": "views/components/editor/umb-editor-header.html",
