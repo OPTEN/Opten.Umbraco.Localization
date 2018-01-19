@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Models;
@@ -101,9 +102,7 @@ namespace Opten.Umbraco.Localization.Web
 
 			if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
 			{
-				//TODO: This is kind of wrong because it should take the default language which
-				//		is selected in LocalizationApiController.GetAllLanguages()
-				return LocalizationContext.Languages;
+				return new[] { GetDefaultLanguage(LocalizationContext.Languages) };
 			}
 			else
 			{
@@ -111,6 +110,54 @@ namespace Opten.Umbraco.Localization.Web
 
 				return LocalizationContext.Languages.Where(o => isoCodes.Contains(o.IsoCode)).ToArray();
 			}
+		}
+
+		/// <summary>
+		/// Gets the default language.
+		/// </summary>
+		/// <param name="languages">The languages.</param>
+		/// <returns></returns>
+		internal static ILanguage GetDefaultLanguage(IEnumerable<ILanguage> languages)
+		{
+			ILanguage language = null;
+
+			// If not try set from current thread
+			if (language == null)
+				language = GetActiveLanguage(languages, Thread.CurrentThread.CurrentUICulture.Name);
+
+			// Couldn't find from the thread, so try from web.config
+			if (language == null)
+				language = GetActiveLanguage(languages, LocalizationContext.DefaultCulture.Name);
+
+			// Couldn't find a good enough match, just select the first language
+			if (language == null)
+				language = languages.FirstOrDefault();
+
+			return language;
+		}
+
+		/// <summary>
+		/// Gets the active language.
+		/// </summary>
+		/// <param name="languages">The languages.</param>
+		/// <param name="isoCode">The iso code.</param>
+		/// <returns></returns>
+		internal static ILanguage GetActiveLanguage(
+			IEnumerable<ILanguage> languages,
+			string isoCode)
+		{
+			// Try settings to exact match of current culture
+			ILanguage language = languages.FirstOrDefault(o => o.CultureInfo.Name == isoCode);
+
+			// Try setting to nearest match
+			if (language == null)
+				language = languages.FirstOrDefault(o => o.CultureInfo.Name.Contains(isoCode));
+
+			// Try setting to nearest match
+			if (language == null)
+				language = languages.FirstOrDefault(o => isoCode.Contains(o.CultureInfo.Name));
+
+			return language;
 		}
 
 		/// <summary>
