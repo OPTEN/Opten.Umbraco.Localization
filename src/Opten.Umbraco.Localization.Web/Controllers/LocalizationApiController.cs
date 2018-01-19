@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Models;
@@ -42,24 +41,11 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 						Name = o.EnglishName
 					}));
 
-			// See if one has already been set via the event handler
-			Models.Language activeLanguage = languages.FirstOrDefault(o => o.IsDefault);
-
-			// If not try set from current thread
-			if (activeLanguage == null)
-				activeLanguage = GetActiveLanguage(languages, Thread.CurrentThread.CurrentUICulture.Name);
-
-			// Couldn't find from the thread, so try from web.config
-			if (activeLanguage == null)
-				activeLanguage = GetActiveLanguage(languages, LocalizationContext.DefaultCulture.Name);
-
-			// Couldn't find a good enough match, just select the first language
-			if (activeLanguage == null)
-				activeLanguage = languages.FirstOrDefault();
-
-			// If we found any we set it as the default language for the backend
-			if (activeLanguage != null)
-				languages.Single(o => o.ISOCode == activeLanguage.ISOCode).IsDefault = true;
+			if (languages.Any(o => o.IsDefault) == false)
+			{
+				ILanguage defaultLanguage = LocalizationContext.GetDefaultLanguage(LocalizationContext.Languages);
+				languages.Single(o => o.ISOCode == defaultLanguage.CultureInfo.Name).IsDefault = true;
+			}
 
 			return languages;
 		}
@@ -127,21 +113,15 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 
 		public IEnumerable<Models.Language> GetSelectedLanguages()
 		{
-			HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cache.BackendLanguages];
-
-			// This is equivalent to all languages or default language
-			if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
-				return Enumerable.Empty<Models.Language>();
-
+			//TODO: check if there is any? because maybe the cookie lived long and some languages got deleted?
 			// otherwise something was changed/cached
-			IEnumerable<ILanguage> languages = LocalizationContext.CurrentBackEndUserLanguages();
-
-			return languages.Select(o => o.CultureInfo)
-							.Select(o => new Models.Language
-							{
-								ISOCode = o.Name,
-								Name = o.EnglishName
-							});
+			return LocalizationContext.CurrentBackEndUserLanguages()
+				.Select(o => o.CultureInfo)
+				.Select(o => new Models.Language
+				{
+					ISOCode = o.Name,
+					Name = o.EnglishName
+				});
 		}
 
 		public bool PostSelectedLanguages(string[] languages)
@@ -160,28 +140,6 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 
 			return true;
 		}
-
-		#region Private helpers
-
-		private Models.Language GetActiveLanguage(
-			List<Models.Language> languages,
-			string isoCode)
-		{
-			// Try settings to exact match of current culture
-			Models.Language language = languages.FirstOrDefault(o => o.ISOCode == isoCode);
-
-			// Try setting to nearest match
-			if (language == null)
-				language = languages.FirstOrDefault(o => o.ISOCode.Contains(isoCode));
-
-			// Try setting to nearest match
-			if (language == null)
-				language = languages.FirstOrDefault(o => isoCode.Contains(o.ISOCode));
-
-			return language;
-		}
-
-		#endregion
 
 	}
 
