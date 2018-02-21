@@ -38,7 +38,9 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 
 			// If not found try to get it from the browser
 			if (getFromBrowserIfNotFound && currentUICulture == null)
+			{
 				currentUICulture = request.TryGetCultureFromBrowser();
+			}
 
 			return LocalizationContext.TryGetCultureFromTwoLetterIsoCode(
 				twoLetterISOLanguageName: currentUICulture.TwoLetterISOLanguageName);
@@ -59,7 +61,9 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 				string browserCulture = (request.UserLanguages ?? Enumerable.Empty<string>()).FirstOrDefault();
 
 				if (string.IsNullOrWhiteSpace(browserCulture))
+				{
 					browserCulture = Thread.CurrentThread.CurrentUICulture.Name;
+				}
 
 				return LocalizationContext.TryGetCultureFromTwoLetterIsoCode(
 					twoLetterISOLanguageName: browserCulture.GetTwoLetterISOCodeByName());
