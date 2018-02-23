@@ -105,6 +105,96 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		}
 
 		/// <summary>
+		/// Gets the localized navigation name.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <returns></returns>
+		public static string GetLocalizedNavigationName(this IPublishedContent content)
+		{
+			return content.GetLocalizedNavigationName(
+				recurse: false,
+				language: string.Empty,
+				withFallback: true);
+		}
+
+		/// <summary>
+		/// Gets the localized navigation name.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <param name="language">The language.</param>
+		/// <returns></returns>
+		public static string GetLocalizedNavigationName(this IPublishedContent content, string language)
+		{
+			return content.GetLocalizedNavigationName(
+				recurse: false,
+				language: language,
+				withFallback: true);
+		}
+
+		/// <summary>
+		/// Gets the localized navigation name.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
+		/// <returns></returns>
+		public static string GetLocalizedNavigationName(this IPublishedContent content, bool recurse)
+		{
+			return content.GetLocalizedNavigationName(
+				recurse: recurse,
+				language: string.Empty,
+				withFallback: true);
+		}
+
+		/// <summary>
+		/// Gets the localized navigation name.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
+		/// <param name="language">The language.</param>
+		/// <returns></returns>
+		public static string GetLocalizedNavigationName(this IPublishedContent content, bool recurse, string language)
+		{
+			return content.GetLocalizedNavigationName(
+				recurse: recurse,
+				language: language,
+				withFallback: true);
+		}
+
+		/// <summary>
+		/// Gets the localized navigation name.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
+		/// <param name="withFallback">if set to <c>false</c> [no fallback to default language].</param>
+		/// <returns></returns>
+		public static string GetLocalizedNavigationName(this IPublishedContent content, bool recurse, bool withFallback = true)
+		{
+			return content.GetLocalizedNavigationName(
+				recurse: recurse,
+				language: string.Empty,
+				withFallback: withFallback);
+		}
+
+		/// <summary>
+		/// Gets the localized navigation name.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
+		/// <param name="language">The language.</param>
+		/// <param name="withFallback">if set to <c>false</c> [no fallback to default language].</param>
+		/// <returns></returns>
+		public static string GetLocalizedNavigationName(this IPublishedContent content, bool recurse, string language, bool withFallback = true)
+		{
+			string title = content.GetLocalizedValue<string>(
+				alias: "navigationName",
+				recurse: recurse,
+				language: language,
+				withFallback: withFallback);
+			if (string.IsNullOrWhiteSpace(title)) return content.Name;
+			else return title;
+		}
+
+		/// <summary>
 		/// Gets the localized value.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
