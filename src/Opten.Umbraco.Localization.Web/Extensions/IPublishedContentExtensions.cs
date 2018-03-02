@@ -190,7 +190,7 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 				recurse: recurse,
 				language: language,
 				withFallback: withFallback);
-			if (string.IsNullOrWhiteSpace(title)) return content.Name;
+			if (string.IsNullOrWhiteSpace(title)) return content.GetLocalizedTitle();
 			else return title;
 		}
 
