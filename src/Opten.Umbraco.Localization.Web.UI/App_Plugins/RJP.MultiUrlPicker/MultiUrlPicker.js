@@ -1,129 +1,140 @@
-(function(angular, _) {
-  'use strict';
+(function () {
+  'use strict'
 
-  angular.module("umbraco").controller("RJP.MultiUrlPickerController", function($scope, dialogService, iconHelper, entityResource) {
-    var documentIds = [];
-    var mediaIds = [];
+  var MultiUrlPickerController = function ($scope, angularHelper, entityResource, iconHelper) {
+    this.renderModel = []
 
-    $scope.renderModel = [];
-    $scope.cfg = { maxNumberOfItems: 0, minNumberOfItems: 0 };
-    $scope.sortableOptions = { handle: '.handle' };
+    if ($scope.preview) {
+      return
+    }
 
-    if( $scope.model.value ) {
-      _.each($scope.model.value, function( item, i ) {
-        $scope.renderModel.push(new Link(item));
-        if( item.id ) {
-          (item.isMedia ? mediaIds : documentIds).push( item.id );
+    if (!Array.isArray($scope.model.value)) {
+      $scope.model.value = []
+    }
+
+    $scope.model.value.forEach(function (link) {
+      link.icon = iconHelper.convertFromLegacyIcon(link.icon)
+      this.renderModel.push(link)
+    }.bind(this))
+
+    $scope.$on('formSubmitting', function () {
+      $scope.model.value = this.renderModel
+    }.bind(this))
+
+    $scope.$watch(function () {
+      return this.renderModel.length
+    }.bind(this), function () {
+      if ($scope.model.config && $scope.model.config.minNumberOfItems) {
+        $scope.multiUrlPickerForm.minCount.$setValidity('minCount', +$scope.model.config.minNumberOfItems <= this.renderModel.length)
+      }
+      if ($scope.model.config && $scope.model.config.maxNumberOfItems) {
+        $scope.multiUrlPickerForm.maxCount.$setValidity('maxCount', +$scope.model.config.maxNumberOfItems >= this.renderModel.length)
+      }
+      this.sortableOptions.disabled = this.renderModel.length === 1
+    }.bind(this))
+
+    this.sortableOptions = {
+      distance: 10,
+      tolerance: 'pointer',
+      scroll: true,
+      zIndex: 6000,
+      update: function () {
+        angularHelper.getCurrentForm($scope).$setDirty()
+      }
+    }
+
+    this.remove = function ($index) {
+      this.renderModel.splice($index, 1)
+
+      angularHelper.getCurrentForm($scope).$setDirty()
+    }
+
+    this.openLinkPicker = function (link, $index) {
+      var target = link ? {
+        name: link.name,
+        // the linkPicker breaks if it get an id or udi for media
+        id: link.isMedia ? null : link.id,
+        udi: link.isMedia ? null : link.udi,
+        url: link.url,
+        querystring: link.querystring,
+        target: link.target
+      } : null
+
+
+      this.linkPickerOverlay = {
+        view: 'linkpicker',
+        currentTarget: target,
+        show: true,
+        querystring: true,
+        submit: function (model) {
+          if (model.target.url) {
+            if (link) {
+              if (link.isMedia && link.url === model.target.url) {
+                // we can assume the existing media item is changed and no new file has been selected
+                // so we don't need to update the id, udi and isMedia fields
+              } else {
+                link.id = model.target.id
+                link.udi = model.target.udi
+                link.isMedia = model.target.isMedia
+              }
+
+              link.name = model.target.name || model.target.url
+              link.target = model.target.target
+              link.url = model.target.url
+              link.querystring = model.target.querystring
+            } else {
+              link = {
+                id: model.target.id,
+                isMedia: model.target.isMedia,
+                name: model.target.name || model.target.url,
+                target: model.target.target,
+                udi: model.target.udi,
+                url: model.target.url,
+                querystring: model.target.querystring
+              }
+              this.renderModel.push(link)
+            }
+
+            if (link.udi) {
+              var entityType = link.isMedia ? 'media' : 'document'
+
+              entityResource.getById(link.udi, entityType)
+              .then(function (data) {
+                link.icon = iconHelper.convertFromLegacyIcon(data.icon)
+                link.published = !(data.metaData && data.metaData.IsPublished === false && entityType === 'document')
+              })
+            } else {
+              link.published = true
+              link.icon = 'icon-link'
+            }
+
+            angularHelper.getCurrentForm($scope).$setDirty()
+          }
+
+          this.linkPickerOverlay.show = false
+          this.linkPickerOverlay = null
+        }.bind(this)
+      }
+    }
+  }
+
+  var mupHttpProvider = function ($httpProvider) {
+    $httpProvider.interceptors.push(function ($q) {
+      return {
+        response: function (response) {
+          if (response.config.url.indexOf('views/common/overlays/linkpicker/linkpicker.html') !== -1) {
+            // Inject the querystring field
+            var $markup = $(response.data)
+            var $urlField = $markup.find('[label="@defaultdialogs_urlLinkPicker"]')
+            $urlField.after('<umb-control-group label="Query String" ng-if="model.querystring"><input type="text" placeholder="Query String" class="umb-editor umb-textstring" ng-model="model.target.querystring"/></umb-control-group>')
+            response.data = $markup[0]
+          }
+          return response
         }
-      });
-    }
-
-    var setIcon = function( nodes ) {
-      if( _.isArray( nodes ) ) {
-        _.each( nodes, setIcon );
-      } else {
-        var item = _.find( $scope.renderModel, function( item ) {
-          return +item.id === nodes.id;
-        });
-        item.icon = iconHelper.convertFromLegacyIcon( nodes.icon );
       }
-    };
+    })
+  }
 
-    entityResource.getByIds( documentIds, 'Document' ).then( setIcon );
-    entityResource.getByIds( mediaIds, 'Media' ).then( setIcon );
-
-    if ( $scope.model.config ) {
-      $scope.cfg = angular.extend( $scope.cfg, $scope.model.config );
-    }
-
-    if( $scope.cfg.maxNumberOfItems <= 0 ) {
-      delete $scope.cfg.maxNumberOfItems;
-    }
-    if( $scope.cfg.minNumberOfItems <= 0 ) {
-      $scope.cfg.minNumberOfItems = 0;
-    }
-
-    $scope.openLinkPicker = function() {
-      dialogService.linkPicker({ callback: $scope.onContentSelected });
-    };
-
-    $scope.edit = function(index) {
-      var link = $scope.renderModel[index];
-      dialogService.linkPicker({
-        currentTarget: {
-          id: link.isMedia ? null : link.id, // the linkPicker breaks if it get an id for media
-          index: index,
-          name: link.name,
-          url: link.url,
-          target: link.target,
-          isMedia: link.isMedia,
-        },
-        callback: $scope.onContentSelected
-      });
-    };
-
-    $scope.remove = function(index) {
-      $scope.renderModel.splice( index, 1 );
-      $scope.model.value = $scope.renderModel;
-    };
-
-    $scope.$watch(
-      function() {
-        return $scope.renderModel.length;
-      },
-      function(newVal) {
-        if( $scope.renderModel.length ) {
-          $scope.model.value = $scope.renderModel;
-        } else {
-          $scope.model.value = null;
-        }
-
-        if( $scope.cfg.minNumberOfItems && +$scope.cfg.minNumberOfItems > $scope.renderModel.length ) {
-          $scope.multiUrlPickerForm.minCount.$setValidity( 'minCount', false );
-        } else {
-          $scope.multiUrlPickerForm.minCount.$setValidity( 'minCount', true );
-        }
-         if( $scope.cfg.maxNumberOfItems && +$scope.cfg.maxNumberOfItems < $scope.renderModel.length ) {
-          $scope.multiUrlPickerForm.maxCount.$setValidity( 'maxCount', false );
-        } else {
-          $scope.multiUrlPickerForm.maxCount.$setValidity( 'maxCount', true );
-        }
-      }
-    );
-
-    $scope.$on("formSubmitting", function(ev, args) {
-      if( $scope.renderModel.length ) {
-        $scope.model.value = $scope.renderModel;
-      } else {
-        $scope.model.value = null;
-      }
-    });
-
-
-    $scope.onContentSelected = function(e) {
-      var link = new Link(e);
-
-      if( e.index !== undefined && e.index !== null ) {
-        $scope.renderModel[ e.index ] = link;
-      } else {
-        $scope.renderModel.push( link );
-      }
-
-      if( e.id && e.id > 0 ) {
-        entityResource.getById( e.id, e.isMedia ? 'Media' : 'Document' ).then( setIcon );
-      }
-
-      $scope.model.value = $scope.renderModel;
-      dialogService.close();
-    };
-
-    function Link(link) {
-        this.id = link.id;
-        this.name = link.name || link.url;
-        this.url = link.url;
-        this.target = link.target;
-        this.isMedia = link.isMedia;
-        this.icon = link.icon || 'icon-link';
-    }
-  });
-})(window.angular, window._);
+  angular.module('umbraco').controller('RJP.MultiUrlPickerController', MultiUrlPickerController)
+  angular.module("umbraco.services").config(['$httpProvider', mupHttpProvider]);
+})()
