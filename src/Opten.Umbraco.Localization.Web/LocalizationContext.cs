@@ -102,7 +102,17 @@ namespace Opten.Umbraco.Localization.Web
 
 			if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
 			{
-				return new[] { GetDefaultLanguage(LocalizationContext.Languages) };
+				var defaultBackofficeCultures = ConfigurationManager.AppSettings.Get<string>(key: "OPTEN:localization:defaultBackofficeCultures");
+				if (string.IsNullOrWhiteSpace(defaultBackofficeCultures))
+				{
+					return new[] { GetDefaultLanguage(LocalizationContext.Languages) };
+				}
+				else
+				{
+					string[] isoCodes = defaultBackofficeCultures.Split(',');
+
+					return LocalizationContext.Languages.Where(o => isoCodes.Contains(o.IsoCode)).ToArray();
+				}
 			}
 			else
 			{
