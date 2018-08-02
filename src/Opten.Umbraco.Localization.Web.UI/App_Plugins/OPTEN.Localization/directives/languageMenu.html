@@ -4,7 +4,7 @@
 		<span class="caret"></span>
 	</a>
 
-	<ul class="dropdown-menu umb-actions" role="menu" aria-labelledby="dLabel" ng-click="$event.stopPropagation()">
+	<ul class="dropdown-menu umb-actions" role="menu" aria-labelledby="dLabel" ng-click="$event.stopPropagation()" style="max-height:75vh;overflow: auto;">
 		<li class="action" data-ng-repeat="language in $root.languages" data-ng-class="{ 'selected' : $root.selectedLanguages.indexOf(language.isoCode) > -1 }">
 			<a prevent-default
 			   ng-click="language.select()">
