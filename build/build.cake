@@ -110,7 +110,7 @@ Task("Build")
 	CopyFileToDirectory(File("package.xml"), umb);
 });
 
-/*Task("Run-Unit-Tests")
+Task("Run-Unit-Tests")
 	.IsDependentOn("Build")
 	.Does(() =>
 {
@@ -123,14 +123,18 @@ Task("Build")
 
 	//TODO: Why not csproj?
 	NUnit3("../tests/Opten.Umbraco.Localization.Test/bin/Release/Opten.Umbraco.Localization.Test.dll", new NUnit3Settings {
-		Results = results + File("Opten.Umbraco.Localization.Test.xml"),
-		Configuration = "Release",
-		ResultFormat = "nunit2" // Wait until Bamboo 5.14 is out to support NUnit 3!
+		Results = new[] {
+			new NUnit3Result {
+				FileName = results + File("Opten.Umbraco.Localization.Test.xml"),
+				Format = "nunit2" // Wait until Bamboo 5.14 is out to support NUnit 3!
+			}
+		},
+		Configuration = "Release"
 	});
-});*/
+});
 
 Task("Pack")
-	.IsDependentOn("Build")
+	.IsDependentOn("Run-Unit-Tests")
 	.Does(() =>
 {
 	NuGetPackWithDependencies("./Opten.Umbraco.Localization.Core.nuspec", new NuGetPackSettings {
