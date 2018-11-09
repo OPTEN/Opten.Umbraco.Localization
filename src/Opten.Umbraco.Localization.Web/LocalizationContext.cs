@@ -109,7 +109,7 @@ namespace Opten.Umbraco.Localization.Web
 				}
 				else
 				{
-					string[] isoCodes = defaultBackofficeCultures.ToLower().Replace(" ", "").Split(',');
+					string[] isoCodes = defaultBackofficeCultures.ToLower().Replace(" ", string.Empty).Split(',');
 
 					return LocalizationContext.Languages.Where(o => isoCodes.Contains(o.IsoCode.ToLower())).ToArray();
 				}
