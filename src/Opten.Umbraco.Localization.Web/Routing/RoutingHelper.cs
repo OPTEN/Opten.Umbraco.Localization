@@ -155,7 +155,9 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		{
 			UrlAlias[] urlAlias = new UrlAlias[0];
 
-			if (content.HasProperty(Core.Constants.Conventions.Content.UrlAlias) &&
+
+			if (content != null &&
+				content.HasProperty(Core.Constants.Conventions.Content.UrlAlias) &&
 				content.HasValue(Core.Constants.Conventions.Content.UrlAlias))
 			{
 				urlAlias = content.GetPropertyValue<UrlAlias[]>(Core.Constants.Conventions.Content.UrlAlias);
