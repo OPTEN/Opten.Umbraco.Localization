@@ -109,9 +109,9 @@ namespace Opten.Umbraco.Localization.Web
 				}
 				else
 				{
-					string[] isoCodes = defaultBackofficeCultures.ToLower().Replace(" ", "").Split(',');
+					string[] isoCodes = defaultBackofficeCultures.Replace(" ", string.Empty).Split(',');
 
-					return LocalizationContext.Languages.Where(o => isoCodes.Contains(o.IsoCode.ToLower())).ToArray();
+					return LocalizationContext.Languages.Where(o => isoCodes.Contains(o.IsoCode, StringComparer.OrdinalIgnoreCase)).ToArray();
 				}
 			}
 			else
