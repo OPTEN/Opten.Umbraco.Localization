@@ -1,6 +1,4 @@
 ﻿using Opten.Common.Extensions;
-using Opten.Umbraco.Localization.Core.Models;
-using Opten.Umbraco.Localization.Web.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,24 +6,23 @@ using System.Linq;
 using System.Threading;
 using Umbraco.Core;
 using Umbraco.Core.Logging;
-using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 using Umbraco.Web;
 using Umbraco.Web.Routing;
+
 namespace Opten.Umbraco.Localization.Web.Routing
 {
 	/// <summary>
 	/// The Alias URL Provider (Localized URLs).
 	/// </summary>
+	/// <seealso cref="Umbraco.Web.Routing.IUrlProvider" />
 	public class AliasUrlProvider : IUrlProvider
 	{
-		public static event EventHandler<OnUrlGeneratingEventArgs> OnUrlGenerating;
-		public static event EventHandler<OnUrlGeneratingEventArgs> OnOtherUrlsGenerating;
 
 		private readonly RoutingHelper _routingHelper;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AliasUrlProvider"/> class.
+		/// Initializes a new instance of the <see cref="AliasUrlProvider" /> class.
 		/// </summary>
 		/// <param name="domainService">The domain service.</param>
 		public AliasUrlProvider(IDomainService domainService)
@@ -34,7 +31,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="AliasUrlProvider"/> class.
+		/// Initializes a new instance of the <see cref="AliasUrlProvider" /> class.
 		/// </summary>
 		public AliasUrlProvider() : this(ApplicationContext.Current.Services.DomainService) { }
 
@@ -45,24 +42,30 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		/// <param name="id">The identifier.</param>
 		/// <param name="current">The current.</param>
 		/// <param name="mode">The mode.</param>
-		/// <returns></returns>
+		/// <returns>
+		/// The url for the published content.
+		/// </returns>
 		/// <exception cref="System.ArgumentException">Current url must be absolute.;current</exception>
+		/// <remarks>
+		/// <para>The url is absolute or relative depending on <c>mode</c> and on <c>current</c>.</para>
+		/// <para>If the provider is unable to provide a url, it should return <c>null</c>.</para>
+		/// </remarks>
 		public string GetUrl(
 			UmbracoContext umbracoContext,
 			int id,
 			Uri current,
 			UrlProviderMode mode)
 		{
-			return this.GetUrl(
+			return this.GetUri(
 				umbracoContext: umbracoContext,
 				id: id,
 				current: current,
 				mode: mode,
-				culture: Thread.CurrentThread.CurrentUICulture);
+				culture: Thread.CurrentThread.CurrentUICulture)?.Url;
 		}
 
 		/// <summary>
-		/// Gets the localized URL.
+		/// Gets the localized URI.
 		/// </summary>
 		/// <param name="umbracoContext">The umbraco context.</param>
 		/// <param name="id">The identifier.</param>
@@ -70,58 +73,57 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		/// <param name="mode">The mode.</param>
 		/// <param name="culture">The culture.</param>
 		/// <returns></returns>
+		/// <exception cref="ArgumentException">Current url must be absolute. - current</exception>
 		/// <exception cref="System.ArgumentException">Current url must be absolute.;current</exception>
-		public string GetUrl(
+		public LocalizedUri GetUri(
 			UmbracoContext umbracoContext,
 			int id,
 			Uri current,
 			UrlProviderMode mode,
 			CultureInfo culture)
 		{
-			if (FindByUrlAliasEnabled/* && umbracoContext.IsFrontEndUmbracoRequest*/)
+			if (FindByUrlAliasEnabled)
 			{
 				if (current.IsAbsoluteUri == false)
-					throw new ArgumentException("Current url must be absolute.", "current");
-
-				if (OnUrlGenerating != null)
 				{
-					OnUrlGeneratingEventArgs e = new OnUrlGeneratingEventArgs(umbracoContext, id, current, mode, culture);
-					OnUrlGenerating(this, e);
-					if (e.Cancel) return null;
+					throw new ArgumentException("Current url must be absolute.", nameof(culture));
+				}
+
+				if (umbracoContext.IsFrontEndUmbracoRequest == false)
+				{
+					// this is just an attempt to display the correct url in the "Info" tab
+					// for the current user (e.g. if backend language is fr-CH but only de-CH is on frontend).
+					culture = LocalizationContext.IsValidLanguage(culture.TwoLetterISOLanguageName)
+						? culture
+						: LocalizationContext.DefaultCulture;
 				}
 
 				string isoCode = culture.Name;
 
-				// will not use cache if previewing
-				bool anyLocalizedUrl;
-				string route = _routingHelper.GetRouteById(
-					umbracoContext,
-					umbracoContext.InPreviewMode,
-					id,
-					isoCode,
-					out anyLocalizedUrl);
+				LocalizedUri uri = _routingHelper.GetLocalizedUri(umbracoContext, id, isoCode);
 
-				// NO! We want to localize it because of Surface/Api Controller!
-				//if (anyLocalizedUrl == false) return null; // other provider should take care of it
-
-				if (string.IsNullOrWhiteSpace(route))
+				if (uri == null || string.IsNullOrWhiteSpace(uri.Route))
 				{
 					LogHelper.Debug<AliasUrlProvider>(
 						"Couldn't find any page with contentId={0}. This is most likely caused by the page not being published.",
 						() => id);
+
 					return null;
 				}
 
 				// assemble the url from domainUri (maybe null) and path
-				return _routingHelper.AssembleUrl(
-					route: route,
+				uri.Url = _routingHelper.AssembleUrl(
+					route: uri.Route,
 					current: current,
 					mode: mode,
 					isoCode: isoCode);
+
+				return uri;
 			}
 			else
 			{
-				return null; // Other provider should take care of it.
+				// other provider should take care of it.
+				return null;
 			}
 		}
 
@@ -145,98 +147,42 @@ namespace Opten.Umbraco.Localization.Web.Routing
 				return Enumerable.Empty<string>();
 			}
 
-			IPublishedContent content = umbracoContext.ContentCache.GetById(id);
-			if (OnOtherUrlsGenerating != null)
-			{
-				OnUrlGeneratingEventArgs e = new OnUrlGeneratingEventArgs(umbracoContext, id, current);
-				OnOtherUrlsGenerating(this, e);
-				if (e.Cancel) return Enumerable.Empty<string>();
-			}
+			string route = umbracoContext.ContentCache.GetRouteById(id);
 
-			bool hasDomains = _routingHelper.NodeHasDomains(
-				contentId: content.Id);
+			// extract domainRootId and path
+			// route is /<path> or <domainRootId>/<path>
+			int pos = route.IndexOf('/');
+			string path = pos == 0 ? route : route.Substring(pos);
 
-			if (hasDomains)
+			int domainRootId = int.Parse(route.Substring(0, pos));
+
+			IEnumerable<DomainAndUri> domainUris = pos == 0
+				? null
+				: _routingHelper.UmbracoDomainsForNode(domainRootId, current);
+
+			if (domainUris == null || domainUris.Any() == false)
 			{
-				// If content has domains we do not have to walk up
-				// but when not then we have to, because we don't know if somewhere is a localized url
+				// if there are no domains (hostnames) we don't have to do anything
+				// because we do not have smth. like /de /en, right?!
 				return Enumerable.Empty<string>();
 			}
 
-			IPublishedContent node = content;
-			IEnumerable<DomainAndUri> domainUris = _routingHelper.UmbracoDomainsForNode(
-				contentId: node.Id,
-				current: current,
-				excludeDefault: false);
-
-			List<IPublishedContent> parents = new List<IPublishedContent>();
-
-			while (domainUris == null && node != null) // n is null at root
-			{
-				// move to parent node
-				node = node.Parent;
-
-				if (node != null) parents.Add(node);
-
-				domainUris = node == null ? null : _routingHelper.UmbracoDomainsForNode(
-					contentId: node.Id,
-					current: current,
-					excludeDefault: false);
-			}
-
-			/*parents.Reverse(); // Reverse from root down to the node*/
-
 			List<string> otherUrls = new List<string>();
 
-			if (domainUris == null)
-			{
-				// If there are no domains (hostnames) we don't have to do anything
-				// because we do not have smth. like /de /en, right?!
-				return otherUrls;
-			}
-
-			// We have to assemble the other urls by the url alias
-			// but we have to do that with all possible languages
-			// because the urlAlias could be null but the parent could have one
-			/*string path;
-			bool isLocalized;
-			UrlAlias alias;*/
-			string path;
 			foreach (CultureInfo cultureInfo in LocalizationContext.Cultures)
 			{
-				//TODO: We use the same as the Frontend would use it... the question is, if that is ok?
-				// Due to performance... I don't know we have less code here but populate always the parents and it's domains?
-				path = content.GetLocalizedUrl(language: cultureInfo.TwoLetterISOLanguageName);
+				LocalizedUri uri = this.GetUri(umbracoContext, id, current, UrlProviderMode.AutoLegacy, cultureInfo);
 
-				// Url per language will be added because of the domainAndUris
-				// so /about-us is possible for all languages e.g. /en/about-us /de/about-us /it/about-us...
-
-				foreach (DomainAndUri domainUri in domainUris)
+				if (uri != null && uri.Localized)
 				{
-					// We have to replace the host and the language so we can populate the other urls correctly
-					path = path.Replace(domainUri.Uri.GetBaseUrl(), string.Empty);
-					path = path.EnsureStartsWith('/').EnsureEndsWith('/');
-					path = path.Replace("/" + cultureInfo.TwoLetterISOLanguageName.ToLowerInvariant() + "/", string.Empty);
-					path = path.EnsureStartsWith('/').EnsureEndsWith('/');
+					otherUrls.Add(uri.Url);
 				}
-
-				//alias = urlAlias.SingleOrDefault(o => o.ISOCode.Equals(cultureInfo.Name));
-
-				//otherUrls.Add(path);
-
-				/*path = "/" + string.Join("/", _routingHelper.GetUrlNamesByISOCode(contents: parents, isoCode: cultureInfo.Name));
-				path += (parents.Count > 1 ? "/" : string.Empty) + _routingHelper.GetUrlName(false, content, alias, out isLocalized);*/
-
-				otherUrls.AddRange(AssembleOtherUrls(
-					domainUris: domainUris,
-					path: path));
 			}
 
 			return otherUrls
-				   .Where(o => o.Equals(content.Url) == false) // Except the url made from umbraco
-				   .OrderBy(o => o)
-				   .Distinct()
-				   .ToList();
+				.OrderBy(o => o)
+				.Distinct()
+				.ToList();
 		}
 
 		/// <summary>
@@ -250,8 +196,10 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			get
 			{
 				// finder 
-				if (ContentFinderResolver.Current.ContainsType<Opten.Umbraco.Localization.Web.Routing.ContentFinderByUrlAlias>())
+				if (ContentFinderResolver.Current.ContainsType<Routing.ContentFinderByUrlAlias>())
+				{
 					return true;
+				}
 
 				// handler wrapped into a finder 
 				//if (ContentFinderResolver.Current.ContainsType<ContentFinderByNotFoundHandler<global::umbraco.SearchForAlias>>())

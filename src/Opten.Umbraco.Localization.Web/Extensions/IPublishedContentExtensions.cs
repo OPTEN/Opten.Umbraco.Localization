@@ -2,6 +2,7 @@
 using Opten.Umbraco.Localization.Web.Helpers;
 using System;
 using System.Globalization;
+using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Web;
@@ -379,7 +380,9 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// </summary>
 		/// <param name="content">The content.</param>
 		/// <param name="alias">The alias.</param>
-		/// <returns></returns>
+		/// <returns>
+		///   <c>true</c> if [has localized value] [the specified alias]; otherwise, <c>false</c>.
+		/// </returns>
 		public static bool HasLocalizedValue(this IPublishedContent content, string alias)
 		{
 			return content.HasLocalizedValue(
@@ -395,7 +398,9 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// <param name="content">The content.</param>
 		/// <param name="alias">The alias.</param>
 		/// <param name="language">The language.</param>
-		/// <returns></returns>
+		/// <returns>
+		///   <c>true</c> if [has localized value] [the specified alias]; otherwise, <c>false</c>.
+		/// </returns>
 		public static bool HasLocalizedValue(this IPublishedContent content, string alias, string language)
 		{
 			return content.HasLocalizedValue(
@@ -411,7 +416,9 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// <param name="content">The content.</param>
 		/// <param name="alias">The alias.</param>
 		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
-		/// <returns></returns>
+		/// <returns>
+		///   <c>true</c> if [has localized value] [the specified alias]; otherwise, <c>false</c>.
+		/// </returns>
 		public static bool HasLocalizedValue(this IPublishedContent content, string alias, bool recurse)
 		{
 			return content.HasLocalizedValue(
@@ -428,7 +435,9 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// <param name="alias">The alias.</param>
 		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
 		/// <param name="language">The language.</param>
-		/// <returns></returns>
+		/// <returns>
+		///   <c>true</c> if [has localized value] [the specified alias]; otherwise, <c>false</c>.
+		/// </returns>
 		public static bool HasLocalizedValue(this IPublishedContent content, string alias, bool recurse, string language)
 		{
 			return content.HasLocalizedValue(
@@ -445,7 +454,9 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// <param name="alias">The alias.</param>
 		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
 		/// <param name="withFallback">if set to <c>false</c> [no fallback to default language].</param>
-		/// <returns></returns>
+		/// <returns>
+		///   <c>true</c> if [has localized value] [the specified alias]; otherwise, <c>false</c>.
+		/// </returns>
 		public static bool HasLocalizedValue(this IPublishedContent content, string alias, bool recurse, bool withFallback = true)
 		{
 			return content.HasLocalizedValue(
@@ -463,7 +474,9 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// <param name="recurse">if set to <c>true</c> [recurse].</param>
 		/// <param name="language">The language.</param>
 		/// <param name="withFallback">if set to <c>false</c> [no fallback to default language].</param>
-		/// <returns></returns>
+		/// <returns>
+		///   <c>true</c> if [has localized value] [the specified alias]; otherwise, <c>false</c>.
+		/// </returns>
 		public static bool HasLocalizedValue(this IPublishedContent content, string alias, bool recurse, string language, bool withFallback = true)
 		{
 			Mandate.ParameterNotNull(content, "content");
@@ -479,16 +492,20 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// <returns></returns>
 		public static string GetLocalizedUrl(this IPublishedContent content)
 		{
-			System.Web.HttpContext httpContext = System.Web.HttpContext.Current; //TODO: Better way?
+			if (UmbracoContext.Current == null || UmbracoContext.Current.IsFrontEndUmbracoRequest == false)
+			{
+				return null;
+			}
 
 			Routing.LocalizedRouting router = new Routing.LocalizedRouting(
-				applicationContext: ApplicationContext.Current, //TODO: Better way?
-				umbracoContext: UmbracoContext.Current); //TODO: Better way?
+				applicationContext: ApplicationContext.Current,
+				umbracoContext: UmbracoContext.Current);
 
+			//TODO: Better way?
 			CultureInfo culture = router.TryGetCultureByRequest(
-				request: new System.Web.HttpRequestWrapper(httpContext.Request));
+				request: new HttpRequestWrapper(HttpContext.Current.Request));
 
-			return content.GetLocalizedUrl(language: culture.TwoLetterISOLanguageName);
+			return content.GetLocalizedUrl(culture.TwoLetterISOLanguageName);
 		}
 
 		/// <summary>
@@ -499,42 +516,55 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		/// <returns></returns>
 		public static string GetLocalizedUrl(this IPublishedContent content, string language)
 		{
-			//TODO: Check if language is valid?
+			if (UmbracoContext.Current == null || UmbracoContext.Current.IsFrontEndUmbracoRequest == false)
+			{
+				return null;
+			}
 
-			System.Web.HttpContext httpContext = System.Web.HttpContext.Current;  //TODO: Better way?
-			Uri current = httpContext.Request.Url;  //TODO: Better way?
+			Uri current = HttpContext.Current.Request.Url;
+
+			return content.GetLocalizedUrl(language, current);
+		}
+
+		/// <summary>
+		/// Gets the localized URL.
+		/// </summary>
+		/// <param name="content">The content.</param>
+		/// <param name="language">The language.</param>
+		/// <param name="current">The current URI.</param>
+		/// <returns></returns>
+		public static string GetLocalizedUrl(this IPublishedContent content, string language, Uri current)
+		{
+			//TODO: Check if language is valid?
 
 			if (Routing.AliasUrlProvider.FindByUrlAliasEnabled == false)
 			{
-				//TODO: Should we add also here the "just" replacing way if alias url provider disabled? /de/page => /en/page?
-				//TODO: Helper for adding url something like => current.AddUrl("/de/"); with handles the ensure thingy
-
 				// Sometimes the URL contains the host (when hostnames are added) e.g. http://www.opten.ch/de
 				// So the content.Url is already an absolute URL => no need the get the base url...
-				Uri uri;
 				bool withDomain = true;
-				if (Uri.TryCreate(content.Url, UriKind.Absolute, out uri) == false)
+				if (Uri.TryCreate(content.Url, UriKind.Absolute, out Uri uri) == false)
 				{
 					// but we have to handle it, if there are no hostnames
-					uri = new Uri(current.GetBaseUrl() + content.Url.EnsureStartsWith('/'));
-					withDomain = false; // If we don't have any hostnames we don't want to return the domain
+					//TODO: GetUrlWithLanguage should handle relative urls.
+					uri = new Uri(current.GetBaseUrl().EnsureStartsWith('/') + content.Url.TrimStart('/'));
+
+					withDomain = false; // if we don't have any hostnames we don't want to return the domain
 				}
 
+				//TODO: Should we add also here the "just" replacing way if alias url provider disabled? /de/page => /en/page?
+				//TODO: Helper for adding url something like => current.AddUrl("/de/"); with handles the ensure thingy
 				return uri.GetUrlWithLanguage(language: language, withDomain: withDomain);
 			}
-
-			Opten.Umbraco.Localization.Web.Routing.AliasUrlProvider urlProvider
-				= new Routing.AliasUrlProvider();
 
 			CultureInfo culture = LocalizationContext.TryGetCultureFromTwoLetterIsoCode(
 				twoLetterISOLanguageName: language);
 
-			return urlProvider.GetUrl(
+			return new Routing.AliasUrlProvider().GetUri(
 				umbracoContext: UmbracoContext.Current,
 				id: content.Id,
 				current: current,
 				mode: global::Umbraco.Web.Routing.UrlProviderMode.AutoLegacy,
-				culture: culture);
+				culture: culture)?.Url;
 		}
 
 		/// <summary>

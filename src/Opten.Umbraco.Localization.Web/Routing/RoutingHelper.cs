@@ -1,5 +1,4 @@
-﻿using Opten.Common.Extensions;
-using Opten.Common.Helpers;
+﻿using Opten.Common.Helpers;
 using Opten.Umbraco.Localization.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -28,66 +27,60 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		//TODO: Has to be changed for 7.3.x
 
 		/// <summary>
-		/// Gets the localized route and checks if any is set.
+		/// Gets the localized URI.
 		/// </summary>
 		/// <param name="umbracoContext">The umbraco context.</param>
-		/// <param name="preview">if set to <c>true</c> [preview].</param>
 		/// <param name="contentId">The content identifier.</param>
 		/// <param name="isoCode">The ISO code.</param>
-		/// <param name="anyLocalizedUrl">if set to <c>true</c> [any localized URL].</param>
 		/// <returns></returns>
+		/// <exception cref="ArgumentNullException">content</exception>
 		/// https://github.com/umbraco/Umbraco-CMS/blob/ded1def8e2e7ea1a4fd0f849cc7a3f1f97cd8242/src/Umbraco.Web/PublishedCache/XmlPublishedCache/PublishedContentCache.cs
-		internal string GetRouteById(
+		internal LocalizedUri GetLocalizedUri(
 			UmbracoContext umbracoContext,
-			bool preview,
 			int contentId,
-			string isoCode,
-			out bool anyLocalizedUrl)
+			string isoCode)
 		{
-			// This means an editor set a localized url in the backend
-			anyLocalizedUrl = false;
+			// will not use cache if previewing
+			IPublishedContent content = umbracoContext.ContentCache.GetById(contentId);
 
-			IPublishedContent content = umbracoContext.ContentCache.GetById(
-				preview: preview,
-				contentId: contentId);
+			if (content == null)
+			{
+				return null;
+			}
 
-			if (content == null) return string.Empty;
+			LocalizedUri routing = new LocalizedUri();
+
+			string route = umbracoContext.ContentCache.GetRouteById(contentId);
+
+			// extract domainRootId and path
+			// route is /<path> or <domainRootId>/<path>
+			int pos = route.IndexOf('/');
+			int domainRootId = pos == 0 ? 0 : int.Parse(route.Substring(0, pos));
 
 			// walk up from that node until we hit a node with a domain, 
 			// or we reach the content root, collecting urls in the way 
 			List<string> pathParts = new List<string>();
 			IPublishedContent node = content;
-			bool hasDomains = this.NodeHasDomains(contentId: node.Id);
-			bool isLocalized;
-			while (hasDomains == false && node != null) // n is null at root 
+			while (node != null && node.Id != domainRootId) // node is null at root 
 			{
-				pathParts.Add(GetUrlNameByISOCode(node, isoCode, out isLocalized));
-				if (isLocalized) anyLocalizedUrl = true; // only set this if we have one
+				pathParts.Add(GetUrlNameByISOCode(node, isoCode, out bool localized));
+
+				if (localized)
+				{
+					routing.Localized = true;
+				}
 
 				// move to parent node 
 				node = node.Parent;
-				hasDomains = node != null && this.NodeHasDomains(contentId: node.Id);
 			}
 
-			// assemble the route 
-			pathParts = pathParts.Where(o => o.Equals("/") == false) //TODO: Can we do that better?
-								 .ToList();
 			pathParts.Reverse();
 
-			string path = "/" + string.Join("/", pathParts); // will be "/" or "/foo" or "/foo/bar" etc 
-			string route = (node == null ? string.Empty : node.Id.ToString(CultureInfo.InvariantCulture)) + path;
+			routing.Route = domainRootId + string.Join("/", pathParts).EnsureStartsWith('/');
 
-			return route;
+			return routing;
 		}
 
-		/// <summary>
-		/// Assembles the URL with the found hostname.
-		/// </summary>
-		/// <param name="route">The route.</param>
-		/// <param name="current">The current.</param>
-		/// <param name="mode">The mode.</param>
-		/// <param name="isoCode">The iso code.</param>
-		/// <returns></returns>
 		internal string AssembleUrl(
 			string route,
 			Uri current,
@@ -124,16 +117,16 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			return urlAlias.Any(o => o.Url.Equals(urlName, StringComparison.InvariantCultureIgnoreCase));
 		}
 
-		internal string GetUrlNameByISOCode(IPublishedContent content, string isoCode, out bool isLocalized)
+		internal string GetUrlNameByISOCode(IPublishedContent content, string isoCode, out bool localized)
 		{
 			UrlAlias urlAlias = GetUrlAlias(content: content, isoCode: isoCode);
 
-			return GetUrlName(content, urlAlias, out isLocalized);
+			return GetUrlName(content, urlAlias, out localized);
 		}
 
-		internal string GetUrlName(IPublishedContent content, UrlAlias urlAlias, out bool isLocalized)
+		internal string GetUrlName(IPublishedContent content, UrlAlias urlAlias, out bool localized)
 		{
-			isLocalized = false;
+			localized = false;
 
 			if (content == null) return string.Empty;
 
@@ -143,18 +136,17 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			}
 			else
 			{
-				isLocalized = (IsEmptyUrlName(urlAlias: urlAlias) == false);
+				localized = IsEmptyUrlName(urlAlias: urlAlias) == false;
 
-				return isLocalized
-						? urlAlias.Url
-						: content.UrlName;
+				return localized
+					? urlAlias.Url
+					: content.UrlName;
 			}
 		}
 
 		internal UrlAlias[] GetUrlAlias(IPublishedContent content)
 		{
 			UrlAlias[] urlAlias = new UrlAlias[0];
-
 
 			if (content != null &&
 				content.HasProperty(Core.Constants.Conventions.Content.UrlAlias) &&
@@ -164,6 +156,18 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			}
 
 			return urlAlias ?? new UrlAlias[0];
+		}
+
+		internal bool HasUrlAlias(IPublishedContent content)
+		{
+			if (content == null)
+			{
+				return false;
+			}
+
+			UrlAlias[] urlAlias = GetUrlAlias(content);
+
+			return urlAlias != null && urlAlias.Any(alias => IsEmptyUrlName(alias) == false);
 		}
 
 		private UrlAlias GetUrlAlias(IPublishedContent content, string isoCode)
@@ -177,10 +181,99 @@ namespace Opten.Umbraco.Localization.Web.Routing
 
 		private bool IsEmptyUrlName(UrlAlias urlAlias)
 		{
+			if (urlAlias == null)
+			{
+				return true;
+			}
+
 			return string.IsNullOrWhiteSpace(urlAlias.Url) || string.IsNullOrWhiteSpace(urlAlias.Url.ToUrlSegment());
 		}
 
-		#region Copied from DomainHelper.cs because it's internal ;-(
+		#region Private methods
+
+		private DomainAndUri DomainForNode(int contentId, Uri current, string isoCode)
+		{
+			if (contentId < 1)
+			{
+				return null;
+			}
+
+			// get the domains on that node
+			IDomain[] domains = _domainService.GetAssignedDomains(contentId, false).ToArray();
+
+			// none?
+			if (domains.Any() == false)
+			{
+				return null;
+			}
+
+			string twoLetterISOCode = new CultureInfo(isoCode).TwoLetterISOLanguageName;
+
+			string scheme = current == null ? Uri.UriSchemeHttp : current.Scheme;
+
+			// get domains for the iso code
+			DomainAndUri[] domainsAndUris = domains
+				.Where(d => d.IsWildcard == false)
+				//.Where(d => d.LanguageIsoCode.StartsWith(twoLetterISOCode, StringComparison.OrdinalIgnoreCase))
+				.Select(d => new DomainAndUri(d, scheme))
+				.OrderByDescending(d => d.Uri.ToString())
+				.ToArray();
+
+			if (domainsAndUris.Any() == false)
+			{
+				// maybe Umbraco can give us the correct domain
+				return UmbracoDomainForNode(contentId, current);
+			}
+
+			if (current == null)
+			{
+				// take the first one by default (what else can we do?)
+				return domainsAndUris.First();
+			}
+			else
+			{
+				// look for the first domain that would be the exact of the current url
+				// ie current is www.example.com/de, look for domain www.example.com
+				Uri currentWithSlash = current.EndPathWithSlash();
+
+				DomainAndUri domainAndUri = domainsAndUris.FirstOrDefault(d => d.Uri.EndPathWithSlash().IsBaseOf(currentWithSlash));
+
+				if (domainAndUri != null)
+				{
+					return domainAndUri;
+				}
+
+				// look for the first domain that would be the base of the current url
+				// ie current is www.example.com/de, look for domain www.example.com/(de)
+				string authority = current.GetLeftPart(UriPartial.Authority);
+				string path = twoLetterISOCode.EnsureStartsWith('/');
+
+				currentWithSlash = new Uri(authority + path, UriKind.Absolute).EndPathWithSlash();
+
+				domainAndUri = domainsAndUris.FirstOrDefault(d => d.Uri.EndPathWithSlash().IsBaseOf(currentWithSlash));
+
+				if (domainAndUri != null)
+				{
+					return domainAndUri;
+				}
+
+				// if none matches, try again without the port
+				// ie current is www.example.com:1234/foo/bar, look for domain www.example.com
+				domainAndUri = domainsAndUris.FirstOrDefault(d => d.Uri.EndPathWithSlash().IsBaseOf(currentWithSlash.WithoutPort()));
+
+				if (domainAndUri != null)
+				{
+					return domainAndUri;
+				}
+			}
+
+			// maybe Umbraco can give us the correct domain
+			return UmbracoDomainForNode(contentId, current);
+		}
+
+		#endregion
+
+		#region Copied from DomainHelper.cs because these methods are internal
 
 		private Uri UmbracoAssembleUrl(DomainAndUri domainUri, string path, Uri current, UrlProviderMode mode)
 		{
@@ -217,69 +310,17 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			return domains != null && domains.Any();
 		}
 
-		#endregion
-
-		#region Private methods
-
-		private DomainAndUri DomainForNode(int contentId, Uri current, string isoCode)
+		private DomainAndUri UmbracoDomainForNode(int contentId, Uri current)
 		{
-			// sanitize the list to have proper uris for comparison (scheme, path end with /)
-			// we need to end with / because example.com/foo cannot match example.com/foobar
-			// we need to order so example.com/foo matches before example.com/
-			string scheme = current == null ? Uri.UriSchemeHttp : current.Scheme;
+			// In 7.3.x the method "DomainsForNode" is not static anymore!
+			DomainHelper domainHelper = new DomainHelper(
+				domainService: _domainService);
 
-			IEnumerable<IDomain> domains = _domainService.GetAssignedDomains(
-				contentId: contentId,
-				includeWildcards: false);
-
-			// No domains so return null
-			if (domains.Any() == false) return null;
-
-			DomainAndUri[] domainsAndUris = domains
-				.Where(d => d.IsWildcard == false)
-				//.Select(SanitizeForBackwardCompatibility) // Not needed because we have pre-4.10+
-				.Select(d => new DomainAndUri(d, scheme))
-				.OrderByDescending(d => d.Uri.ToString())
-				.ToArray();
-
-			// this is easier than umbraco's approach
-			// because for this localization it's only allowed to have one culture per hostname
-			// maybe we have to change this for the future...
-
-			// look for the first domain that would be the base of the current url and has same the iso code
-			// ie current is www.example.com/foo/bar, look for domain www.example.com 
-			DomainAndUri domainAndUri = TryGetDomainByUriAndIsoCode(
-				domainsAndUris: domainsAndUris,
-				current: current,
-				isoCode: isoCode);
-
-			// if nothing found we get at least the correct language
-			if (domainAndUri == null)
-			{
-				domainAndUri = domainsAndUris.FirstOrDefault(
-					o => o.UmbracoDomain.LanguageIsoCode == isoCode);
-			}
-
-			return domainAndUri;
-		}
-
-		private DomainAndUri TryGetDomainByUriAndIsoCode(
-			DomainAndUri[] domainsAndUris,
-			Uri current,
-			string isoCode)
-		{
-			current = current.EndPathWithSlash();
-
-			// Is it okay that we only check the BaseUrl()?
-			// I think so, because we do not care about the rest...
-			return domainsAndUris.FirstOrDefault(o =>
-				o.Uri.GetBaseUrl().Equals(current.GetBaseUrl())
-					//o.Uri.EndPathWithSlash().IsBaseOf(current)
-					//||
-					//o.Uri.EndPathWithSlash().IsBaseOf(current.WithoutPort())
-					//)
-				&&
-				o.UmbracoDomain.LanguageIsoCode.Equals(isoCode));
+			// Should be removed until DomainHelper is public
+			return ActivatorHelper.GetPrivateMethodReturnValueOfInstance<DomainAndUri>(
+				instance: domainHelper,
+				methodName: "DomainForNode",
+				methodArguments: new object[] { contentId, current });
 		}
 
 		#endregion

@@ -176,18 +176,18 @@
 				// Transform name into segment by Umbraco
 				getUrlSegment(name, function (segment) {
 
-					// Set the semgent
+					// set the semgent
 					$scope.urls[index].url = segment;
 
-					// Then check if the current url has the same segment
-					if (editorState.current.urls && editorState.current.urls.length) {
+					// check if the current url has the same segment
+					/*if (editorState.current.urls && editorState.current.urls.length) {
 						var currentSegment = editorState.current.urls[0].split('/');
 						currentSegment = currentSegment[currentSegment.length - 2];
 
 						setError(index, (segment.toLowerCase() == currentSegment.toLowerCase()));
-					}
+					}*/
 
-					// Then if other in the same node has the same url
+					// check if any sibling has the same url
 					angular.forEach($scope.urls, function (language, i) {
 						if (index != i && hasError(index) == false) {
 
