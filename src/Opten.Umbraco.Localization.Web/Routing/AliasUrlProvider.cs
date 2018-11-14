@@ -61,7 +61,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 				id: id,
 				current: current,
 				mode: mode,
-				culture: Thread.CurrentThread.CurrentUICulture)?.Url;
+				cultureInfo: Thread.CurrentThread.CurrentUICulture)?.Url;
 		}
 
 		/// <summary>
@@ -71,36 +71,38 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		/// <param name="id">The identifier.</param>
 		/// <param name="current">The current.</param>
 		/// <param name="mode">The mode.</param>
-		/// <param name="culture">The culture.</param>
+		/// <param name="cultureInfo">The culture.</param>
 		/// <returns></returns>
-		/// <exception cref="ArgumentException">Current url must be absolute. - current</exception>
 		/// <exception cref="System.ArgumentException">Current url must be absolute.;current</exception>
+		/// <exception cref="ArgumentException">Current url must be absolute. - current</exception>
 		public LocalizedUri GetUri(
 			UmbracoContext umbracoContext,
 			int id,
 			Uri current,
 			UrlProviderMode mode,
-			CultureInfo culture)
+			CultureInfo cultureInfo)
 		{
 			if (FindByUrlAliasEnabled)
 			{
 				if (current.IsAbsoluteUri == false)
 				{
-					throw new ArgumentException("Current url must be absolute.", nameof(culture));
+					throw new ArgumentException("Current url must be absolute.", nameof(current));
+				}
+				if (cultureInfo == null)
+				{
+					throw new ArgumentException(nameof(cultureInfo));
 				}
 
 				if (umbracoContext.IsFrontEndUmbracoRequest == false)
 				{
 					// this is just an attempt to display the correct url in the "Info" tab
 					// for the current user (e.g. if backend language is fr-CH but only de-CH is on frontend).
-					culture = LocalizationContext.IsValidLanguage(culture.TwoLetterISOLanguageName)
-						? culture
+					cultureInfo = LocalizationContext.IsValidLanguage(cultureInfo.TwoLetterISOLanguageName)
+						? cultureInfo
 						: LocalizationContext.DefaultCulture;
 				}
-
-				string isoCode = culture.Name;
-
-				LocalizedUri uri = _routingHelper.GetLocalizedUri(umbracoContext, id, isoCode);
+				
+				LocalizedUri uri = _routingHelper.GetLocalizedUri(umbracoContext, id, cultureInfo);
 
 				if (uri == null || string.IsNullOrWhiteSpace(uri.Route))
 				{
@@ -116,7 +118,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 					route: uri.Route,
 					current: current,
 					mode: mode,
-					isoCode: isoCode);
+					cultureInfo: cultureInfo);
 
 				return uri;
 			}

@@ -31,14 +31,14 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		/// </summary>
 		/// <param name="umbracoContext">The umbraco context.</param>
 		/// <param name="contentId">The content identifier.</param>
-		/// <param name="isoCode">The ISO code.</param>
+		/// <param name="cultureInfo">The culture information.</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentNullException">content</exception>
 		/// https://github.com/umbraco/Umbraco-CMS/blob/ded1def8e2e7ea1a4fd0f849cc7a3f1f97cd8242/src/Umbraco.Web/PublishedCache/XmlPublishedCache/PublishedContentCache.cs
 		internal LocalizedUri GetLocalizedUri(
 			UmbracoContext umbracoContext,
 			int contentId,
-			string isoCode)
+			CultureInfo cultureInfo)
 		{
 			// will not use cache if previewing
 			IPublishedContent content = umbracoContext.ContentCache.GetById(contentId);
@@ -63,7 +63,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			IPublishedContent node = content;
 			while (node != null && node.Id != domainRootId) // node is null at root 
 			{
-				pathParts.Add(GetUrlNameByISOCode(node, isoCode, out bool localized));
+				pathParts.Add(GetUrlNameByCulture(node, cultureInfo, out bool localized));
 
 				if (localized)
 				{
@@ -85,7 +85,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			string route,
 			Uri current,
 			UrlProviderMode mode,
-			string isoCode)
+			CultureInfo cultureInfo)
 		{
 			// extract domainUri and path 
 			// route is /<path> or <domainRootId>/<path> 
@@ -95,7 +95,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			DomainAndUri domainUri = pos == 0 ? null : this.DomainForNode(
 				contentId: int.Parse(route.Substring(0, pos)),
 				current: current,
-				isoCode: isoCode);
+				cultureInfo: cultureInfo);
 
 			return UmbracoAssembleUrl(
 				domainUri: domainUri,
@@ -117,9 +117,9 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			return urlAlias.Any(o => o.Url.Equals(urlName, StringComparison.InvariantCultureIgnoreCase));
 		}
 
-		internal string GetUrlNameByISOCode(IPublishedContent content, string isoCode, out bool localized)
+		internal string GetUrlNameByCulture(IPublishedContent content, CultureInfo cultureInfo, out bool localized)
 		{
-			UrlAlias urlAlias = GetUrlAlias(content: content, isoCode: isoCode);
+			UrlAlias urlAlias = GetUrlAlias(content: content, cultureInfo: cultureInfo);
 
 			return GetUrlName(content, urlAlias, out localized);
 		}
@@ -170,13 +170,14 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			return urlAlias != null && urlAlias.Any(alias => IsEmptyUrlName(alias) == false);
 		}
 
-		private UrlAlias GetUrlAlias(IPublishedContent content, string isoCode)
+		private UrlAlias GetUrlAlias(IPublishedContent content, CultureInfo cultureInfo)
 		{
 			UrlAlias[] urlAlias = GetUrlAlias(content: content);
 
 			if (urlAlias == null || urlAlias.Any() == false) return null;
 
-			return urlAlias.FirstOrDefault(o => o.ISOCode.Equals(isoCode, StringComparison.OrdinalIgnoreCase));
+			//TODO: twoLetterISOLanguageName?
+			return urlAlias.FirstOrDefault(o => o.ISOCode.Equals(cultureInfo.Name, StringComparison.OrdinalIgnoreCase));
 		}
 
 		private bool IsEmptyUrlName(UrlAlias urlAlias)
@@ -191,7 +192,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 
 		#region Private methods
 
-		private DomainAndUri DomainForNode(int contentId, Uri current, string isoCode)
+		private DomainAndUri DomainForNode(int contentId, Uri current, CultureInfo cultureInfo)
 		{
 			if (contentId < 1)
 			{
@@ -206,8 +207,6 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			{
 				return null;
 			}
-
-			string twoLetterISOCode = new CultureInfo(isoCode).TwoLetterISOLanguageName;
 
 			string scheme = current == null ? Uri.UriSchemeHttp : current.Scheme;
 
@@ -246,7 +245,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 				// look for the first domain that would be the base of the current url
 				// ie current is www.example.com/de, look for domain www.example.com/(de)
 				string authority = current.GetLeftPart(UriPartial.Authority);
-				string path = twoLetterISOCode.EnsureStartsWith('/');
+				string path = cultureInfo.TwoLetterISOLanguageName.EnsureStartsWith('/');
 
 				currentWithSlash = new Uri(authority + path, UriKind.Absolute).EndPathWithSlash();
 

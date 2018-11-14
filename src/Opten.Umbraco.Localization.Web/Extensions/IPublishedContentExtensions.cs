@@ -564,7 +564,7 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 				id: content.Id,
 				current: current,
 				mode: global::Umbraco.Web.Routing.UrlProviderMode.AutoLegacy,
-				culture: culture)?.Url;
+				cultureInfo: culture)?.Url;
 		}
 
 		/// <summary>
