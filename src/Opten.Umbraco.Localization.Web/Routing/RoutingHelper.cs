@@ -1,4 +1,5 @@
-﻿using Opten.Common.Helpers;
+﻿using Opten.Common.Extensions;
+using Opten.Common.Helpers;
 using Opten.Umbraco.Localization.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -231,9 +232,14 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			}
 			else
 			{
+
 				// look for the first domain that would be the exact of the current url
 				// ie current is www.example.com/de, look for domain www.example.com
 				Uri currentWithSlash = current.EndPathWithSlash();
+				if (currentWithSlash.ContainsLanguage())
+				{
+					currentWithSlash = new Uri(currentWithSlash.GetUrlWithLanguage(cultureInfo.TwoLetterISOLanguageName));
+				}
 
 				DomainAndUri domainAndUri = domainsAndUris.FirstOrDefault(d => d.Uri.EndPathWithSlash().IsBaseOf(currentWithSlash));
 
