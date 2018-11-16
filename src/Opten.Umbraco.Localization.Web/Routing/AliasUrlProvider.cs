@@ -156,7 +156,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			int pos = route.IndexOf('/');
 			string path = pos == 0 ? route : route.Substring(pos);
 
-			int domainRootId = int.Parse(route.Substring(0, pos));
+			int domainRootId = pos == 0 ? 0 : int.Parse(route.Substring(0, pos));
 
 			IEnumerable<DomainAndUri> domainUris = pos == 0
 				? null
