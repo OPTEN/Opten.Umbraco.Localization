@@ -1,4 +1,5 @@
 ﻿using Opten.Common.Extensions;
+using Opten.Umbraco.Localization.Core.Models;
 using Opten.Umbraco.Localization.Web.Extensions;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 using Umbraco.Web;
 using Umbraco.Web.Routing;
-
 namespace Opten.Umbraco.Localization.Web.Routing
 {
 	/// <summary>
@@ -19,6 +19,8 @@ namespace Opten.Umbraco.Localization.Web.Routing
 	/// </summary>
 	public class AliasUrlProvider : IUrlProvider
 	{
+		public static event EventHandler<OnUrlGeneratingEventArgs> OnUrlGenerating;
+		public static event EventHandler<OnUrlGeneratingEventArgs> OnOtherUrlsGenerating;
 
 		private readonly RoutingHelper _routingHelper;
 
@@ -81,6 +83,13 @@ namespace Opten.Umbraco.Localization.Web.Routing
 				if (current.IsAbsoluteUri == false)
 					throw new ArgumentException("Current url must be absolute.", "current");
 
+				if (OnUrlGenerating != null)
+				{
+					OnUrlGeneratingEventArgs e = new OnUrlGeneratingEventArgs(umbracoContext, id, current, mode, culture);
+					OnUrlGenerating(this, e);
+					if (e.Cancel) return null;
+				}
+
 				string isoCode = culture.Name;
 
 				// will not use cache if previewing
@@ -137,8 +146,12 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			}
 
 			IPublishedContent content = umbracoContext.ContentCache.GetById(id);
-
-			/*UrlAlias[] urlAlias = _routingHelper.GetUrlAlias(content: content);*/
+			if (OnOtherUrlsGenerating != null)
+			{
+				OnUrlGeneratingEventArgs e = new OnUrlGeneratingEventArgs(umbracoContext, id, current);
+				OnOtherUrlsGenerating(this, e);
+				if (e.Cancel) return Enumerable.Empty<string>();
+			}
 
 			bool hasDomains = _routingHelper.NodeHasDomains(
 				contentId: content.Id);

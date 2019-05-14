@@ -42,24 +42,25 @@
 
 		activate();
 
-		$scope.$on("formSubmitting", function () {
+		$scope.$on("formSubmitting", function (e, f) {
 			//TODO: If we have a valid state the json get's created but could be "empty"
 			// don't know if this is a problem or we have to check each input if it has a value
 			// and then create the json? => this code here don't work if it's a directive...
-
-			if ($scope.states.isPublished == false || ($scope.states.isEnabled && $scope.states.hasHostnames)) {
-				// Delete all urls if has hostnames!
-				$scope.model.value = null;
-			}
-			else if ($scope.urls && $scope.urls.length) {
-				// Check if we have any localized url
-				// Only set the JSON to the $scope.model.value if we really have something.
-				if (hasAnyLocalized()) {
-					$scope.model.value = $scope.urls;
-				}
-				else {
+			if (f.action == 'publish') {
+				$scope.states.isPublished = true;
+				if ($scope.states.isEnabled && $scope.states.hasHostnames) {
+					// Delete all urls if has hostnames!
 					$scope.model.value = null;
 				}
+				// Check if we have any localized url
+				// Only set the JSON to the $scope.model.value if we really have something.
+				if ($scope.urls && $scope.urls.length && hasAnyLocalized()) {
+					$scope.model.value = $scope.urls;
+				} else {
+					$scope.model.value = null;
+				}
+			} else if (f.action === undefined) {// unpublished
+				$scope.states.isPublished = false;
 			}
 		});
 
@@ -77,17 +78,18 @@
 			languageResource.getState(contentId).then(function (state) {
 				vm.loadings.push("isEnabled");
 				vm.loadings.push("hasHostnames");
+				vm.loadings = Array.from(new Set(vm.loadings));
 
 				$scope.states.isEnabled = state.isEnabled;
 				$scope.states.hasHostnames = state.hasHostnames;
 			});
 
-			$scope.states.isPublished = editorState.current.published;
+			$scope.states.isPublished = editorState.current.published ? editorState.current.published : editorState.current.hasPublishedVersion;
 		};
 
 		function enable(state) {
 			// We wait until everything is loaded
-			if (state.isPublished && vm.loadings.length >= 3) {
+			if (state.isPublished && vm.loadings.length == 3) {
 
 				// Only set the languages if the states are valid
 				if (state.isEnabled &&
@@ -188,10 +190,10 @@
 					}
 
 					// Then if other in the same node has the same url
-					angular.forEach($scope.urls, function (language, i) {
+					/*angular.forEach($scope.urls, function (language, i) {
 						if (index != i && hasError(index) == false) {
 
-							if (setError(index, (language.url.toLowerCase() == $scope.urls[index].url.toLowerCase())) == false) {
+							if (setError(index, (language.url.toLowerCase() == $scope.urls[index].url.toLowerCase())) == false) {*/
 
 								//TODO: This could be slow so maybe load all first and then check it against this?
 								// or if a node in the same level has the same url
@@ -199,9 +201,9 @@
 
 									setError(index, (isAvailable.toString().toLowerCase() == "false"));
 								});
-							}
+							/*}
 						}
-					});
+					});*/
 				});
 			}
 

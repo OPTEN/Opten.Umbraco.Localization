@@ -273,6 +273,7 @@
     </Compile>
     <Compile Include="Routing\ContentFinderByUrlAliasAndTemplate.cs" />
     <Compile Include="Routing\LocalizedRouting.cs" />
+    <Compile Include="Routing\OnUrlGeneratingEventArgs.cs" />
     <Compile Include="Routing\RoutingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\AliasUrlProvider.cs" />
