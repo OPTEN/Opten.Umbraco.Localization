@@ -2,7 +2,7 @@
 #tool "nuget:?package=NUnit.Extension.NUnitV2ResultWriter"
 #addin "Cake.Git"
 #addin "Cake.FileHelpers"
-#addin "nuget:http://nuget.oss-concept.ch/nuget/?package=Opten.Cake"
+#addin "nuget:http://6pak.opten.ch/nuget/v2-nuget?package=Opten.Cake"
 
 var target = Argument("target", "Default");
 var feedUrl = "https://www.nuget.org/api/v2/package";
