@@ -1,4 +1,5 @@
 ﻿using Opten.Umbraco.Localization.Core.Models;
+using Opten.Umbraco.Localization.Web.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,15 +42,20 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 				var sortOrderIndex = propertyType.SortOrder + 1;
 				if (PropertyHelper.IsLocalizedProperty(propertyType.Alias) == false)
 				{
-					propertyType.Alias = PropertyHelper.GetAlias(propertyType.Alias, LocalizationContext.DefaultCulture.TwoLetterISOLanguageName);
+					propertyType.Alias = PropertyHelper.GetAlias(propertyType.Alias, LocalizationContext.DefaultCulture.GetUrlLanguage());
+				}
+				else if (PropertyHelper.IsWrongLocalizedProperty(propertyType.Alias))
+				{
+					propertyType.Alias = PropertyHelper.GetCorrectLocalizedAlias(propertyType.Alias);
 				}
 
 				foreach (ILanguage language in LocalizationContext.Languages)
 				{
-					string localizedAlias = PropertyHelper.GetAlias(PropertyHelper.GetNotLocalizedAlias(propertyType.Alias), language.CultureInfo.TwoLetterISOLanguageName);
+					string localizedAlias = PropertyHelper.GetAlias(propertyType.Alias, language.CultureInfo.GetUrlLanguage());
 
-					if ((contentType.PropertyTypeExists(localizedAlias) == false ||
-						propertyType.Alias.Equals(localizedAlias) == false) &&
+					if (propertyType.Alias.Equals(localizedAlias) == false &&
+						contentType.PropertyTypeExists(localizedAlias) == false &&
+						contentType.PropertyTypeExists(PropertyHelper.GetInvertedLocalizedAlias(propertyType.Alias, language.CultureInfo)) == false &&
 						propertyType.PropertyEditorAlias.Equals("OPTEN.UrlAlias", StringComparison.OrdinalIgnoreCase) == false)
 					{
 						PropertyType newPropertyType = new PropertyType(dataTypeDefinition)

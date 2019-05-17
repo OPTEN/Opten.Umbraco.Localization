@@ -22,8 +22,8 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 		{
 			CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
 
-			return LocalizationContext.TryGetCultureFromTwoLetterIsoCode(
-				twoLetterISOLanguageName: currentCulture.TwoLetterISOLanguageName);
+			return LocalizationContext.TryGetCultureFromUrlLanguage(
+				languageName: currentCulture.GetUrlLanguage());
 		}
 
 		/// <summary>
@@ -42,8 +42,8 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 				currentUICulture = request.TryGetCultureFromBrowser();
 			}
 
-			return LocalizationContext.TryGetCultureFromTwoLetterIsoCode(
-				twoLetterISOLanguageName: currentUICulture.TwoLetterISOLanguageName);
+			return LocalizationContext.TryGetCultureFromUrlLanguage(
+				languageName: currentUICulture.GetUrlLanguage());
 		}
 
 		/// <summary>
@@ -65,8 +65,8 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 					browserCulture = Thread.CurrentThread.CurrentUICulture.Name;
 				}
 
-				return LocalizationContext.TryGetCultureFromTwoLetterIsoCode(
-					twoLetterISOLanguageName: browserCulture.GetTwoLetterISOCodeByName());
+				return LocalizationContext.TryGetCultureFromUrlLanguage(
+					languageName: browserCulture);
 			}
 			catch (Exception ex)
 			{
@@ -74,17 +74,6 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 				return defaultCulture;
 			}
 		}
-
-		#region Private helpers
-
-		private static string GetTwoLetterISOCodeByName(this string name)
-		{
-			if (string.IsNullOrWhiteSpace(name)) return string.Empty;
-			if (name.Contains("-") == false) return name;
-			return name.Split('-')[0];
-		}
-
-		#endregion
 
 	}
 }

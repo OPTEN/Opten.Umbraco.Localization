@@ -602,3 +602,7 @@ Found 0 .lic file(s):
 Could not validate license:
 
 Your license has been approved for the following IPs/Domains: - This license is *not* associated with any ips or domains at all
+Could not find any UmbracoForms licensing files in D:\DEVELOPMENT\GIT\Opten.Umbraco.Localization\src\Opten.Umbraco.Localization.Web.UI\bin:
+Could not find any UmbracoForms licensing files in D:\DEVELOPMENT\GIT\Opten.Umbraco.Localization\src\Opten.Umbraco.Localization.Web.UI\bin:
+Could not find any UmbracoForms licensing files in D:\DEVELOPMENT\GIT\Opten.Umbraco.Localization\src\Opten.Umbraco.Localization.Web.UI\bin:
+Could not find any UmbracoForms licensing files in D:\DEVELOPMENT\GIT\Opten.Umbraco.Localization\src\Opten.Umbraco.Localization.Web.UI\bin:

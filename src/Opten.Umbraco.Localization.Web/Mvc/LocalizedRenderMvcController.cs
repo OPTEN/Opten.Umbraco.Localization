@@ -1,4 +1,5 @@
 ﻿using Opten.Common.Extensions;
+using Opten.Umbraco.Localization.Web.Extensions;
 using Opten.Umbraco.Localization.Web.Routing;
 using System;
 using System.Globalization;
@@ -98,7 +99,7 @@ namespace Opten.Umbraco.Localization.Web.Mvc
 
 				// otherwise redirect to language
 				string redirectUrl = Request.Url.GetUrlWithLanguage(
-					language: culture.TwoLetterISOLanguageName,
+					language: culture.GetUrlLanguage(),
 					withQuery: true,
 					withDomain: false);
 
@@ -107,7 +108,7 @@ namespace Opten.Umbraco.Localization.Web.Mvc
 					UmbracoContext.PublishedContentRequest != null &&
 					UmbracoContext.PublishedContentRequest.HasPublishedContent)
 				{
-					redirectUrl = UmbracoContext.PublishedContentRequest.PublishedContent.GetLocalizedUrl(language: culture.TwoLetterISOLanguageName);
+					redirectUrl = UmbracoContext.PublishedContentRequest.PublishedContent.GetLocalizedUrl(language: culture.GetUrlLanguage());
 				}*/
 
 				filterContext.Result = new RedirectResult(url: redirectUrl);

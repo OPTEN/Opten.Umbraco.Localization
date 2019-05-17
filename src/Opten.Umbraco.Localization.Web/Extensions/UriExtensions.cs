@@ -1,4 +1,5 @@
 ﻿using Opten.Umbraco.Localization.Web;
+using Opten.Umbraco.Localization.Web.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,7 +22,7 @@ namespace Opten.Common.Extensions // Add them to the global extensions
 		/// <returns></returns>
 		public static bool ContainsLanguage(this Uri uri)
 		{
-			IEnumerable<string> toCompare = LocalizationContext.Cultures.Select(o => o.TwoLetterISOLanguageName);
+			IEnumerable<string> toCompare = LocalizationContext.Cultures.Select(o => o.GetUrlLanguage());
 
 			return uri.ContainsSegment(segments: toCompare);
 		}
@@ -72,7 +73,7 @@ namespace Opten.Common.Extensions // Add them to the global extensions
 				if (string.IsNullOrWhiteSpace(compare)) continue;
 
 				foreach (CultureInfo ci in LocalizationContext.Cultures)
-					if (compare.Equals(ci.TwoLetterISOLanguageName, StringComparison.OrdinalIgnoreCase))
+					if (compare.Equals(ci.GetUrlLanguage(), StringComparison.OrdinalIgnoreCase))
 					{
 						found = true;
 						break;

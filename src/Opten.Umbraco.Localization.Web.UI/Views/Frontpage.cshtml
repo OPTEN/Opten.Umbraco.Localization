@@ -14,9 +14,9 @@
 <p>My name is: @Model.Content.Name</p>
 <p>My path is: @Model.Content.Url</p>
 <p>
-	Get Localized value (en): @Model.Content.GetLocalizedValue("textstring", "en")<br />
+	Get Localized value (en): @Model.Content.GetLocalizedValue("textstring", "enUS")<br />
 	Get Localized value (current): @Model.Content.GetLocalizedValue("textstring")<br />
-	Get Localized value (en, recurse): @Model.Content.GetLocalizedValue("textstring", true, "en")<br />
+	Get Localized value (en, recurse): @Model.Content.GetLocalizedValue("textstring", true, "enUS")<br />
 	Get Localized value (current, recurse): @Model.Content.GetLocalizedValue("textstring", true)<br />
 	Get Localized value (current, nofallback): @(Model.Content.GetLocalizedValue<string>("textstring", recurse: false, withFallback: false))<br/>
 </p>
@@ -44,7 +44,7 @@
 	Other plugins
 	<br />
 	RJP.MultiUrlPicker: @Model.Content.GetLocalizedValue("rjp") is null: @(Model.Content.GetLocalizedValue("rjp") == null)
-	@if(Model.Content.GetLocalizedValue("rjp") != null)
+	@if(Model.Content.GetLocalizedValue<RJP.MultiUrlPicker.Models.MultiUrls>("rjp") != null && Model.Content.GetLocalizedValue<RJP.MultiUrlPicker.Models.MultiUrls>("rjp").Any())
 	{
 		<br />
 		@("RJP.MultiUrlPicker: " + Model.Content.GetLocalizedValue<RJP.MultiUrlPicker.Models.MultiUrls>("rjp").First().Url)
@@ -77,11 +77,11 @@
 	foreach(IPublishedContent content in Model.Content.Children)
 	{
 		<p>
-			.Url: @content.Url
+			.Url: <a href="@content.Url">@content.Url</a>
 			<br />
-			.GetLocalizedUrl(en): @content.GetLocalizedUrl("en")
+			.GetLocalizedUrl(en): <a href="@content.GetLocalizedUrl("en")">@content.GetLocalizedUrl("en")</a>
 			<br />
-			.GetLocalizedUrl(de): @content.GetLocalizedUrl("de")
+			.GetLocalizedUrl(de): <a href="@content.GetLocalizedUrl("de")">@content.GetLocalizedUrl("de")</a>
 		</p>
 	}
 }

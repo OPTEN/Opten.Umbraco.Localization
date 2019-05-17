@@ -1,4 +1,5 @@
 ﻿using Opten.Common.Extensions;
+using Opten.Umbraco.Localization.Web.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -93,6 +94,22 @@ namespace Opten.Umbraco.Localization.Web
 		}
 
 		/// <summary>
+		/// Gets a value indicating whether to use full culture or not.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if [full culture]; otherwise, <c>false</c>.
+		/// </value>
+		public static bool FullCulture
+		{
+			get
+			{
+				bool fullCulture;
+				bool hasKey = Boolean.TryParse(ConfigurationManager.AppSettings["OPTEN:localization:fullCulture"], out fullCulture);
+				return fullCulture;
+			}
+		}
+
+		/// <summary>
 		/// Gets the current back end user languages BUT ONLY when a back end request was accomplished.
 		/// </summary>
 		/// <returns></returns>
@@ -171,34 +188,22 @@ namespace Opten.Umbraco.Localization.Web
 		}
 
 		/// <summary>
-		/// Determines whether the language is available in the umbraco's backend.
-		/// </summary>
-		/// <param name="twoLetterISOLanguageName">Name of the two letter iso language.</param>
-		/// <returns></returns>
-		internal static bool IsValidLanguage(string twoLetterISOLanguageName)
-		{
-			foreach (CultureInfo ci in Cultures)
-				if (twoLetterISOLanguageName.Equals(ci.TwoLetterISOLanguageName, StringComparison.OrdinalIgnoreCase))
-					return true;
-
-			return false;
-		}
-
-		/// <summary>
 		/// Tries to get the culture from two letter iso code if not found default will returned.
 		/// </summary>
-		/// <param name="twoLetterISOLanguageName">Name of the two letter iso language.</param>
+		/// <param name="languageName">Name of language.</param>
 		/// <returns></returns>
-		internal static CultureInfo TryGetCultureFromTwoLetterIsoCode(string twoLetterISOLanguageName)
+		internal static CultureInfo TryGetCultureFromUrlLanguage(string languageName)
 		{
-			if (IsValidLanguage(twoLetterISOLanguageName))
+			var culture = Cultures.FirstOrDefault(o => o.GetUrlLanguage().StartsWith(languageName, StringComparison.OrdinalIgnoreCase));
+			if (culture != null)
 			{
-				return Cultures.First(o => o.Name.StartsWith(twoLetterISOLanguageName));
+				return culture;
 			}
-			else
+			if (languageName.Contains("-"))
 			{
-				return DefaultCulture;
+				return TryGetCultureFromUrlLanguage(languageName.Split('-')[0]);
 			}
+			return DefaultCulture;
 		}
 
 		#region Private helpers
