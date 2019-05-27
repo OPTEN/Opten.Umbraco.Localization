@@ -27,6 +27,20 @@ namespace Opten.Common.Extensions // Add them to the global extensions
 			return uri.ContainsSegment(segments: toCompare);
 		}
 
+		//TODO: Helper to get the real other url!
+
+		/// <summary>
+		/// Determines whether this uri contains a inverted language.
+		/// </summary>
+		/// <param name="uri">The URI.</param>
+		/// <returns></returns>
+		public static bool ContainsInvertedLanguage(this Uri uri)
+		{
+			IEnumerable<string> toCompare = LocalizationContext.Cultures.Select(o => o.GetUrlLanguage(!LocalizationContext.FullCulture));
+
+			return uri.ContainsSegment(segments: toCompare);
+		}
+
 		/// <summary>
 		/// Gets the URL with desired language.
 		/// </summary>

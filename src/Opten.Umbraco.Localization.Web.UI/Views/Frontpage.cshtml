@@ -4,7 +4,9 @@
 @{
 	Layout = null;
 
-	string otherLanguage = (Request.GetCurrentUICulture().TwoLetterISOLanguageName == "en") ? "de" : "en";	
+	string otherLanguage = (Request.GetCurrentUICulture().TwoLetterISOLanguageName == "en") ? "de" : "en";
+
+	string enLangaugeName = "en";
 }
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -14,9 +16,9 @@
 <p>My name is: @Model.Content.Name</p>
 <p>My path is: @Model.Content.Url</p>
 <p>
-	Get Localized value (en): @Model.Content.GetLocalizedValue("textstring", "enUS")<br />
+	Get Localized value (en): @Model.Content.GetLocalizedValue("textstring", enLangaugeName)<br />
 	Get Localized value (current): @Model.Content.GetLocalizedValue("textstring")<br />
-	Get Localized value (en, recurse): @Model.Content.GetLocalizedValue("textstring", true, "enUS")<br />
+	Get Localized value (en, recurse): @Model.Content.GetLocalizedValue("textstring", true, enLangaugeName)<br />
 	Get Localized value (current, recurse): @Model.Content.GetLocalizedValue("textstring", true)<br />
 	Get Localized value (current, nofallback): @(Model.Content.GetLocalizedValue<string>("textstring", recurse: false, withFallback: false))<br/>
 </p>

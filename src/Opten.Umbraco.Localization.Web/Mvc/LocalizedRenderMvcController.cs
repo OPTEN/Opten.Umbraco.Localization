@@ -3,6 +3,7 @@ using Opten.Umbraco.Localization.Web.Extensions;
 using Opten.Umbraco.Localization.Web.Routing;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 using Umbraco.Core.Logging;
 using Umbraco.Web;
@@ -73,6 +74,24 @@ namespace Opten.Umbraco.Localization.Web.Mvc
 				{
 					base.OnActionExecuting(filterContext);
 					return;
+				}
+
+				// When url contains language do nothing
+				if (Request.Url.ContainsInvertedLanguage())
+				{
+					var urlSegments = Request.Url.AbsolutePath.GetSegments();
+					string urlLanguage = urlSegments.FirstOrDefault().Substring(0, 2).ToLower();
+					string language = LocalizationContext.Cultures.Select(o => o.GetUrlLanguage()).FirstOrDefault(o => o.Substring(0, 2).ToLower().Equals(urlLanguage, StringComparison.OrdinalIgnoreCase));
+					if (string.IsNullOrWhiteSpace(language) == false)
+					{
+						// otherwise redirect to language
+						string redirectLanguageUrl = language.ForceEndsWith(char.Parse("/")) + string.Join("/", urlSegments.Skip(1));
+
+						filterContext.Result = new RedirectResult(url: redirectLanguageUrl);
+
+						base.OnActionExecuting(filterContext);
+						return;
+					}
 				}
 
 				// When is the same as the template do nothing
