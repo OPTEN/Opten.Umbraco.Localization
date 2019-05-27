@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Opten.Common.Extensions;
 using Opten.Umbraco.Localization.Web;
+using Opten.Umbraco.Localization.Web.Extensions;
 using System.Globalization;
 using System.Net.Http.Headers;
 
@@ -35,7 +36,7 @@ namespace Opten.Umbraco.Localization.Test.Extensions
 				new StringWithQualityHeaderValue("de", 0.5)
 			};
 
-			Assert.AreEqual("fr", header.TryGetCultureFromAcceptLanguage(LocalizationContext.Cultures).TwoLetterISOLanguageName);
+			Assert.AreEqual("fr", header.TryGetCultureFromAcceptLanguage(LocalizationContext.Cultures).GetUrlLanguage());
 		}
 
 		[Test]
@@ -46,9 +47,9 @@ namespace Opten.Umbraco.Localization.Test.Extensions
 				new StringWithQualityHeaderValue("de", 0.5)
 			};
 
-			Assert.AreEqual("fr", header.TryGetCultureFromAcceptLanguage(LocalizationContext.Cultures).TwoLetterISOLanguageName);
-			Assert.AreEqual("fr", "fr, de;q=0.5".ToAcceptLanguage().TryGetCultureFromAcceptLanguage(LocalizationContext.Cultures).TwoLetterISOLanguageName);
-			Assert.AreEqual("fr", "de;q=0.5, fr".ToAcceptLanguage().TryGetCultureFromAcceptLanguage(LocalizationContext.Cultures).TwoLetterISOLanguageName);
+			Assert.AreEqual("fr", header.TryGetCultureFromAcceptLanguage(LocalizationContext.Cultures).GetUrlLanguage());
+			Assert.AreEqual("fr", "fr, de;q=0.5".ToAcceptLanguage().TryGetCultureFromAcceptLanguage(LocalizationContext.Cultures).GetUrlLanguage());
+			Assert.AreEqual("fr", "de;q=0.5, fr".ToAcceptLanguage().TryGetCultureFromAcceptLanguage(LocalizationContext.Cultures).GetUrlLanguage());
 		}
 
 	}

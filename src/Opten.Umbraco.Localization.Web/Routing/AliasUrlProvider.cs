@@ -206,7 +206,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			{
 				//TODO: We use the same as the Frontend would use it... the question is, if that is ok?
 				// Due to performance... I don't know we have less code here but populate always the parents and it's domains?
-				path = content.GetLocalizedUrl(language: cultureInfo.TwoLetterISOLanguageName);
+				path = content.GetLocalizedUrl(language: cultureInfo.GetUrlLanguage());
 
 				// Url per language will be added because of the domainAndUris
 				// so /about-us is possible for all languages e.g. /en/about-us /de/about-us /it/about-us...
@@ -216,7 +216,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 					// We have to replace the host and the language so we can populate the other urls correctly
 					path = path.Replace(domainUri.Uri.GetBaseUrl(), string.Empty);
 					path = path.EnsureStartsWith('/').EnsureEndsWith('/');
-					path = path.Replace("/" + cultureInfo.TwoLetterISOLanguageName.ToLowerInvariant() + "/", string.Empty);
+					path = path.Replace("/" + cultureInfo.GetUrlLanguage().ToLowerInvariant() + "/", string.Empty);
 					path = path.EnsureStartsWith('/').EnsureEndsWith('/');
 				}
 

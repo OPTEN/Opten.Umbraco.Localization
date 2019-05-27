@@ -488,7 +488,7 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 			CultureInfo culture = router.TryGetCultureByRequest(
 				request: new System.Web.HttpRequestWrapper(httpContext.Request));
 
-			return content.GetLocalizedUrl(language: culture.TwoLetterISOLanguageName);
+			return content.GetLocalizedUrl(language: culture.GetUrlLanguage());
 		}
 
 		/// <summary>
@@ -526,8 +526,8 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 			Opten.Umbraco.Localization.Web.Routing.AliasUrlProvider urlProvider
 				= new Routing.AliasUrlProvider();
 
-			CultureInfo culture = LocalizationContext.TryGetCultureFromTwoLetterIsoCode(
-				twoLetterISOLanguageName: language);
+			CultureInfo culture = LocalizationContext.TryGetCultureFromUrlLanguage(
+				languageName: language);
 
 			return urlProvider.GetUrl(
 				umbracoContext: UmbracoContext.Current,
@@ -554,7 +554,7 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 			Mandate.ParameterNotNull(content, "content");
 
 			if (string.IsNullOrWhiteSpace(language))
-				language = PropertyHelper.TryGetTwoLetterISOLanguageName();
+				language = PropertyHelper.TryGetUrlLanguage();
 
 			string lookup = PropertyHelper.GetAlias(
 				alias: alias,
@@ -570,7 +570,7 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 			{
 				lookup = PropertyHelper.GetAlias(
 					alias: alias,
-					language: LocalizationContext.DefaultCulture.TwoLetterISOLanguageName);
+					language: LocalizationContext.DefaultCulture.GetUrlLanguage());
 
 				if (content.HasValue(alias: lookup, recurse: recurse))
 				{

@@ -150,7 +150,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 						//	"(" +
 									"@urlName = '{1}'" +
 									" or " +
-									"contains({0}, \"{1}\")" +
+									"contains({0}, \"{1}\")" +// [string(data [@alias='umbracoNaviHide']) != '1']    http://blackpoint.dk/umbraco-workbench/xslt/navigating-using-xpath.aspx
 						//	")" +
 							")]";
 				}

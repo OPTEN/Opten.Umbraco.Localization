@@ -251,6 +251,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\GridTemplateExtensions.cs" />
+    <Compile Include="Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Install\PackageActions\TransformXmlFile.cs" />
     <Compile Include="LocalizationContext.cs" />
     <Compile Include="Controllers\MigrationApiController.cs" />
