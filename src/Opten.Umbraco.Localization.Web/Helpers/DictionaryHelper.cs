@@ -57,7 +57,11 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 		private static string GetTranslation(IDictionaryItem dictionaryItem, string languageName)
 		{
 			var translation = dictionaryItem.Translations.SingleOrDefault(x => x.Language.CultureInfo.GetUrlLanguage().Equals(languageName, System.StringComparison.OrdinalIgnoreCase));
-			return translation.Value;
+			if (translation != null)
+			{
+				return translation.Value;
+			}
+			return null;
 		}
 
 	}
