@@ -1,5 +1,4 @@
 ﻿using Opten.Umbraco.Localization.Web.Extensions;
-using System.Globalization;
 using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.Models;
@@ -15,12 +14,13 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 		private static ILocalizationService _localizationService = ApplicationContext.Current.Services.LocalizationService;
 
 		/// <summary>
-		/// Gets the dictionary value by the language.
+		/// Gets the dictionary value with fallback to different cultures.
 		/// </summary>
-		/// <param name="key">The key.</param>
-		/// <param name="languageName">Name of the language.</param>
+		/// <param name="key">The key of the dictionary.</param>
+		/// <param name="defaultValue">The default value to show if no dictionary could be found.</param>
+		/// <param name="languageName">Name of the language, if empty it takes the current culture.</param>
 		/// <returns></returns>
-		public static string GetDictionaryValue(string key, string languageName = "")
+		public static string GetDictionaryValue(string key, string defaultValue = "", string languageName = "")
 		{
 			if (string.IsNullOrWhiteSpace(languageName))
 			{
@@ -51,7 +51,7 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 					return dictionary;
 				}
 			}
-			return $"[{key}]";
+			return defaultValue;
 		}
 
 		private static string GetTranslation(IDictionaryItem dictionaryItem, string languageName)

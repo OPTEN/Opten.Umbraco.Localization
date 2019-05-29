@@ -9,21 +9,22 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 	public static class UmbracoHelperExtensions
 	{
 		/// <summary>
-		/// Gets the localized dictionary value.
+		/// Gets the dictionary value with fallback to different cultures.
 		/// </summary>
 		/// <param name="umbracoHelper">The umbraco helper.</param>
-		/// <param name="dictionaryKey">The dictionary key.</param>
-		/// <param name="languageName">Name of the language.</param>
+		/// <param name="key">The key of the dictionary.</param>
+		/// <param name="defaultValue">The default value to show if no dictionary could be found.</param>
+		/// <param name="languageName">Name of the language, if empty it takes the current culture.</param>
 		/// <returns></returns>
-		public static string GetLocalizedDictionaryValue(this UmbracoHelper umbracoHelper, string dictionaryKey, string languageName = "")
+		public static string GetLocalizedDictionaryValue(this UmbracoHelper umbracoHelper, string key, string defaultValue = "", string languageName = "")
 		{
-			var dictionary = umbracoHelper.GetDictionaryValue(dictionaryKey);
+			var dictionary = umbracoHelper.GetDictionaryValue(key);
 			if (string.IsNullOrWhiteSpace(dictionary) == false)
 			{
 				return dictionary;
 			}
 
-			return DictionaryHelper.GetDictionaryValue(dictionaryKey, languageName);
+			return DictionaryHelper.GetDictionaryValue(key, defaultValue, languageName);
 		}
 	}
 }
