@@ -568,9 +568,26 @@ namespace Opten.Umbraco.Localization.Web.Extensions
 			}
 			else if (withFallback)
 			{
+				var fallbackCulture = LocalizationContext.FallbackCulture(language);
+				var defaultCulture = LocalizationContext.DefaultCulture;
+				while (fallbackCulture != defaultCulture)
+				{
+					lookup = PropertyHelper.GetAlias(
+						alias: alias,
+						language: fallbackCulture.GetUrlLanguage());
+
+					if (content.HasValue(alias: lookup, recurse: recurse))
+					{
+						return content.GetProperty(
+							alias: lookup,
+							recurse: recurse); // Try to get default language => title_de
+					}
+					fallbackCulture = LocalizationContext.FallbackCulture(fallbackCulture.GetUrlLanguage());
+				}
+
 				lookup = PropertyHelper.GetAlias(
 					alias: alias,
-					language: LocalizationContext.DefaultCulture.GetUrlLanguage());
+					language: defaultCulture.GetUrlLanguage());
 
 				if (content.HasValue(alias: lookup, recurse: recurse))
 				{

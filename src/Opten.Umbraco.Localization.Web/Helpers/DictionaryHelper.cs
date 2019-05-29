@@ -1,6 +1,8 @@
 ﻿using Opten.Umbraco.Localization.Web.Extensions;
+using System.Globalization;
 using System.Linq;
 using Umbraco.Core;
+using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 
 namespace Opten.Umbraco.Localization.Web.Helpers
@@ -27,18 +29,35 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 			var dictionaryItem = _localizationService.GetDictionaryItemByKey(key);
 			if (dictionaryItem != null)
 			{
-				var translation = dictionaryItem.Translations.SingleOrDefault(x => x.Language.CultureInfo.GetUrlLanguage().Equals(languageName, System.StringComparison.OrdinalIgnoreCase));
-				var dictionary = translation.Value;
+				var dictionary = GetTranslation(dictionaryItem, languageName);
 				if (string.IsNullOrWhiteSpace(dictionary) == false)
 				{
 					return dictionary;
 				}
-				if (LocalizationContext.DefaultCulture.GetUrlLanguage().Equals(languageName, System.StringComparison.OrdinalIgnoreCase) == false)
+				var fallbackCulture = LocalizationContext.FallbackCulture(languageName);
+				var defaultCulture = LocalizationContext.DefaultCulture;
+				while (fallbackCulture != defaultCulture)
 				{
-					return GetDictionaryValue(key, LocalizationContext.DefaultCulture.GetUrlLanguage());
+					dictionary = GetTranslation(dictionaryItem, fallbackCulture.GetUrlLanguage());
+					if (string.IsNullOrWhiteSpace(dictionary) == false)
+					{
+						return dictionary;
+					}
+					fallbackCulture = LocalizationContext.FallbackCulture(fallbackCulture.GetUrlLanguage());
+				}
+				dictionary = GetTranslation(dictionaryItem, defaultCulture.GetUrlLanguage());
+				if (string.IsNullOrWhiteSpace(dictionary) == false)
+				{
+					return dictionary;
 				}
 			}
-			return "[" + key + "]";
+			return $"[{key}]";
+		}
+
+		private static string GetTranslation(IDictionaryItem dictionaryItem, string languageName)
+		{
+			var translation = dictionaryItem.Translations.SingleOrDefault(x => x.Language.CultureInfo.GetUrlLanguage().Equals(languageName, System.StringComparison.OrdinalIgnoreCase));
+			return translation.Value;
 		}
 
 	}

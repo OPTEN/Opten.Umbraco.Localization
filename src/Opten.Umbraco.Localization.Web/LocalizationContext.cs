@@ -63,6 +63,27 @@ namespace Opten.Umbraco.Localization.Web
 		}
 
 		/// <summary>
+		/// Gets the fallback culture.
+		/// </summary>
+		/// <param name="languageName">Name of the language.</param>
+		/// <returns></returns>
+		public static CultureInfo FallbackCulture(string languageName)
+		{
+			// Try to get the fallback culture by the web.config
+			string fallbackCultureName = ConfigurationManager.AppSettings.Get<string>(key: string.Format("OPTEN:localization:fallback:{0}", languageName));
+
+			if (string.IsNullOrWhiteSpace(fallbackCultureName) == false)
+			{
+				var langauge = GetActiveLanguage(Languages, fallbackCultureName);
+				if (langauge != null)
+				{
+					return langauge.CultureInfo;
+				}
+			}
+			return DefaultCulture;
+		}
+
+		/// <summary>
 		/// Gets the default culture.
 		/// </summary>
 		/// <value>
