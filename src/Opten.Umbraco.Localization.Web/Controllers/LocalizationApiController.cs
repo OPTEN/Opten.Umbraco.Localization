@@ -1,4 +1,6 @@
-﻿using Opten.Umbraco.Localization.Web.Routing;
+﻿using Opten.Umbraco.Localization.Web.Extensions;
+using Opten.Umbraco.Localization.Web.Helpers;
+using Opten.Umbraco.Localization.Web.Routing;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -38,6 +40,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 					.Select(o => new Models.Language
 					{
 						ISOCode = o.Name,
+						LanguageAlias = PropertyHelper.GetLanguageAlias(o.GetUrlLanguage()),
 						Name = o.EnglishName
 					}));
 

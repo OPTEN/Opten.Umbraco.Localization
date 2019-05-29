@@ -18,7 +18,7 @@
 				angular.forEach(data, function (value, key) {
 					var language = {
 						isoCode: value.isoCode,
-						twoLetterISOCode: value.isoCode.split('-')[0],
+						languageAlias: value.languageAlias,
 						name: value.name,
 						select: function () {
 							if ($rootScope.selectedLanguages.indexOf(this.isoCode) == -1) {

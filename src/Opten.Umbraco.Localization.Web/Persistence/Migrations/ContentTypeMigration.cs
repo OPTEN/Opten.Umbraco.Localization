@@ -63,6 +63,8 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 							Alias = localizedAlias,
 							Name = propertyType.Name,
 							Description = propertyType.Description,
+							Mandatory = propertyType.Mandatory,
+							ValidationRegExp = propertyType.ValidationRegExp,
 							SortOrder = sortOrderIndex
 						};
 
