@@ -159,6 +159,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -250,6 +251,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\DictionaryCompareAttribute.cs" />
+    <Compile Include="Attributes\DictionaryDisplayNameAttribute.cs" />
+    <Compile Include="Attributes\DictionaryEmailAddressAttribute.cs" />
+    <Compile Include="Attributes\DictionaryPasswordAttribute.cs" />
+    <Compile Include="Attributes\DictionaryRangeAttribute.cs" />
+    <Compile Include="Attributes\DictionaryRequiredAttribute.cs" />
+    <Compile Include="Attributes\DictionaryStringLengthAttribute.cs" />
+    <Compile Include="Extensions\DictionaryAttributeExtensions.cs" />
     <Compile Include="Extensions\GridTemplateExtensions.cs" />
     <Compile Include="Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Extensions\UmbracoHelperExtensions.cs" />
