@@ -258,6 +258,7 @@
     <Compile Include="Attributes\DictionaryRangeAttribute.cs" />
     <Compile Include="Attributes\DictionaryRequiredAttribute.cs" />
     <Compile Include="Attributes\DictionaryStringLengthAttribute.cs" />
+    <Compile Include="Extensions\ContentBaseExtensions.cs" />
     <Compile Include="Extensions\DictionaryAttributeExtensions.cs" />
     <Compile Include="Extensions\GridTemplateExtensions.cs" />
     <Compile Include="Extensions\CultureInfoExtensions.cs" />
