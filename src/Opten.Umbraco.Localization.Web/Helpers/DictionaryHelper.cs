@@ -22,7 +22,7 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 		{
 			if (string.IsNullOrWhiteSpace(languageName))
 			{
-				languageName = LocalizationContext.DefaultCulture.GetUrlLanguage();
+				languageName = LocalizationContext.GetDefaultLanguage(LocalizationContext.Languages).CultureInfo.GetUrlLanguage();
 			}
 			var dictionaryItem = _localizationService.GetDictionaryItemByKey(key);
 			if (dictionaryItem != null)
@@ -32,6 +32,10 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 				if (string.IsNullOrWhiteSpace(dictionary) == false)
 				{
 					return dictionary;
+				}
+				if (LocalizationContext.DefaultCulture.GetUrlLanguage().Equals(languageName, System.StringComparison.OrdinalIgnoreCase) == false)
+				{
+					return GetDictionaryValue(key, LocalizationContext.DefaultCulture.GetUrlLanguage());
 				}
 			}
 			return "[" + key + "]";

@@ -24,7 +24,7 @@
 					animate = $animator(scope, attr);
 
 				angular.forEach($rootScope.languages, function (value, key) {
-					if (typeof propertyAlias !== "undefined" && propertyAlias.indexOf("_" + value.twoLetterISOCode) > -1) {
+					if (typeof propertyAlias !== "undefined" && propertyAlias.indexOf("_" + value.languageAlias) > -1) {
 						canLocalize = true;
 						language = value.isoCode;
 					}
@@ -61,7 +61,7 @@
 					animate = $animator(scope, attr);
 
 				angular.forEach($rootScope.languages, function (value, key) {
-					if (typeof propertyAlias !== "undefined" && propertyAlias.indexOf("_" + value.twoLetterISOCode) > -1) {
+					if (typeof propertyAlias !== "undefined" && propertyAlias.indexOf("_" + value.languageAlias) > -1) {
 						canLocalize = true;
 						language = value.isoCode;
 						languageName = value.name;
