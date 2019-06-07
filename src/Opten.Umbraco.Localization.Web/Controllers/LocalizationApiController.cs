@@ -30,14 +30,14 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 				domainService: base.Services.DomainService));
 		}
 
-		public IEnumerable<Models.Language> GetAllLanguages()
+		public IEnumerable<Core.Models.Language> GetAllLanguages()
 		{
-			List<Models.Language> languages = new List<Models.Language>();
+			List<Core.Models.Language> languages = new List<Core.Models.Language>();
 
 			languages.AddRange(
 					LocalizationContext.Languages
 					.Select(o => o.CultureInfo)
-					.Select(o => new Models.Language
+					.Select(o => new Core.Models.Language
 					{
 						ISOCode = o.Name,
 						LanguageAlias = PropertyHelper.GetLanguageAlias(o.GetUrlLanguage()),
@@ -114,13 +114,13 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			return true;
 		}
 
-		public IEnumerable<Models.Language> GetSelectedLanguages()
+		public IEnumerable<Core.Models.Language> GetSelectedLanguages()
 		{
 			//TODO: check if there is any? because maybe the cookie lived long and some languages got deleted?
 			// otherwise something was changed/cached
 			return LocalizationContext.CurrentBackEndUserLanguages()
 				.Select(o => o.CultureInfo)
-				.Select(o => new Models.Language
+				.Select(o => new Core.Models.Language
 				{
 					ISOCode = o.Name,
 					Name = o.EnglishName

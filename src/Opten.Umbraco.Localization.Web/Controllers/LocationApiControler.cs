@@ -1,13 +1,15 @@
 ﻿using Newtonsoft.Json;
+using Opten.Umbraco.Localization.Web.Helpers;
+using Opten.Umbraco.Localization.Web.Models;
 using System;
 using System.Configuration;
 using System.Globalization;
 using System.Net;
 using System.Web;
 
-namespace Opten.Umbraco.Localization.Web.Helpers
+namespace Opten.Umbraco.Localization.Web.Controllers
 {
-	public static class LocationApiControler
+	public class LocationApiControler
 	{
 		private static bool UseTestApi = false;
 		private static string TestApiUrl = "http://api.ipstack.com/";
@@ -20,7 +22,7 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 			ApiKey = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:apiKey");
 		}
 
-		public static RegionInfo GetRegionInfoByCurrentIPAddress()
+		public RegionInfo GetRegionInfoByCurrentIPAddress()
 		{
 			IPStackResponse location = GetLocationByIPAddress(IPAddressHelper.GetIPAddress());
 			if (location != null && string.IsNullOrWhiteSpace(location.CountryName) == false)
@@ -30,7 +32,7 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 			return null;
 		}
 
-		public static IPStackResponse GetLocationByIPAddress(string ipAddress, bool useCookie = true)
+		public IPStackResponse GetLocationByIPAddress(string ipAddress, bool useCookie = true)
 		{
 			if (useCookie)
 			{
@@ -49,12 +51,12 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 			}
 		}
 
-		private static string GetRequestUrl(string ipAddress, string responseLanguage = "en")
+		private string GetRequestUrl(string ipAddress, string responseLanguage = "en")
 		{
 			return $"{(UseTestApi ? TestApiUrl : ApiUrl)}{ipAddress}?access_key={ApiKey}&output=json";
 		}
 
-		private static void UpdateCookie(IPStackResponse ipStackResponse)
+		private void UpdateCookie(IPStackResponse ipStackResponse)
 		{
 			if (ipStackResponse != null)
 			{
@@ -65,20 +67,5 @@ namespace Opten.Umbraco.Localization.Web.Helpers
 				HttpContext.Current.Response.Cookies.Add(cookie);
 			}
 		}
-	}
-
-	public class IPStackResponse
-	{
-		[JsonProperty("ip")]
-		public string IP { get; set; }
-
-		[JsonProperty("continent_name")]
-		public string ContinentName { get; set; }
-
-		[JsonProperty("country_code")]
-		public string CountryCode { get; set; }
-
-		[JsonProperty("country_name")]
-		public string CountryName { get; set; }
 	}
 }
