@@ -1,5 +1,6 @@
 ﻿using Opten.Common.Extensions;
 using Opten.Umbraco.Localization.Web.Extensions;
+using Opten.Umbraco.Localization.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -225,6 +226,16 @@ namespace Opten.Umbraco.Localization.Web
 				return TryGetCultureFromUrlLanguage(languageName.Split('-')[0]);
 			}
 			return DefaultCulture;
+		}
+
+		public static RegionInfo GetRegionByIP()
+		{
+			RegionInfo currentRegion = LocationHelper.GetRegionInfoByIPAddress();
+			if (currentRegion != null)
+			{
+				return currentRegion;
+			}
+			return new RegionInfo(DefaultCulture.Name);
 		}
 
 		#region Private helpers
