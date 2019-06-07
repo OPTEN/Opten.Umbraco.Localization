@@ -228,9 +228,9 @@ namespace Opten.Umbraco.Localization.Web
 			return DefaultCulture;
 		}
 
-		public static RegionInfo GetRegionByIP()
+		public static RegionInfo GetRegionByCurrentIPAddress()
 		{
-			RegionInfo currentRegion = LocationHelper.GetRegionInfoByIPAddress();
+			RegionInfo currentRegion = LocationApiControler.GetRegionInfoByCurrentIPAddress();
 			if (currentRegion != null)
 			{
 				return currentRegion;

@@ -22,6 +22,8 @@
 
 			public const string Languages = "OPTEN:localization:languages:all";
 
+			public const string Country = "OPTEN:localization:country";
+
 			public const string BackendLanguages = "OPTEN.localization.backend.languages"; // Has to be valid characters otherwise exception in Backend!
 
 		}
