@@ -264,6 +264,8 @@
     <Compile Include="Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Extensions\UmbracoHelperExtensions.cs" />
     <Compile Include="Helpers\DictionaryHelper.cs" />
+    <Compile Include="Helpers\LocationHelper.cs" />
+    <Compile Include="Helpers\IPAddressHelper.cs" />
     <Compile Include="Install\PackageActions\TransformXmlFile.cs" />
     <Compile Include="LocalizationContext.cs" />
     <Compile Include="Controllers\MigrationApiController.cs" />
