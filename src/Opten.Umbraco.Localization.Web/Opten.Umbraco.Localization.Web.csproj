@@ -262,7 +262,7 @@
     <Compile Include="Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Extensions\UmbracoHelperExtensions.cs" />
     <Compile Include="Helpers\DictionaryHelper.cs" />
-    <Compile Include="Controllers\LocationApiControler.cs" />
+    <Compile Include="Controllers\LocationApiController.cs" />
     <Compile Include="Helpers\IPAddressHelper.cs" />
     <Compile Include="Install\PackageActions\TransformXmlFile.cs" />
     <Compile Include="LocalizationContext.cs" />
@@ -287,6 +287,7 @@
     </Compile>
     <Compile Include="Routing\ContentFinderByUrlAliasAndTemplate.cs" />
     <Compile Include="Routing\LocalizedRouting.cs" />
+    <Compile Include="Routing\OnGetDomainByUriAndIsoCodeEventArgs.cs" />
     <Compile Include="Routing\OnUrlGeneratingEventArgs.cs" />
     <Compile Include="Routing\RoutingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

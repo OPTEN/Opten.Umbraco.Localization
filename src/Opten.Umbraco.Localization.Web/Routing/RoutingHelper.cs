@@ -14,14 +14,15 @@ using Umbraco.Web.Routing;
 
 namespace Opten.Umbraco.Localization.Web.Routing
 {
-	internal class RoutingHelper
+	public class RoutingHelper
 	{
+		public static event EventHandler<OnGetDomainByUriAndIsoCodeEventArgs> OnGetDomainByUriAndIsoCode;
 
 		private readonly IDomainService _domainService;
 
 		public RoutingHelper(IDomainService domainService)
 		{
-			_domainService = domainService;
+			this._domainService = domainService;
 		}
 
 		//TODO: Performance, Caching?
@@ -57,7 +58,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			// or we reach the content root, collecting urls in the way 
 			List<string> pathParts = new List<string>();
 			IPublishedContent node = content;
-			bool hasDomains = this.NodeHasDomains(contentId: node.Id);
+			bool hasDomains = NodeHasDomains(contentId: node.Id);
 			bool isLocalized;
 			while (hasDomains == false && node != null) // n is null at root 
 			{
@@ -66,7 +67,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 
 				// move to parent node 
 				node = node.Parent;
-				hasDomains = node != null && this.NodeHasDomains(contentId: node.Id);
+				hasDomains = node != null && NodeHasDomains(contentId: node.Id);
 			}
 
 			// assemble the route 
@@ -99,7 +100,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			int pos = route.IndexOf('/');
 			string path = pos == 0 ? route : route.Substring(pos);
 
-			DomainAndUri domainUri = pos == 0 ? null : this.DomainForNode(
+			DomainAndUri domainUri = pos == 0 ? null : DomainForNode(
 				contentId: int.Parse(route.Substring(0, pos)),
 				current: current,
 				isoCode: isoCode);
@@ -197,7 +198,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		{
 			// In 7.3.x the method "DomainsForNode" is not static anymore!
 			DomainHelper domainHelper = new DomainHelper(
-				domainService: _domainService);
+				domainService: this._domainService);
 
 			// Should be removed until DomainHelper is public
 			return ActivatorHelper.GetPrivateMethodReturnValueOfInstance<IEnumerable<DomainAndUri>>(
@@ -210,7 +211,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 		{
 			if (contentId < 1) return false;
 
-			IEnumerable<IDomain> domains = _domainService.GetAssignedDomains(
+			IEnumerable<IDomain> domains = this._domainService.GetAssignedDomains(
 				contentId: contentId,
 				includeWildcards: false);
 
@@ -228,7 +229,7 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			// we need to order so example.com/foo matches before example.com/
 			string scheme = current == null ? Uri.UriSchemeHttp : current.Scheme;
 
-			IEnumerable<IDomain> domains = _domainService.GetAssignedDomains(
+			IEnumerable<IDomain> domains = this._domainService.GetAssignedDomains(
 				contentId: contentId,
 				includeWildcards: false);
 
@@ -242,16 +243,35 @@ namespace Opten.Umbraco.Localization.Web.Routing
 				.OrderByDescending(d => d.Uri.ToString())
 				.ToArray();
 
+			DomainAndUri domainAndUri = null;
+			if (OnGetDomainByUriAndIsoCode != null)
+			{
+				OnGetDomainByUriAndIsoCodeEventArgs e = new OnGetDomainByUriAndIsoCodeEventArgs(
+					domainsAndUris: domainsAndUris,
+					current: current,
+					isoCode: isoCode);
+				OnGetDomainByUriAndIsoCode(this, e);
+				if (e.SelectedDomainAndUri != null)
+				{
+					domainAndUri = e.SelectedDomainAndUri;
+				}
+			}
+
 			// this is easier than umbraco's approach
 			// because for this localization it's only allowed to have one culture per hostname
 			// maybe we have to change this for the future...
 
-			// look for the first domain that would be the base of the current url and has same the iso code
-			// ie current is www.example.com/foo/bar, look for domain www.example.com 
-			DomainAndUri domainAndUri = TryGetDomainByUriAndIsoCode(
-				domainsAndUris: domainsAndUris,
-				current: current,
-				isoCode: isoCode);
+			if (domainAndUri == null)
+			{
+				// look for the first domain that would be the base of the current url and has same the iso code
+				// ie current is www.example.com/foo/bar, look for domain www.example.com 
+
+				domainAndUri = TryGetDomainByUriAndIsoCode(
+					domainsAndUris: domainsAndUris,
+					current: current,
+					isoCode: isoCode);
+			}
+
 
 			// if nothing found we get at least the correct language
 			if (domainAndUri == null)
@@ -274,10 +294,10 @@ namespace Opten.Umbraco.Localization.Web.Routing
 			// I think so, because we do not care about the rest...
 			return domainsAndUris.FirstOrDefault(o =>
 				o.Uri.GetBaseUrl().Equals(current.GetBaseUrl())
-					//o.Uri.EndPathWithSlash().IsBaseOf(current)
-					//||
-					//o.Uri.EndPathWithSlash().IsBaseOf(current.WithoutPort())
-					//)
+				//o.Uri.EndPathWithSlash().IsBaseOf(current)
+				//||
+				//o.Uri.EndPathWithSlash().IsBaseOf(current.WithoutPort())
+				//)
 				&&
 				o.UmbracoDomain.LanguageIsoCode.Equals(isoCode));
 		}

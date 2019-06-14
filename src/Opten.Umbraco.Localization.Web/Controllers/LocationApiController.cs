@@ -9,25 +9,35 @@ using System.Web;
 
 namespace Opten.Umbraco.Localization.Web.Controllers
 {
-	public class LocationApiControler
+	public class LocationApiController
 	{
 		private static bool UseTestApi = false;
 		private static string TestApiUrl = "http://api.ipstack.com/";
 		private static string ApiUrl = "https://api.ipstack.com/";
 		private static string ApiKey = string.Empty;
 
-		static LocationApiControler()
+		static LocationApiController()
 		{
 			Boolean.TryParse(ConfigurationManager.AppSettings["OPTEN:localization:ipstack:useTestApi"], out UseTestApi);
 			ApiKey = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:apiKey");
 		}
 
+		public RegionInfo GetRegionInfoByIPAddress(string ipAddress, bool useCookie = true)
+		{
+			IPStackResponse location = GetLocationByIPAddress(ipAddress, useCookie);
+			if (location != null && string.IsNullOrWhiteSpace(location.CountryCode) == false)
+			{
+				return new RegionInfo(location.CountryCode);
+			}
+			return null;
+		}
+
 		public RegionInfo GetRegionInfoByCurrentIPAddress()
 		{
 			IPStackResponse location = GetLocationByIPAddress(IPAddressHelper.GetIPAddress());
-			if (location != null && string.IsNullOrWhiteSpace(location.CountryName) == false)
+			if (location != null && string.IsNullOrWhiteSpace(location.CountryCode) == false)
 			{
-				return new RegionInfo(location.CountryName);
+				return new RegionInfo(location.CountryCode);
 			}
 			return null;
 		}
@@ -44,9 +54,12 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			}
 			using (WebClient wc = new WebClient())
 			{
-				var json = wc.DownloadString(GetRequestUrl(ipAddress));
-				var ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
-				UpdateCookie(ipStackResponse);
+				string json = wc.DownloadString(GetRequestUrl(ipAddress));
+				IPStackResponse ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
+				if (useCookie)
+				{
+					UpdateCookie(ipStackResponse);
+				}
 				return ipStackResponse;
 			}
 		}

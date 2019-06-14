@@ -231,7 +231,7 @@ namespace Opten.Umbraco.Localization.Web
 
 		public static RegionInfo GetRegionByCurrentIPAddress()
 		{
-			RegionInfo currentRegion = new LocationApiControler().GetRegionInfoByCurrentIPAddress();
+			RegionInfo currentRegion = new LocationApiController().GetRegionInfoByCurrentIPAddress();
 			if (currentRegion != null)
 			{
 				return currentRegion;
