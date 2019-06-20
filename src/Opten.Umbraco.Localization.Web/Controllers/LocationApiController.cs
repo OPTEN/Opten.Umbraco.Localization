@@ -44,24 +44,29 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 
 		public IPStackResponse GetLocationByIPAddress(string ipAddress, bool useCookie = true)
 		{
-			if (useCookie)
+			IPStackResponse ipStackResponse = null;
+			if (HttpContext.Current.Request.RawUrl.Contains("umbraco/backoffice") == false)
 			{
-				HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cache.Country];
-				if (cookie != null && string.IsNullOrWhiteSpace(cookie.Value) == false)
-				{
-					return new IPStackResponse() { CountryCode = cookie.Value };
-				}
-			}
-			using (WebClient wc = new WebClient())
-			{
-				string json = wc.DownloadString(GetRequestUrl(ipAddress));
-				IPStackResponse ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
 				if (useCookie)
 				{
-					UpdateCookie(ipStackResponse);
+					HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cache.Country];
+					if (cookie != null && string.IsNullOrWhiteSpace(cookie.Value) == false)
+					{
+						return new IPStackResponse() { CountryCode = cookie.Value };
+					}
 				}
-				return ipStackResponse;
+				using (WebClient wc = new WebClient())
+				{
+					string json = wc.DownloadString(GetRequestUrl(ipAddress));
+					ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
+					if (useCookie && ipStackResponse.CountryCode != null)
+					{
+						UpdateCookie(ipStackResponse);
+					}
+				}
 			}
+			return ipStackResponse;
+
 		}
 
 		private string GetRequestUrl(string ipAddress, string responseLanguage = "en")
