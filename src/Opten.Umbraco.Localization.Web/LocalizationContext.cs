@@ -1,7 +1,5 @@
 ﻿using Opten.Common.Extensions;
-using Opten.Umbraco.Localization.Web.Controllers;
 using Opten.Umbraco.Localization.Web.Extensions;
-using Opten.Umbraco.Localization.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -76,7 +74,7 @@ namespace Opten.Umbraco.Localization.Web
 
 			if (string.IsNullOrWhiteSpace(fallbackCultureName) == false)
 			{
-				var langauge = GetActiveLanguage(Languages, fallbackCultureName);
+				ILanguage langauge = GetActiveLanguage(Languages, fallbackCultureName);
 				if (langauge != null)
 				{
 					return langauge.CultureInfo;
@@ -142,7 +140,7 @@ namespace Opten.Umbraco.Localization.Web
 
 			if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
 			{
-				var defaultBackofficeCultures = ConfigurationManager.AppSettings.Get<string>(key: "OPTEN:localization:defaultBackofficeCultures");
+				string defaultBackofficeCultures = ConfigurationManager.AppSettings.Get<string>(key: "OPTEN:localization:defaultBackofficeCultures");
 				if (string.IsNullOrWhiteSpace(defaultBackofficeCultures))
 				{
 					return new[] { GetDefaultLanguage(LocalizationContext.Languages) };
@@ -217,7 +215,7 @@ namespace Opten.Umbraco.Localization.Web
 		/// <returns></returns>
 		internal static CultureInfo TryGetCultureFromUrlLanguage(string languageName)
 		{
-			var culture = Cultures.FirstOrDefault(o => o.GetUrlLanguage().StartsWith(languageName, StringComparison.OrdinalIgnoreCase));
+			CultureInfo culture = Cultures.FirstOrDefault(o => o.GetUrlLanguage().StartsWith(languageName, StringComparison.OrdinalIgnoreCase));
 			if (culture != null)
 			{
 				return culture;
@@ -227,16 +225,6 @@ namespace Opten.Umbraco.Localization.Web
 				return TryGetCultureFromUrlLanguage(languageName.Split('-')[0]);
 			}
 			return DefaultCulture;
-		}
-
-		public static RegionInfo GetRegionByCurrentIPAddress()
-		{
-			RegionInfo currentRegion = new LocationApiController().GetRegionInfoByCurrentIPAddress();
-			if (currentRegion != null)
-			{
-				return currentRegion;
-			}
-			return new RegionInfo(DefaultCulture.Name);
 		}
 
 		#region Private helpers
