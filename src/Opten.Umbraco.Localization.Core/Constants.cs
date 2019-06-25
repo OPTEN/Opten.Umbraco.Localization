@@ -24,9 +24,14 @@
 
 			public const string Countries = "OPTEN:localization:countries";
 
-			public const string Country = "OPTEN:localization:country";
+		}
 
-			public const string BackendLanguages = "OPTEN.localization.backend.languages"; // Has to be valid characters otherwise exception in Backend!
+		public static class Cookie // Has to be valid characters otherwise exception in Backend!
+		{
+
+			public const string Country = "OPTEN.localization.country";
+
+			public const string BackendLanguages = "OPTEN.localization.backend.languages";
 
 		}
 

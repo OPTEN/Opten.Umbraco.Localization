@@ -49,7 +49,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			{
 				if (useCookie)
 				{
-					HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cache.Country];
+					HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cookie.Country];
 					if (cookie != null && string.IsNullOrWhiteSpace(cookie.Value) == false)
 					{
 						return new IPStackResponse() { CountryCode = cookie.Value };
@@ -78,7 +78,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 		{
 			if (ipStackResponse != null)
 			{
-				HttpCookie cookie = new HttpCookie(Core.Constants.Cache.Country);
+				HttpCookie cookie = new HttpCookie(Core.Constants.Cookie.Country);
 				cookie.Expires = DateTime.Now.AddDays(1);
 				cookie.Path = "/";
 				cookie.Value = ipStackResponse.CountryCode;

@@ -129,7 +129,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 
 		public bool PostSelectedLanguages(string[] languages)
 		{
-			HttpCookie cookie = new HttpCookie(Core.Constants.Cache.BackendLanguages);
+			HttpCookie cookie = new HttpCookie(Core.Constants.Cookie.BackendLanguages);
 			cookie.Expires = DateTime.Now.AddDays(1);
 			cookie.Path = "/";
 

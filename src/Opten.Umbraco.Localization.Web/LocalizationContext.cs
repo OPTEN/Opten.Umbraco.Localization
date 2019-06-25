@@ -136,7 +136,7 @@ namespace Opten.Umbraco.Localization.Web
 		/// <returns></returns>
 		public static ILanguage[] CurrentBackEndUserLanguages()
 		{
-			HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cache.BackendLanguages];
+			HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cookie.BackendLanguages];
 
 			if (cookie == null || string.IsNullOrWhiteSpace(cookie.Value))
 			{
