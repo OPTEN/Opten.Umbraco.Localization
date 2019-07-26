@@ -35,8 +35,8 @@
     <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Opten.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Opten.Common.2.0.0\lib\net45\Opten.Common.dll</HintPath>
+    <Reference Include="Opten.Common, Version=1.1.5.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Opten.Common.1.1.5.7\lib\net45\Opten.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

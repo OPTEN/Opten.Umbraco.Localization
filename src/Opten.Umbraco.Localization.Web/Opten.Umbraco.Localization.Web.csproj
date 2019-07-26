@@ -142,8 +142,8 @@
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Opten.Common, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Opten.Common.2.0.0\lib\net45\Opten.Common.dll</HintPath>
+    <Reference Include="Opten.Common, Version=1.1.5.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Opten.Common.1.1.5.7\lib\net45\Opten.Common.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -260,6 +260,7 @@
     <Compile Include="Extensions\DictionaryAttributeExtensions.cs" />
     <Compile Include="Extensions\GridTemplateExtensions.cs" />
     <Compile Include="Extensions\CultureInfoExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\UmbracoHelperExtensions.cs" />
     <Compile Include="Helpers\DictionaryHelper.cs" />
     <Compile Include="Controllers\LocationApiController.cs" />
