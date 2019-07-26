@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Net;
 using System.Web;
+using Umbraco.Core.Logging;
 
 namespace Opten.Umbraco.Localization.Web.Controllers
 {
@@ -45,25 +46,32 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 		public IPStackResponse GetLocationByIPAddress(string ipAddress, bool useCookie = true)
 		{
 			IPStackResponse ipStackResponse = null;
-			if (HttpContext.Current.Request.RawUrl.Contains("umbraco/backoffice") == false)
+			try
 			{
-				if (useCookie)
+				if (HttpContext.Current.Request.RawUrl.Contains("umbraco/backoffice") == false)
 				{
-					HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cookie.Country];
-					if (cookie != null && string.IsNullOrWhiteSpace(cookie.Value) == false)
+					if (useCookie)
 					{
-						return new IPStackResponse() { CountryCode = cookie.Value };
+						HttpCookie cookie = HttpContext.Current.Request.Cookies[Core.Constants.Cookie.Country];
+						if (cookie != null && string.IsNullOrWhiteSpace(cookie.Value) == false)
+						{
+							return new IPStackResponse() { CountryCode = cookie.Value };
+						}
+					}
+					using (WebClient wc = new WebClient())
+					{
+						string json = wc.DownloadString(GetRequestUrl(ipAddress));
+						ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
+						if (useCookie && ipStackResponse.CountryCode != null)
+						{
+							UpdateCookie(ipStackResponse);
+						}
 					}
 				}
-				using (WebClient wc = new WebClient())
-				{
-					string json = wc.DownloadString(GetRequestUrl(ipAddress));
-					ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
-					if (useCookie && ipStackResponse.CountryCode != null)
-					{
-						UpdateCookie(ipStackResponse);
-					}
-				}
+			}
+			catch (Exception exc)
+			{
+				LogHelper.Error<LocationApiController>($"Could not get Region Data by following IP: {ipAddress}", exc);
 			}
 			return ipStackResponse;
 
