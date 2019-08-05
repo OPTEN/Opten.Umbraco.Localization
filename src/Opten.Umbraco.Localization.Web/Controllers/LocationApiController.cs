@@ -78,7 +78,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			IPStackResponse ipStackResponse = null;
 			try
 			{
-				if (IsRequestFromCrawler() || IsExcludedIp(ipAddress))
+				if (IsExcludedIp(ipAddress) || IsRequestFromCrawler())
 				{
 					return null;
 				}
