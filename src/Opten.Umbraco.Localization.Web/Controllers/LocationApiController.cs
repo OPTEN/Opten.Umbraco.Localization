@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Opten.Umbraco.Localization.Web.Helpers;
 using Opten.Umbraco.Localization.Web.Models;
+using Opten.Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,6 +20,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 		private static string TestApiUrl = "http://api.ipstack.com/";
 		private static string ApiUrl = "https://api.ipstack.com/";
 		private static string ApiKey = string.Empty;
+		private static string[] ExcludedIps = null;
 		private static List<IPStackRequest> Requests = new List<IPStackRequest>();
 
 		private static List<string> Crawlers = new List<string>()
@@ -48,6 +50,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 		{
 			Boolean.TryParse(ConfigurationManager.AppSettings["OPTEN:localization:ipstack:useTestApi"], out UseTestApi);
 			ApiKey = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:apiKey");
+			ExcludedIps = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:excludedIps").ConvertCommaSeparatedToStringArray();
 		}
 
 		public RegionInfo GetRegionInfoByIPAddress(string ipAddress, bool useCookie = true)
@@ -75,7 +78,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			IPStackResponse ipStackResponse = null;
 			try
 			{
-				if (IsRequestFromCrawler())
+				if (IsRequestFromCrawler() || IsExcludedIp(ipAddress))
 				{
 					return null;
 				}
@@ -98,13 +101,10 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 					{
 						string json = wc.DownloadString(GetRequestUrl(ipAddress));
 						ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
-						LogHelper.Info<LocationApiController>($"IPSTACK Request with IP: {ipAddress}, UseCookie: {useCookie}");
 						if (useCookie && ipStackResponse.CountryCode != null)
 						{
-							LogHelper.Info<LocationApiController>($"IPSTACK Request with IP: {ipAddress} gave: {ipStackResponse.CountryCode}");
 							UpdateCookie(ipStackResponse);
 							Requests.Add(new IPStackRequest(ipAddress, ipStackResponse.CountryCode));
-							LogHelper.Info<LocationApiController>($"IPSTACK Request cookie was set: {ipAddress}");
 						}
 					}
 				}
@@ -115,6 +115,11 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			}
 			return ipStackResponse;
 
+		}
+
+		private bool IsExcludedIp(string ipAddress)
+		{
+			return ExcludedIps.Contains(ipAddress);
 		}
 
 		private bool IsRequestFromCrawler()
