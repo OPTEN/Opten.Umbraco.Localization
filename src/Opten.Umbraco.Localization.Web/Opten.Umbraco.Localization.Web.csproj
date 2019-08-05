@@ -268,6 +268,7 @@
     <Compile Include="Install\PackageActions\TransformXmlFile.cs" />
     <Compile Include="LocalizationContext.cs" />
     <Compile Include="Controllers\MigrationApiController.cs" />
+    <Compile Include="Models\IPStackRequest.cs" />
     <Compile Include="Models\IPStackResponse.cs" />
     <Compile Include="Persistence\Migrations\ContentTypeMigration.cs" />
     <Compile Include="Mvc\LocalizedBeforeActionExecutingEventArgs.cs" />

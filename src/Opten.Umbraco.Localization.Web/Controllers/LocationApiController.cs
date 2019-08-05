@@ -12,19 +12,6 @@ using Umbraco.Core.Logging;
 
 namespace Opten.Umbraco.Localization.Web.Controllers
 {
-	struct IPStackRequest
-	{
-		public string IP { get; set; }
-		public string CountryCode { get; set; }
-		public DateTime Date { get; set; }
-
-		public IPStackRequest(string ipAddress, string countryCode)
-		{
-			IP = ipAddress;
-			CountryCode = countryCode;
-			Date = DateTime.Now;
-		}
-	}
 
 	public class LocationApiController
 	{
@@ -102,8 +89,10 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 							return new IPStackResponse() { CountryCode = cookie.Value };
 						}
 					}
-					if (Requests.Any(o => o.IP.Equals(ipAddress, StringComparison.OrdinalIgnoreCase) && o.Date > DateTime.Now.AddDays(-1))) {
-						return null;
+					IPStackRequest firstSameRequest = Requests.FirstOrDefault(o => o.IP.Equals(ipAddress, StringComparison.OrdinalIgnoreCase) && o.Date > DateTime.Now.AddDays(-1));
+					if (firstSameRequest != null)
+					{
+						return new IPStackResponse() { CountryCode = firstSameRequest.CountryCode };
 					}
 					using (WebClient wc = new WebClient())
 					{
