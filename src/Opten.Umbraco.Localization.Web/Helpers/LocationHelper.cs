@@ -10,18 +10,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Umbraco.Core.Logging;
+using Umbraco.Core;
 
 namespace Opten.Umbraco.Localization.Web.Controllers
 {
 
-	public class LocationApiController
+	public class LocationHelper
 	{
 		private static bool UseTestApi = false;
 		private static string TestApiUrl = "http://api.ipstack.com/";
 		private static string ApiUrl = "https://api.ipstack.com/";
 		private static string ApiKey = string.Empty;
 		private static string[] ExcludedIps = null;
-		private static List<IPStackRequest> Requests = new List<IPStackRequest>();
 
 		private static List<string> Crawlers = new List<string>()
 		{
@@ -46,14 +46,14 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			"wolp","wwwc","xget","legs","curl","webs","wget","sift","cmc"
 		};
 
-		static LocationApiController()
+		static LocationHelper()
 		{
 			Boolean.TryParse(ConfigurationManager.AppSettings["OPTEN:localization:ipstack:useTestApi"], out UseTestApi);
 			ApiKey = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:apiKey");
 			ExcludedIps = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:excludedIps").ConvertCommaSeparatedToStringArray();
 		}
 
-		public RegionInfo GetRegionInfoByIPAddress(string ipAddress, bool useCookie = true)
+		public static RegionInfo GetRegionInfoByIPAddress(string ipAddress, bool useCookie = true)
 		{
 			IPStackResponse location = GetLocationByIPAddress(ipAddress, useCookie);
 			if (location != null && string.IsNullOrWhiteSpace(location.CountryCode) == false)
@@ -63,7 +63,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			return null;
 		}
 
-		public RegionInfo GetRegionInfoByCurrentIPAddress()
+		public static RegionInfo GetRegionInfoByCurrentIPAddress()
 		{
 			IPStackResponse location = GetLocationByIPAddress(IPAddressHelper.GetIPAddress());
 			if (location != null && string.IsNullOrWhiteSpace(location.CountryCode) == false)
@@ -73,7 +73,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			return null;
 		}
 
-		public IPStackResponse GetLocationByIPAddress(string ipAddress, bool useCookie = true)
+		public static IPStackResponse GetLocationByIPAddress(string ipAddress, bool useCookie = true)
 		{
 			IPStackResponse ipStackResponse = null;
 			try
@@ -92,48 +92,52 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 							return new IPStackResponse() { CountryCode = cookie.Value };
 						}
 					}
-					IPStackRequest firstSameRequest = Requests.FirstOrDefault(o => o.IP.Equals(ipAddress, StringComparison.OrdinalIgnoreCase) && o.Date > DateTime.Now.AddDays(-1));
-					if (firstSameRequest != null)
+					ApplicationContext.Current.ApplicationCache.IsolatedRuntimeCache.GetOrCreateCache<IPStackRequest>().GetCacheItem($"{ipAddress}", () =>
 					{
-						return new IPStackResponse() { CountryCode = firstSameRequest.CountryCode };
-					}
-					using (WebClient wc = new WebClient())
-					{
-						string json = wc.DownloadString(GetRequestUrl(ipAddress));
-						ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
-						if (useCookie && ipStackResponse.CountryCode != null)
+						using (WebClient wc = new WebClient())
 						{
-							UpdateCookie(ipStackResponse);
-							Requests.Add(new IPStackRequest(ipAddress, ipStackResponse.CountryCode));
+							string json = wc.DownloadString(GetRequestUrl(ipAddress));
+							ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
+							if (useCookie && ipStackResponse.CountryCode != null)
+							{
+								UpdateCookie(ipStackResponse);
+								LogHelper.Info<LocationHelper>($"Request Region Data by following IP: {ipAddress}");
+								return new IPStackRequest(ipAddress, ipStackResponse.CountryCode);
+							}
 						}
-					}
+						return null;
+					});
 				}
 			}
 			catch (Exception exc)
 			{
-				LogHelper.Error<LocationApiController>($"Could not get Region Data by following IP: {ipAddress}", exc);
+				LogHelper.Error<LocationHelper>($"Could not get Region Data by following IP: {ipAddress}", exc);
 			}
 			return ipStackResponse;
 
 		}
 
-		private bool IsExcludedIp(string ipAddress)
+		private static bool IsExcludedIp(string ipAddress)
 		{
 			return ExcludedIps.Contains(ipAddress);
 		}
 
-		private bool IsRequestFromCrawler()
+		private static bool IsRequestFromCrawler()
 		{
-			string ua = HttpContext.Current.Request.UserAgent.ToLower();
+			string ua = HttpContext.Current.Request.UserAgent?.ToLower();
+			if (string.IsNullOrWhiteSpace(ua))
+			{
+				return true;
+			}
 			return Crawlers.Exists(x => ua.Contains(x));
 		}
 
-		private string GetRequestUrl(string ipAddress, string responseLanguage = "en")
+		private static string GetRequestUrl(string ipAddress, string responseLanguage = "en")
 		{
 			return $"{(UseTestApi ? TestApiUrl : ApiUrl)}{ipAddress}?access_key={ApiKey}&output=json";
 		}
 
-		private void UpdateCookie(IPStackResponse ipStackResponse)
+		private static void UpdateCookie(IPStackResponse ipStackResponse)
 		{
 			if (ipStackResponse != null)
 			{
