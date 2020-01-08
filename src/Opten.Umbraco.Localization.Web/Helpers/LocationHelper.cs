@@ -101,7 +101,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 							if (useCookie && ipStackResponse.CountryCode != null)
 							{
 								UpdateCookie(ipStackResponse);
-								LogHelper.Info<LocationHelper>($"Request Region Data by following IP: {ipAddress}");
+								LogHelper.Info<LocationHelper>($"Request Region Data by following IP: {ipAddress} | URL: {HttpContext.Current.Request.RawUrl} | UserAgent: {HttpContext.Current.Request.UserAgent}");
 								return new IPStackRequest(ipAddress, ipStackResponse.CountryCode);
 							}
 						}
