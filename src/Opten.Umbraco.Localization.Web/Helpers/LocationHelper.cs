@@ -50,7 +50,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 		{
 			Boolean.TryParse(ConfigurationManager.AppSettings["OPTEN:localization:ipstack:useTestApi"], out UseTestApi);
 			ApiKey = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:apiKey");
-			ExcludedIps = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:excludedIps").ConvertCommaSeparatedToStringArray();
+			ExcludedIps = ConfigurationManager.AppSettings.Get("OPTEN:localization:ipstack:excludedIps")?.ConvertCommaSeparatedToStringArray();
 		}
 
 		public static RegionInfo GetRegionInfoByIPAddress(string ipAddress, bool useCookie = true)
@@ -75,7 +75,6 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 
 		public static IPStackResponse GetLocationByIPAddress(string ipAddress, bool useCookie = true)
 		{
-			IPStackResponse ipStackResponse = null;
 			try
 			{
 				if (IsExcludedIp(ipAddress) || IsRequestFromCrawler())
@@ -92,17 +91,20 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 							return new IPStackResponse() { CountryCode = cookie.Value };
 						}
 					}
-					ApplicationContext.Current.ApplicationCache.IsolatedRuntimeCache.GetOrCreateCache<IPStackRequest>().GetCacheItem($"{ipAddress}", () =>
+					return (IPStackResponse)ApplicationContext.Current.ApplicationCache.IsolatedRuntimeCache.GetOrCreateCache<IPStackResponse>().GetCacheItem($"{ipAddress}", () =>
 					{
 						using (WebClient wc = new WebClient())
 						{
 							string json = wc.DownloadString(GetRequestUrl(ipAddress));
-							ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
-							if (useCookie && ipStackResponse.CountryCode != null)
+							var ipStackResponse = JsonConvert.DeserializeObject<IPStackResponse>(json);
+							if (string.IsNullOrWhiteSpace(ipStackResponse.CountryCode) == false)
 							{
-								UpdateCookie(ipStackResponse);
+								if (useCookie)
+								{
+									UpdateCookie(ipStackResponse);
+								}
 								LogHelper.Info<LocationHelper>($"Request Region Data by following IP: {ipAddress} | URL: {HttpContext.Current.Request.RawUrl} | UserAgent: {HttpContext.Current.Request.UserAgent}");
-								return new IPStackRequest(ipAddress, ipStackResponse.CountryCode);
+								return ipStackResponse;
 							}
 						}
 						return null;
@@ -113,13 +115,15 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			{
 				LogHelper.Error<LocationHelper>($"Could not get Region Data by following IP: {ipAddress}", exc);
 			}
-			return ipStackResponse;
-
+			return null;
 		}
 
 		private static bool IsExcludedIp(string ipAddress)
 		{
-			return ExcludedIps.Contains(ipAddress);
+			if (ExcludedIps == null || ExcludedIps.Any() == false) {
+				return false;
+			}
+			return ExcludedIps.Contains(ipAddress) || ExcludedIps.Any(o => ipAddress.StartsWith(o));
 		}
 
 		private static bool IsRequestFromCrawler()
