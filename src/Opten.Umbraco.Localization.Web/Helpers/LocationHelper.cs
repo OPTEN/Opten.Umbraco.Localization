@@ -43,7 +43,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 			"urlck","valkyrie libwww-perl","verticrawl","victoria","webscout","voyager","crawlpaper",
 			"webcatcher","t-h-u-n-d-e-r-s-t-o-n-e","webmoose","pagesinventory","webquest","webreaper",
 			"webwalker","winona","occam","robi","fdse","jobo","rhcs","gazz","dwcp","yeti","fido","wlm",
-			"wolp","wwwc","xget","legs","curl","webs","wget","sift","cmc"
+			"wolp","wwwc","xget","legs","curl","webs","wget","sift","cmc","facebookexternalhit","Python-urllib"
 		};
 
 		static LocationHelper()
@@ -77,7 +77,7 @@ namespace Opten.Umbraco.Localization.Web.Controllers
 		{
 			try
 			{
-				if (IsExcludedIp(ipAddress) || IsRequestFromCrawler())
+				if (IsExcludedIp(ipAddress) || IsRequestFromCrawler() || HttpContext.Current.Response.StatusCode != 200)
 				{
 					return null;
 				}
